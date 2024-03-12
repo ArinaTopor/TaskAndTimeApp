@@ -13,11 +13,12 @@ interface ITask {
     template: `
         <div>
             <button (click)="addTask()">Добавить таску</button>
-            <div class="task-container" *ngIf="(tasks$ | async) as tasks">
+            <div class="task-container" *ngIf="(tasks$ | async) as tasks; else skeleton">
                 <div class="task" *ngFor="let task of tasks" [style.margin-bottom]="'16px'" [style.background-color]="task.color">
                     {{task.name}}
                 </div>
             </div>
+            <ng-template #skeleton> Тасок нет, они грузятся</ng-template>
         </div>
     `,
     imports: [
