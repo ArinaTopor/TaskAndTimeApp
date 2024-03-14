@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "instal": "npm i",
+    "clean install": "npm ci",
     "postinstall": "npx husky install"
   },
   "private": true,
