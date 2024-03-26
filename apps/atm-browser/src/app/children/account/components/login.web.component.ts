@@ -1,18 +1,23 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { IStorage, LoginBaseComponent, STORAGE } from '@atm-project/common';
 
 @Component({
     standalone: true,
     selector: 'login-web-component',
     templateUrl: 'login-web-component.component.html',
     providers: [
-        // {
-        //     provide: STORAGE,
-        //     useClass: LocalStorageService
-        // }
+        {
+            provide: STORAGE,
+            useValue: null
+        }
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-// export class LoginWebComponent extends LoginBaseComponent {
-export class LoginWebComponent {
+export class LoginWebComponent extends LoginBaseComponent {
+    constructor(
+        @Inject(STORAGE) service: IStorage
+    ) {
+        super(service);
+    }
 }
