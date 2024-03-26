@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Directive, Inject, OnInit } from '@angular/core';
+import { IStorage, STORAGE } from '../interfaces/auth.interface';
+import { tap } from 'rxjs';
 
-@Component({
-    selector: 'login-base',
-    templateUrl: 'login-base.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-
+@Directive()
 export class LoginBaseComponent implements OnInit {
-    constructor() {
+
+    constructor(
+        @Inject(STORAGE) protected storageService: IStorage
+    ) {
     }
 
     /**
@@ -15,6 +15,14 @@ export class LoginBaseComponent implements OnInit {
      */
     public ngOnInit(): void {
         // init
+        this.storageService.getDataByKey<string>('login')
+            .pipe(
+                tap((login: string): void => {
+                    if (login) {
+                        //...
+                    }
+                })
+            );
     }
 
 }
