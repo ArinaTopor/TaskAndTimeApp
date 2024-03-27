@@ -8,19 +8,33 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/atm-browser",
         "index": "apps/atm-browser/src/index.html",
         "browser": "apps/atm-browser/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/atm-browser/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/atm-browser/src/favicon.ico",
-          "apps/atm-browser/src/assets"
+          "apps/atm-browser/src/assets",
+          {
+            "glob": "**/*",
+            "input": "node_modules/@taiga-ui/icons/src",
+            "output": "assets/taiga-ui/icons"
+          }
         ],
-        "styles": ["apps/atm-browser/src/styles.scss"],
+        "styles": [
+          "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
+          "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
+          "node_modules/@taiga-ui/styles/taiga-ui-global.less",
+          "apps/atm-browser/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
