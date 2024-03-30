@@ -24,7 +24,7 @@ import { TuiInputModule } from '@taiga-ui/kit';
 })
 export class AppComponent {
     protected title: string = 'atm-browser';
-    private readonly _testForm: FormGroup = new FormGroup({
+    protected readonly testForm: FormGroup = new FormGroup({
         testValue: new FormControl('profit@cool.ru'),
     });
 }

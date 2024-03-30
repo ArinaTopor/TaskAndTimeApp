@@ -1,10 +1,9 @@
-import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject, Renderer2 } from '@angular/core';
 import { IStorage, LoginBaseComponent, STORAGE } from '@atm-project/common';
 
 @Component({
-    standalone: true,
     selector: 'login-web-component',
-    templateUrl: 'login-web-component.component.html',
+    template: '<div></div>',
     providers: [
         {
             provide: STORAGE,
@@ -13,11 +12,12 @@ import { IStorage, LoginBaseComponent, STORAGE } from '@atm-project/common';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-
-export class LoginWebComponent extends LoginBaseComponent {
+export class TwoFactorWebComponent extends LoginBaseComponent {
     constructor(
-        @Inject(STORAGE) service: IStorage
+        @Inject(STORAGE) service: IStorage,
+        protected renderer: Renderer2
     ) {
         super(service);
+        const root : HTMLElement = document.getElementById('root')!;
     }
 }
