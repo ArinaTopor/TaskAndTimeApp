@@ -1,46 +1,56 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="./sidenav.component.scss">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
 </head>
 
 <div class="sidenav-container">
     <div class="personal-account">
-        <img class="personal-account-icon" src="/apps/atm-browser/src/assets/icons/personal-account-icon.svg"></img>
+        <img class="personal-account-icon" src="/apps/atm-browser/src/assets/icons/personal-account-icon.svg" title="personal-account"/>
         <span class="personal-account-name">Имя пользователя</span>
     </div>
 
     <ul class="sidenav-nav">
-        <p>{{navDataList}}</p>
-        <li class="sidenav-nav-item" *ngFor="let data of navDataList">
-            <button class="sidenav-nav-link" [routerLink]="[data.routerLink]">
-                <img class="sidenav-nav-link-icon" [icon]="data.icon"></img>
-                <span class="sidenav-nav-link-text">{{ data.label }}</span>
-            </button>
+        <li class="sidenav-nav-item">
+            <a class="sidenav-nav-link">
+                <img class="sidenav-nav-link-icon" src="/apps/atm-browser/src/assets/icons/today-icon.svg" title="icon"/>
+                <span class="sidenav-nav-link-text">Сегодня</span>
+            </a>
         </li>
     </ul>
 
-    <hr class="divider"></hr>
+    <hr class="divider"/>
 
     <ul class="sidenav-nav">
         <li class="sidenav-nav-item" *ngFor="let data of navDataFunction">
-            <button class="sidenav-nav-link" [routerLink]="[data.routerLink]">
-                <img class="sidenav-nav-link-icon" [icon]="data.icon"></img>
-                <span class="sidenav-nav-link-text">{{ data.label }}</span>
-            </button>
+            
         </li>
     </ul>
 
+    <!--
+    <ul class="sidenav-nav">
+        <li class="sidenav-nav-item" *ngFor="let data of navDataFunction">
+            <button class="sidenav-nav-link" [routerLink]="[data.routeLink]">
+                <img class="sidenav-nav-link-icon" src = {{data.icon}} title="icon"/>
+                <span class="sidenav-nav-link-text">{{data.label}}</span>
+            </button>
+        </li>
+    </ul>
+    -->
+
     <div class="themes">
         <button class="theme-light">
-            <img class="theme-light-icon" src="/apps/atm-browser/src/assets/icons/light-icon.svg"></img>
+            <img class="theme-light-icon" src="/apps/atm-browser/src/assets/icons/light-icon.svg" title="icon"/>
         </button>
         <button class="theme-dark">
-            <img class="theme-dark-icon" src="/apps/atm-browser/src/assets/icons/dark-icon.svg"></img>
+            <img class="theme-dark-icon" src="/apps/atm-browser/src/assets/icons/dark-icon.svg" title="icon"/>
         </button>
     </div>
 
     <button class="log-out">
-        <img class="log-out-icon" src="/apps/atm-browser/src/assets/icons/logout-icon.svg"></img>
+        <img class="log-out-icon" src="/apps/atm-browser/src/assets/icons/logout-icon.svg" title="icon"/>
         <span class="log-out-text">Выйти</span>
     </button>
 </div>

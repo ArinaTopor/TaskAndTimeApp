@@ -5,7 +5,8 @@
   "scripts": {
     "instal": "npm i",
     "clean install": "npm ci",
-    "postinstall": "npx husky install"
+    "postinstall": "npx husky install",
+    "run": "npx nx run atm-browser:serve:development"
   },
   "private": true,
   "devDependencies": {

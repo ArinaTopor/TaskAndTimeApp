@@ -13,21 +13,21 @@ $assetPath :"/apps/atm-browser/src/assets/icons";
 
 .personal-account {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
-}
-
-.personal-account-icon {
-    background: url(#{$assetPath}/personal-account-icon.svg);
+    margin-left: 2em;
+    margin-top: 1.5em;
 }
 
 .personal-account-name {
-
+    margin-left: 1em;
 }
 
 .sidenav-nav {
     margin-left: 0;
     padding-left: 0;
+    margin-left: 2em;
+    margin-top: 1.5em;
 }
 
 .sidenav-nav-item{
@@ -49,7 +49,8 @@ $assetPath :"/apps/atm-browser/src/assets/icons";
 
 .themes {
     display: flex;
-    flex-direction: column;
+    margin-left: 2em;
+    margin-top: 1.5em;
 }
 
 .theme-light {
@@ -57,27 +58,17 @@ $assetPath :"/apps/atm-browser/src/assets/icons";
     background-color: none;
 }
 
-.theme-light-icon {
-    background: url(#{$assetPath}/light-icon.svg);
-}
-
 .theme-dark {
     border: none;
     background-color: none;
-}
-
-.theme-dark-icon {
-    background: url(#{$assetPath}/dark-icon.svg);
 }
 
 .log-out {
     display: inline;
     border: none;
     background-color: none;
-}
-
-.log-out-icon {
-    background: url(#{$assetPath}/logout-icon.svg);
+    margin-left: 2em;
+    margin-top: 1.5em;
 }
 
 .log-out-text {
