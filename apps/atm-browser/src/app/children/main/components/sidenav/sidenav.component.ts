@@ -1,27 +1,30 @@
-import { Component, ChangeDetectionStrategy, OnInit  } from '@angular/core';
-import { navbarDataList, navbarDataFunction, INavbarData } from './nav-data';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { navbarDataList, navbarDataFunction, INavbarDataList, INavbarDataFunction } from './nav-data';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
     standalone: true,
     selector: 'sidenav',
     templateUrl: 'sidenav.component.html',
     styleUrl: 'sidenav.component.scss',
-    imports: [CommonModule, RouterModule],
+    imports: [CommonModule, RouterModule, NgOptimizedImage],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class SidenavComponent implements OnInit{
-    public navDataList: INavbarData[];
-    public navDataFunction: INavbarData[];
+export class SidenavComponent {
+    public navDataList: INavbarDataList[];
+    public navDataFunction: INavbarDataFunction[];
+    public isShow: boolean = false;
 
     constructor() {
         this.navDataList = navbarDataList;
         this.navDataFunction = navbarDataFunction;
     }
 
-    public ngOnInit(): void {
-        console.log('gfhfhgytf');
+    // eslint-disable-next-line jsdoc/require-jsdoc
+    protected show(data: INavbarDataFunction): void  {
+        data.isShow = !data.isShow;
     }
 }

@@ -1,56 +1,60 @@
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="./sidenav.component.scss">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-</head>
-
 <div class="sidenav-container">
-    <div class="personal-account">
-        <img class="personal-account-icon" src="/apps/atm-browser/src/assets/icons/personal-account-icon.svg" title="personal-account"/>
-        <span class="personal-account-name">Имя пользователя</span>
+    <div>
+         <div class="personal-account">
+            <img class="personal-account-icon" src="../../../../../assets/icons/personal-account-icon.svg" title="personal-account"/>
+            <span class="personal-account-name">Имя пользователя</span>
+        </div>
+
+        <ul class="sidenav-nav-list">
+            <li class="sidenav-nav-item-list" *ngFor="let data of navDataList">
+                <button class="sidenav-nav-link-list" [routerLink]="[data.routeLink]">
+                    <img class="sidenav-nav-link-icon-list" [ngSrc]="data.icon" width="24" height="24" title="icon"/>
+                    <span class="sidenav-nav-link-text-list">{{data.label}}</span>
+                </button>
+            </li>
+        </ul>
+
+        <hr class="divider"/>
+
+        <ul class="sidenav-nav-function">
+            <li class="sidenav-nav-item-function" *ngFor="let data of navDataFunction">
+                <button class="sidenav-nav-link-function" [routerLink]="[data.routeLink]" (click)="show(data)">
+                    <span>
+                        <img class="sidenav-nav-link-icon-function" [ngSrc]="data.icon" width="16" height="16" title="icon" [ngClass]='{rotate:data.isShow}'/>
+                        <span class="sidenav-nav-link-text-function">{{data.label}}</span>
+                    </span>
+                    <img class="sidenav-nav-add-icon-function" src="../../../../../assets/icons/add.svg" title="icon" width="24" height="24"/>
+                </button>
+
+                <div *ngIf="data.isShow" class="content">
+                    <li class="content-item" *ngFor="let project of data.content">
+                        <span>
+                            <img [ngSrc]="data.iconContent" width="20" height="20" title="icon" class="content-icon"/>
+                            <span class="content-name">{{project}}</span>
+                        </span>
+                        <img class="content-setting" src="../../../../../assets/icons/setting-icon.svg" title="icon" width="16" height="16"/>
+                    </li>
+
+                </div>
+            </li>
+        </ul>
     </div>
 
-    <ul class="sidenav-nav">
-        <li class="sidenav-nav-item">
-            <a class="sidenav-nav-link">
-                <img class="sidenav-nav-link-icon" src="/apps/atm-browser/src/assets/icons/today-icon.svg" title="icon"/>
-                <span class="sidenav-nav-link-text">Сегодня</span>
-            </a>
-        </li>
-    </ul>
-
-    <hr class="divider"/>
-
-    <ul class="sidenav-nav">
-        <li class="sidenav-nav-item" *ngFor="let data of navDataFunction">
-            
-        </li>
-    </ul>
-
-    <!--
-    <ul class="sidenav-nav">
-        <li class="sidenav-nav-item" *ngFor="let data of navDataFunction">
-            <button class="sidenav-nav-link" [routerLink]="[data.routeLink]">
-                <img class="sidenav-nav-link-icon" src = {{data.icon}} title="icon"/>
-                <span class="sidenav-nav-link-text">{{data.label}}</span>
+    <div class="settings">
+        <div class="themes">
+            <button class="theme-light">
+                <img class="theme-light-icon" src="../../../../../assets/icons/light-icon.svg" title="icon"/>
             </button>
-        </li>
-    </ul>
-    -->
+            <button class="theme-dark">
+                <img class="theme-dark-icon" src="../../../../../assets/icons/dark-icon.svg" title="icon"/>
+            </button>
+        </div>
 
-    <div class="themes">
-        <button class="theme-light">
-            <img class="theme-light-icon" src="/apps/atm-browser/src/assets/icons/light-icon.svg" title="icon"/>
-        </button>
-        <button class="theme-dark">
-            <img class="theme-dark-icon" src="/apps/atm-browser/src/assets/icons/dark-icon.svg" title="icon"/>
-        </button>
+        <div>
+            <button class="log-out">
+                <img class="log-out-icon" src="../../../../../assets/icons/logout-icon.svg" title="icon"/>
+                <span class="log-out-text">Выход</span>
+            </button>
+        </div>
     </div>
-
-    <button class="log-out">
-        <img class="log-out-icon" src="/apps/atm-browser/src/assets/icons/logout-icon.svg" title="icon"/>
-        <span class="log-out-text">Выйти</span>
-    </button>
 </div>

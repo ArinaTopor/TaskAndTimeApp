@@ -1,14 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
-$assetPath :"/apps/atm-browser/src/assets/icons";
+
+.rotate {
+    transform: rotate(90deg);
+}
 
 .sidenav-container {
+    padding: 0;
+    margin: 0;
     height: 100vh;
     width: 396px;
     background-color: #F1F1F1;
     color: #000000;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     position: fixed;
     z-index: 1;
+    font-family: "Manrope", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
 }
 
 .personal-account {
@@ -16,35 +26,143 @@ $assetPath :"/apps/atm-browser/src/assets/icons";
     justify-content: left;
     align-items: center;
     margin-left: 2em;
-    margin-top: 1.5em;
+    margin-top: 1.3em;
 }
 
 .personal-account-name {
-    margin-left: 1em;
+    margin-left: 0.7em;
+    font-weight: 600;
+    font-size: 16px;
 }
 
-.sidenav-nav {
-    margin-left: 0;
-    padding-left: 0;
-    margin-left: 2em;
+.sidenav-nav-list {
     margin-top: 1.5em;
 }
 
-.sidenav-nav-item{
+.sidenav-nav-item-list{
     list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.sidenav-nav-link {
+.sidenav-nav-link-list {
     border: none;
     background-color: none;
+    margin-left: 1.4em;
+    width: 328px;
+    height: 41px;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
 }
 
-.sidenav-nav-link-icon {
-
+.sidenav-nav-link-list:hover {
+    border: 1px #000000;
+    background-color:hsl(29, 100%, 77%, 55%);
+    border-radius: 20px;
+    transition: 0.1s;
 }
 
-.sidenav-nav-link-text {
+.sidenav-nav-link-icon-list {
+    margin-left: 1em;
+}
 
+.sidenav-nav-link-text-list {
+    font-size: 16px;
+    align-items: center;
+    margin-left: 0.3em;
+    font-weight: 600;
+}
+
+.sidenav-nav-function {
+    margin-top: 0.5em;
+}
+
+.sidenav-nav-item-function{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 0;
+}
+
+.sidenav-nav-link-function {
+    border: none;
+    background-color: none;
+    margin-left: 1.4em;
+    width: 328px;
+    height: 41px;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between
+}
+
+.sidenav-nav-link-function:hover {
+    border: 1px #000000;
+    background-color: hsl(0, 0%, 88%, 46%);
+    border-radius: 20px;
+    transition: 0.1s;
+}
+
+.sidenav-nav-link-icon-function {
+    margin-left: 1.3em;
+}
+
+.sidenav-nav-add-icon-function {
+    margin-right: 0.5em;
+    opacity: 0;
+}
+
+.sidenav-nav-link-function:hover .sidenav-nav-add-icon-function{
+    opacity: 1;
+    transition: 0.1s;
+}
+
+.sidenav-nav-link-text-function {
+    font-size: 16px;
+    align-items: center;
+    margin-left: 0.3em;
+    font-weight: 600;
+}
+
+.content {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.content-item {
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 320px;
+    height: 30px;
+    margin-left: 2em;
+}
+
+.content-item:hover {
+    border: 1px #000000;
+    background-color: hsl(0, 0%, 88%, 46%);
+    border-radius: 20px;
+    transition: 0.1s;
+}
+
+.content-name {
+    margin-left: 0.5em;
+}
+
+.content-icon {
+    margin-left: 1em;
+}
+
+.content-setting {
+    margin-right: 0.5em;
 }
 
 .themes {
@@ -56,31 +174,61 @@ $assetPath :"/apps/atm-browser/src/assets/icons";
 .theme-light {
     border: none;
     background-color: none;
+    height: 35px;
+    border-radius: 20px;
+}
+
+.theme-light:hover {
+    background-color: hsl(0, 0%, 88%, 46%);
 }
 
 .theme-dark {
     border: none;
     background-color: none;
+    margin-left: 0.5em;
+    border-radius: 20px;
+}
+
+.theme-dark:hover {
+    background-color: hsl(0, 0%, 88%, 46%);
 }
 
 .log-out {
-    display: inline;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     border: none;
     background-color: none;
-    margin-left: 2em;
+    margin-left: 2.5em;
     margin-top: 1.5em;
+    width: 100px;
+    height: 35px;
+}
+
+.log-out:hover {
+    background-color: hsl(0, 0%, 88%, 46%);
+    border-radius: 15px;
 }
 
 .log-out-text {
     color: #7B7B7B;
+    text-align: center;
+    margin-left: 0.5em;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.settings {
+    margin-bottom: 2em;
 }
 
 .divider {
-    margin: 20px 0;
-	padding: 0;
+    margin-left: 1.4em;
+    margin-right: 3em;
+    margin-top: 0.5em;
 	height: 0;
 	border: none;
-	border-top: 1px solid #B3B3B3;
+	border-top: 2px solid hsl(0, 0%, 70%, 50%);
 }
 
 
