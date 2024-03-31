@@ -1,0 +1,46 @@
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./sidenav.component.scss">
+</head>
+
+<div class="sidenav-container">
+    <div class="personal-account">
+        <img class="personal-account-icon" src="/apps/atm-browser/src/assets/icons/personal-account-icon.svg"></img>
+        <span class="personal-account-name">Имя пользователя</span>
+    </div>
+
+    <ul class="sidenav-nav">
+        <p>{{navDataList}}</p>
+        <li class="sidenav-nav-item" *ngFor="let data of navDataList">
+            <button class="sidenav-nav-link" [routerLink]="[data.routerLink]">
+                <img class="sidenav-nav-link-icon" [icon]="data.icon"></img>
+                <span class="sidenav-nav-link-text">{{ data.label }}</span>
+            </button>
+        </li>
+    </ul>
+
+    <hr class="divider"></hr>
+
+    <ul class="sidenav-nav">
+        <li class="sidenav-nav-item" *ngFor="let data of navDataFunction">
+            <button class="sidenav-nav-link" [routerLink]="[data.routerLink]">
+                <img class="sidenav-nav-link-icon" [icon]="data.icon"></img>
+                <span class="sidenav-nav-link-text">{{ data.label }}</span>
+            </button>
+        </li>
+    </ul>
+
+    <div class="themes">
+        <button class="theme-light">
+            <img class="theme-light-icon" src="/apps/atm-browser/src/assets/icons/light-icon.svg"></img>
+        </button>
+        <button class="theme-dark">
+            <img class="theme-dark-icon" src="/apps/atm-browser/src/assets/icons/dark-icon.svg"></img>
+        </button>
+    </div>
+
+    <button class="log-out">
+        <img class="log-out-icon" src="/apps/atm-browser/src/assets/icons/logout-icon.svg"></img>
+        <span class="log-out-text">Выйти</span>
+    </button>
+</div>
