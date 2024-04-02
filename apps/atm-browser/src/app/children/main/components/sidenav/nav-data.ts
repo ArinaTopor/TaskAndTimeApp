@@ -16,7 +16,7 @@ export interface INavbarDataFunction {
 export const navbarDataList: INavbarDataList[] = [
     {
         routeLink: 'main/list',
-        icon: '../../../../../assets/icons/today-icon.svg',
+        icon: '@web-assets/icons/today-icon.svg',
         label:'Сегодня'
     },
     {

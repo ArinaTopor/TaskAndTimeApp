@@ -4,12 +4,13 @@ import { AppComponent } from './components/app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
 import { RouterModule } from '@angular/router';
 import { TuiAlertModule, TuiDialogModule, TuiRootModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { TuiInputModule } from '@taiga-ui/kit';
 import { ReactiveFormsModule } from '@angular/forms';
 import { appRoutes } from './app.routes';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { MainWebModule } from './children/main/main.web.module';
 
 @NgModule({
     imports: [
@@ -24,7 +25,9 @@ import { BrowserModule } from '@angular/platform-browser';
         TuiTextfieldControllerModule,
         CommonModule,
         BrowserModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        NgOptimizedImage,
+        MainWebModule
     ],
     providers: [provideAnimations(), importProvidersFrom(TuiRootModule)],
     declarations: [AppComponent],

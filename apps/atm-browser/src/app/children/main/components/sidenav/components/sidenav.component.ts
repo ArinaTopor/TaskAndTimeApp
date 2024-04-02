@@ -1,16 +1,11 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { navbarDataList, navbarDataFunction, INavbarDataList, INavbarDataFunction } from './nav-data';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { NgOptimizedImage } from '@angular/common';
+import { navbarDataList, navbarDataFunction, INavbarDataList, INavbarDataFunction } from '../nav-data';
 
 @Component({
-    standalone: true,
     selector: 'sidenav',
-    templateUrl: 'sidenav.component.html',
-    styleUrl: 'sidenav.component.scss',
-    imports: [CommonModule, RouterModule, NgOptimizedImage],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    templateUrl: './sidenav.component.html',
+    styleUrl: './sidenav.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class SidenavComponent {
