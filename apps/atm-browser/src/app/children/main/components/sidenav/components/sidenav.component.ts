@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { navbarDataList, navbarDataFunction, INavbarDataList, INavbarDataFunction } from '../nav-data';
+import { navbarDataList, navbarDataFunction, INavbarDataList, INavbarDataFunction } from '../model/nav-data';
 
 @Component({
     selector: 'sidenav',

@@ -10,7 +10,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { appRoutes } from './app.routes';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { MainWebModule } from './children/main/main.web.module';
 
 @NgModule({
     imports: [
@@ -27,11 +26,17 @@ import { MainWebModule } from './children/main/main.web.module';
         BrowserModule,
         BrowserAnimationsModule,
         NgOptimizedImage,
-        MainWebModule
     ],
-    providers: [provideAnimations(), importProvidersFrom(TuiRootModule)],
-    declarations: [AppComponent],
-    bootstrap: [AppComponent],
+    providers: [
+        provideAnimations(),
+        importProvidersFrom(TuiRootModule)
+    ],
+    declarations: [
+        AppComponent
+    ],
+    bootstrap: [
+        AppComponent
+    ],
 })
 export class AppModule {
 }
