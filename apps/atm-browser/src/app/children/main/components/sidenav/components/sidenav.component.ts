@@ -1,25 +1,43 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { navbarDataList, navbarDataFunction, INavbarDataList, INavbarDataFunction } from '../model/nav-data';
+import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { DataNav, DATANAV, IDataNav } from '../model/nav-data';
+import { INavbarDataList } from '../interfaces/data-list.web.interface.ts';
+import { INavbarDataFunction } from '../interfaces/data-function.web.interface';
 
 @Component({
     selector: 'sidenav',
     templateUrl: './sidenav.component.html',
     styleUrl: './sidenav.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: DATANAV,
+            useValue: DataNav
+        }
+    ]
 })
 
 export class SidenavComponent {
-    public navDataList: INavbarDataList[];
-    public navDataFunction: INavbarDataFunction[];
     public isShow: boolean = false;
+    protected navDataList: INavbarDataList[];
+    protected navDataFunction:INavbarDataFunction[];
 
-    constructor() {
-        this.navDataList = navbarDataList;
-        this.navDataFunction = navbarDataFunction;
+    constructor(
+        @Inject(DATANAV) protected data:IDataNav
+
+    ) {
+        console.log(data.dataList);
+        this.navDataList = data.dataList,
+        this.navDataFunction = data.dataFunction;
     }
 
-    // eslint-disable-next-line jsdoc/require-jsdoc
-    protected show(data: INavbarDataFunction): void  {
+    /**
+     * Toggles the visibility of navbar data
+     *
+     * @param {INavbarDataFunction} data - The navbar data whose visibility is to be toggled.
+     * @returns {void}
+     */
+    protected showNavbarData(data: INavbarDataFunction): void {
         data.isShow = !data.isShow;
     }
 }
+

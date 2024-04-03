@@ -1,61 +1,78 @@
-export interface INavbarDataList {
-    routeLink: string;
-    icon: string;
-    label: string;
-}
-
-export interface INavbarDataFunction {
-    routeLink: string;
-    icon: string;
-    label: string;
-    isShow: boolean;
-    iconContent: string;
-    content: string[];
-}
+import { Injectable, InjectionToken } from '@angular/core';
+import { INavbarDataFunction } from '../interfaces/data-function.web.interface.js';
+import { INavbarDataList } from '../interfaces/data-list.web.interface.ts';
 
 export const navbarDataList: INavbarDataList[] = [
     {
-        routeLink: 'main/list',
-        icon: '@web-assets/icons/today-icon.svg',
+        routeLink: '/list',
+        icon: '@web-assets/icons/today.svg',
         label:'Сегодня'
     },
     {
-        routeLink: 'main/list',
-        icon: '../../../../../assets/icons/week-icon.svg',
+        routeLink: '/list',
+        icon: '../../../../../assets/icons/week.svg',
         label:'Неделя'
     },
     {
-        routeLink: 'main/list',
-        icon: '../../../../../assets/icons/calendar-icon.svg',
+        routeLink: '/list',
+        icon: '../../../../../assets/icons/calendar.svg',
         label:'Календарь'
     },
 ];
 
 export const navbarDataFunction: INavbarDataFunction[] = [
     {
-        routeLink: 'main/project',
-        icon: '../../../../../assets/icons/tag-close-icon.svg',
+        routeLink: '/project',
+        icon: '../../../../../assets/icons/tag-close.svg',
         label:'Проекты',
         isShow: false,
         iconContent: '../../../../../assets/icons/fake.svg',
         content: ['Книги', 'Учеба']
     },
     {
-        routeLink: 'main/filter',
-        icon: '../../../../../assets/icons/tag-close-icon.svg',
+        routeLink: '/filter',
+        icon: '../../../../../assets/icons/tag-close.svg',
         label:'Фильтры',
         isShow: false,
-        iconContent: '../../../../../assets/icons/filter-icon.svg',
+        iconContent: '../../../../../assets/icons/filter.svg',
         content: ['Вчерашние задачи', 'Только срочные']
     },
     {
-        routeLink: 'main/tags',
-        icon: '../../../../../assets/icons/tag-close-icon.svg',
+        routeLink: '/tags',
+        icon: '../../../../../assets/icons/tag-close.svg',
         label:'Теги',
         isShow: false,
-        iconContent: '../../../../../assets/icons/tag-icon.svg',
+        iconContent: '../../../../../assets/icons/tag.svg',
         content: ['ВАЖНО', 'прочитано']
     },
 ];
 
+@Injectable()
+export class DataNav implements IDataNav {
+    public static dataList:INavbarDataList[] = [
+        {
+            routeLink: '/list',
+            icon: '@web-assets/icons/today.svg',
+            label:'Сегодня'
+        },
+        {
+            routeLink: '/list',
+            icon: '../../../../../assets/icons/week.svg',
+            label:'Неделя'
+        },
+        {
+            routeLink: '/list',
+            icon: '../../../../../assets/icons/calendar.svg',
+            label:'Календарь'
+        },
+    ];
+    public static dataFunction:INavbarDataFunction[] = navbarDataFunction;
+}
+
+export interface IDataNav {
+    dataList:INavbarDataList[],
+    dataFunction:INavbarDataFunction[]
+}
+
+export const DATANAV:InjectionToken<IDataNav> = new InjectionToken<IDataNav>('Наполнение навбара', { factory: () => new DataNav() });
 
