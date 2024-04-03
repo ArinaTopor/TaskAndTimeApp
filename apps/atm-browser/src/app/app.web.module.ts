@@ -13,6 +13,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
     imports: [
+        BrowserModule,
         NxWelcomeComponent,
         RouterModule.forRoot(appRoutes),
         TuiRootModule,
@@ -22,8 +23,6 @@ import { BrowserModule } from '@angular/platform-browser';
         TuiInputModule,
         ReactiveFormsModule,
         TuiTextfieldControllerModule,
-        CommonModule,
-        BrowserModule,
         BrowserAnimationsModule,
         NgOptimizedImage,
     ],

@@ -8,14 +8,12 @@ import { INavbarDataFunction } from '../interfaces/data-function.web.interface';
     templateUrl: './sidenav.component.html',
     styleUrl: './sidenav.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        {
-            provide: DATANAV,
-            useValue: DataNav
-        }
+    providers: [{
+        provide: DATANAV,
+        useValue: new DataNav()
+    }
     ]
 })
-
 export class SidenavComponent {
     public isShow: boolean = false;
     protected navDataList: INavbarDataList[];
@@ -23,10 +21,8 @@ export class SidenavComponent {
 
     constructor(
         @Inject(DATANAV) protected data:IDataNav
-
     ) {
-        console.log(data.dataList);
-        this.navDataList = data.dataList,
+        this.navDataList = data.dataList;
         this.navDataFunction = data.dataFunction;
     }
 

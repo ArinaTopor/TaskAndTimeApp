@@ -2,7 +2,7 @@ import { Injectable, InjectionToken } from '@angular/core';
 import { INavbarDataFunction } from '../interfaces/data-function.web.interface.js';
 import { INavbarDataList } from '../interfaces/data-list.web.interface.ts';
 
-export const navbarDataList: INavbarDataList[] = [
+const navbarDataList: INavbarDataList[] = [
     {
         routeLink: '/list',
         icon: '@web-assets/icons/today.svg',
@@ -20,7 +20,7 @@ export const navbarDataList: INavbarDataList[] = [
     },
 ];
 
-export const navbarDataFunction: INavbarDataFunction[] = [
+const navbarDataFunction: INavbarDataFunction[] = [
     {
         routeLink: '/project',
         icon: '../../../../../assets/icons/tag-close.svg',
@@ -49,24 +49,8 @@ export const navbarDataFunction: INavbarDataFunction[] = [
 
 @Injectable()
 export class DataNav implements IDataNav {
-    public static dataList:INavbarDataList[] = [
-        {
-            routeLink: '/list',
-            icon: '@web-assets/icons/today.svg',
-            label:'Сегодня'
-        },
-        {
-            routeLink: '/list',
-            icon: '../../../../../assets/icons/week.svg',
-            label:'Неделя'
-        },
-        {
-            routeLink: '/list',
-            icon: '../../../../../assets/icons/calendar.svg',
-            label:'Календарь'
-        },
-    ];
-    public static dataFunction:INavbarDataFunction[] = navbarDataFunction;
+    public dataList:INavbarDataList[] = navbarDataList;
+    public dataFunction:INavbarDataFunction[] = navbarDataFunction;
 }
 
 export interface IDataNav {
@@ -74,5 +58,5 @@ export interface IDataNav {
     dataFunction:INavbarDataFunction[]
 }
 
-export const DATANAV:InjectionToken<IDataNav> = new InjectionToken<IDataNav>('Наполнение навбара', { factory: () => new DataNav() });
+export const DATANAV:InjectionToken<IDataNav> = new InjectionToken<IDataNav>('Наполнение навбара');
 
