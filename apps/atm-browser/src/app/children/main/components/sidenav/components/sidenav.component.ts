@@ -1,7 +1,8 @@
 import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
-import { DataNav, DATANAV, IDataNav } from '../model/nav-data';
 import { INavbarDataList } from '../interfaces/data-list.web.interface.ts';
 import { INavbarDataFunction } from '../interfaces/data-function.web.interface';
+import { DATANAV, IDataNav } from '../interfaces/data-navbar.web.interface.js';
+import { DataNav } from '../model/data.js';
 
 @Component({
     selector: 'sidenav',
@@ -11,19 +12,19 @@ import { INavbarDataFunction } from '../interfaces/data-function.web.interface';
     providers: [{
         provide: DATANAV,
         useValue: new DataNav()
-    }
-    ]
+    }]
 })
+
 export class SidenavComponent {
     public isShow: boolean = false;
-    protected navDataList: INavbarDataList[];
+    protected navDataList:INavbarDataList[];
     protected navDataFunction:INavbarDataFunction[];
 
     constructor(
-        @Inject(DATANAV) protected data:IDataNav
+        @Inject(DATANAV) protected navbar:IDataNav
     ) {
-        this.navDataList = data.dataList;
-        this.navDataFunction = data.dataFunction;
+        this.navDataList = navbar.dataList;
+        this.navDataFunction = navbar.dataFunction;
     }
 
     /**

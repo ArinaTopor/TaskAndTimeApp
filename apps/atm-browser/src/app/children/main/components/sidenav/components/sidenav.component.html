@@ -1,38 +1,38 @@
-<nav class="sidenav-container">
+<nav class="sidenavbar__container">
     <div>
-         <div class="personal-account">
-            <img class="personal-account-icon" src="../../../../../assets/icons/personal-account.svg" title="personal-account"/>
-            <span class="personal-account-name">Имя пользователя</span>
+        <div class="sidenavbar__personal-account">
+            <img class="sidenavbar__personal-account-icon" src="../../../../../assets/icons/personal-account.svg" title="personal-account"/>
+            <span class="sidenavbar__personal-account-name">Имя пользователя</span>
         </div>
 
-        <ul class="sidenav-nav-list">
-            <li class="sidenav-nav-item-list" *ngFor="let data of navDataList">
-                <button class="sidenav-nav-link-list" [routerLink]="[data.routeLink]">
-                    <img class="sidenav-nav-link-icon-list" [ngSrc]="data.icon" width="24" height="24" title="icon"/>
-                    <span class="sidenav-nav-link-text-list">{{data.label}}</span>
+        <ul class="sidenavbar__list">
+            <li class="sidenavbar__list-item" *ngFor="let data of navDataList">
+                <button class="sidenavbar__list-item-link" [routerLink]="[data.routeLink]">
+                    <img class="sidenavbar__list-item-link-icon" [ngSrc]="data.icon" width="24" height="24" title="icon"/>
+                    <span class="sidenavbar__list-item-link-text">{{data.label}}</span>
                 </button>
             </li>
         </ul>
 
-        <hr class="divider"/>
+        <hr class="sidenavbar__divider"/>
 
-        <ul class="sidenav-nav-function">
-            <li class="sidenav-nav-item-function" *ngFor="let data of navDataFunction">
-                <button class="sidenav-nav-link-function" [routerLink]="[data.routeLink]" (click)="showNavbarData(data)">
+        <ul class="sidenavbar__function">
+            <li class="sidenavbar__function-item" *ngFor="let data of navDataFunction">
+                <button class="sidenavbar__function-item-link" [routerLink]="[data.routeLink]" (click)="showNavbarData(data)">
                     <span>
-                        <img class="sidenav-nav-link-icon-function" [ngSrc]="data.icon" width="16" height="16" title="icon" [ngClass]='{rotate:data.isShow}'/>
-                        <span class="sidenav-nav-link-text-function">{{data.label}}</span>
+                        <img class="sidenavbar__function-item-link-icon" [ngSrc]="data.icon" width="16" height="16" title="icon" [ngClass]='{rotate:data.isShow}'/>
+                        <span class="sidenavbar__function-item-link-text">{{data.label}}</span>
                     </span>
-                    <img class="sidenav-nav-add-icon-function" src="../../../../../assets/icons/add.svg" title="icon" width="24" height="24"/>
+                    <img class="sidenavbar__function-item-link-icon-two" src="../../../../../assets/icons/add.svg" title="icon" width="24" height="24"/>
                 </button>
 
-                <div *ngIf="data.isShow" class="content">
-                    <li class="content-item" *ngFor="let project of data.content">
+                <div *ngIf="data.isShow" class="sidenavbar__function-item-content">
+                    <li class="sidenavbar__function-item-content-item" *ngFor="let project of data.content">
                         <span>
-                            <img [ngSrc]="data.iconContent" width="20" height="20" title="icon" class="content-icon"/>
-                            <span class="content-name">{{project}}</span>
+                            <img [ngSrc]="data.iconContent" width="20" height="20" title="icon" class="sidenavbar__function-item-content-item-icon"/>
+                            <span class="sidenavbar__function-item-content-item-name">{{project}}</span>
                         </span>
-                        <img class="content-setting" src="../../../../../assets/icons/setting.svg" title="icon" width="16" height="16"/>
+                        <img class="sidenavbar__function-item-content-item-settings" src="../../../../../assets/icons/setting.svg" title="icon" width="16" height="16"/>
                     </li>
 
                 </div>
@@ -40,20 +40,20 @@
         </ul>
     </div>
 
-    <div class="settings">
-        <div class="themes">
-            <button class="theme-light">
-                <img class="theme-light-icon" src="../../../../../assets/icons/light.svg" title="icon"/>
+    <div class="sidenavbar__settings">
+        <div class="sidenavbar__settings-themes">
+            <button class="sidenavbar__settings-themes-light">
+                <img class="sidenav-container-settings-themes-light-icon" src="../../../../../assets/icons/light.svg" title="icon"/>
             </button>
-            <button class="theme-dark">
-                <img class="theme-dark-icon" src="../../../../../assets/icons/dark.svg" title="icon"/>
+            <button class="sidenavbar__settings-themes-dark">
+                <img class="sidenav-container-settings-themes-dark-icon" src="../../../../../assets/icons/dark.svg" title="icon"/>
             </button>
         </div>
 
-        <div>
-            <button class="log-out">
-                <img class="log-out-icon" src="../../../../../assets/icons/logout.svg" title="icon"/>
-                <span class="log-out-text">Выход</span>
+        <div class="sidenavbar__settings-log-out-container">
+            <button class="sidenavbar__settings-log-out">
+                <img class="sidenav-container-settings-log-out-icon" src="../../../../../assets/icons/logout.svg" title="icon"/>
+                <span class="sidenavbar__settings-log-out-text">Выход</span>
             </button>
         </div>
     </div>
