@@ -7,11 +7,7 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "baseUrl": "./",
-    "paths": {
-        "@assets/*": ["apps/atm-browser/src/assets/*"]
-      }
+    "noFallthroughCasesInSwitch": true
   },
   "files": [],
   "include": [],

@@ -1,28 +1,45 @@
 import { INavbarDataFunction } from '../interfaces/data-function.web.interface.js';
+import { initIconNavbar, initIconNavbarContent } from './init-icon.js';
 
 export const navbarDataFunction: INavbarDataFunction[] = [
     {
         routeLink: 'project',
-        icon: '../../../../../assets/icons/tag-close.svg',
+        icon: '',
         label:'Проекты',
         isShow: false,
-        iconContent: '../../../../../assets/icons/fake.svg',
+        iconContent: '',
         content: ['Книги', 'Учеба']
     },
     {
         routeLink: 'filter',
-        icon: '../../../../../assets/icons/tag-close.svg',
+        icon: '',
         label:'Фильтры',
         isShow: false,
-        iconContent: '../../../../../assets/icons/filter.svg',
+        iconContent: '',
         content: ['Вчерашние задачи', 'Только срочные']
     },
     {
         routeLink: 'tags',
-        icon: '../../../../../assets/icons/tag-close.svg',
+        icon: '',
         label:'Теги',
         isShow: false,
-        iconContent: '../../../../../assets/icons/tag.svg',
+        iconContent: '',
         content: ['ВАЖНО', 'прочитано']
     },
 ];
+
+/**
+ * Asynchronously initializes data for the navigation list
+ *
+ * This function loads the paths to icons for each item in navbarDataList
+ * and updates the icon property of each item using the loadIcon function
+ */
+async function initializeNavbarDataFunction(): Promise<void> {
+    const icons:string[] = ['tag-close.svg', 'tag-close.svg', 'tag-close.svg'];
+    const iconsContent:string[] = ['fake.svg', 'filter.svg', 'tag.svg'];
+
+    initIconNavbar(icons, navbarDataFunction);
+    initIconNavbarContent(iconsContent, navbarDataFunction);
+}
+
+initializeNavbarDataFunction();
