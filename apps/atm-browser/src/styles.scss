@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+// @use './assets/styles/mixins/mixin-light' as *;
+// @import './assets/styles/globalStyles';
+@use './assets/styles/common-styles.scss' as *;
+:root {
+    margin: 0;
+    font-family: $font-text-base;
+}
+
+body.dark {
+    @include lighten();
+}
+body.light {
+    @include darken();
+}

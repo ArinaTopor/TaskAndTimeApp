@@ -1,0 +1,5 @@
+@use '../color-vars' as *;
+@mixin darken {
+    --base-bg: #{$base-bg-dark};
+    --tui-base-01: var(--base-bg);
+}

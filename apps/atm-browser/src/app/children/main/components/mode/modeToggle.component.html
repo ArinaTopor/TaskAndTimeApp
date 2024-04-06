@@ -1,0 +1,36 @@
+<div class="themes">
+    <button
+        class="themes-light"
+        (click)="toggleLight()"
+        *ngIf="mode === 'dark'; else activeLight"
+    >
+        <img
+            src="../../../../../assets/icons/light-mode-inactive.svg"
+            title="icon"
+        />
+    </button>
+    <ng-template #activeLight
+        ><button class="theme-light" (click)="toggleLight()">
+            <img
+                src="../../../../../assets/icons/light-mode-active.svg"
+                title="icon"
+            /></button
+    ></ng-template>
+    <button
+        class="themes-dark"
+        (click)="toggleDark()"
+        *ngIf="mode === 'light'; else activeDark"
+    >
+        <img
+            src="../../../../../assets/icons/dark-mode-inactive.svg"
+            title="icon"
+        />
+    </button>
+    <ng-template #activeDark
+        ><button class="themes-dark" (click)="toggleDark()">
+            <img
+                src="../../../../../assets/icons/dark-mode-active.svg"
+                title="icon"
+            /></button
+    ></ng-template>
+</div>
