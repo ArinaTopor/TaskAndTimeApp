@@ -6,38 +6,41 @@
         </div>
 
         <ul class="sidenavbar__list">
-            <li class="sidenavbar__list-item" *ngFor="let data of navDataList">
-                <button class="sidenavbar__list-item-link" [routerLink]="[data.routeLink]">
-                    <img class="sidenavbar__list-item-link-icon" [ngSrc]="data.icon" width="24" height="24" title="icon"/>
-                    <span class="sidenavbar__list-item-link-text">{{data.label}}</span>
+            <li class="sidenavbar__list-item" *ngFor="let btn of btnList">
+                <button class="sidenavbar__list-item-link" [routerLink]="[btn.link]">
+                    <img class="sidenavbar__list-item-link-icon" [ngSrc]="btn.icon" width="24" height="24" title="icon"/>
+                    <span class="sidenavbar__list-item-link-text">{{btn.title}}</span>
                 </button>
             </li>
         </ul>
 
         <hr class="sidenavbar__divider"/>
 
-        <ul class="sidenavbar__function">
-            <li class="sidenavbar__function-item" *ngFor="let data of navDataFunction">
-                <button class="sidenavbar__function-item-link" [routerLink]="[data.routeLink]" (click)="showNavbarData(data)">
+        <ul class="sidenavbar__function" *ngIf="(sectionList$ | async) as sectionList; else skeleton">
+            <li class="sidenavbar__function-item" *ngFor="let section of sectionList" (click)="toggleSection(section)">
+                <button class="sidenavbar__function-item-link">
                     <span>
-                        <img class="sidenavbar__function-item-link-icon" [ngSrc]="data.icon" width="16" height="16" title="icon" [ngClass]='{rotate:data.isShow}'/>
-                        <span class="sidenavbar__function-item-link-text">{{data.label}}</span>
+                        <img class="sidenavbar__function-item-link-icon" [ngSrc]="'../../../../../assets/icons/tags-open.svg'" width="16" height="16" title="icon" [ngClass]='{rotate:section.isShow$ | async}'/>
+                        <span class="sidenavbar__function-item-link-text">{{section.title}}</span>
                     </span>
+<!--                  Поправить пути до иконки-->
                     <img class="sidenavbar__function-item-link-icon-two" src="../../../../../assets/icons/add.svg" title="icon" width="24" height="24"/>
                 </button>
 
-                <div *ngIf="data.isShow" class="sidenavbar__function-item-content">
-                    <li class="sidenavbar__function-item-content-item" *ngFor="let project of data.content">
+                <div *ngIf="section.isShow$ | async" class="sidenavbar__function-item-content">
+                    <li class="sidenavbar__function-item-content-item" *ngFor="let project of section.list">
                         <span>
-                            <img [ngSrc]="data.iconContent" width="20" height="20" title="icon" class="sidenavbar__function-item-content-item-icon"/>
-                            <span class="sidenavbar__function-item-content-item-name">{{project}}</span>
+                            <img *ngIf="project.icon" [ngSrc]="project.icon" width="20" height="20" title="icon" class="sidenavbar__function-item-content-item-icon"/>
+                            <span class="sidenavbar__function-item-content-item-name">{{project.title}}</span>
                         </span>
                         <img class="sidenavbar__function-item-content-item-settings" src="../../../../../assets/icons/setting.svg" title="icon" width="16" height="16"/>
                     </li>
-
                 </div>
             </li>
         </ul>
+      <ng-template #skeleton>
+        Загрузка
+      </ng-template>
     </div>
 
     <div class="sidenavbar__settings">
