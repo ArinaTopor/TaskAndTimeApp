@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CalendarButtonViewModel } from '../view-models/calendar-button.view-model';
+import { TabButtonViewModel } from '../view-models/tab-button.view-model';
 import { Observable } from 'rxjs';
 import { SectionListViewModel } from '../view-models/section-list.view-model';
 import { NavBarContentManagerService } from '../services/nav-bar-content-manager.service';
+import { NgxSkeletonLoaderComponent, NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @Component({
     selector: 'sidenav',
@@ -11,12 +12,13 @@ import { NavBarContentManagerService } from '../services/nav-bar-content-manager
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         NavBarContentManagerService,
+        NgxSkeletonLoaderComponent,
+        NgxSkeletonLoaderModule,
     ]
 })
 export class SidenavComponent {
-    protected btnList: CalendarButtonViewModel[];
+    protected btnList: TabButtonViewModel[];
     protected sectionList$: Observable<SectionListViewModel[]>;
-
 
     constructor(
         protected contentManager: NavBarContentManagerService
@@ -25,6 +27,10 @@ export class SidenavComponent {
         this.sectionList$ = this.contentManager.getSectionList();
     }
 
+    /**
+     *
+     * This method toogle section: open and close space.
+     */
     protected toggleSection(section: SectionListViewModel): void {
         section.toggleSection();
     }

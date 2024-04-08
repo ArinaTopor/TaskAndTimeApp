@@ -101,6 +101,13 @@
             border-radius: 20px;
             transition: 0.1s;
         }
+
+        &:hover {
+            .sidenavbar__function-item-link-icon-two {
+                opacity: 1;
+                transition: 0.1s;
+            }
+        }
     }
 
     &__function-item-link-icon {
@@ -110,11 +117,11 @@
     &__function-item-link-icon-two {
         margin-right: 0.5em;
         opacity: 0;
-    }
 
-    &__function-item-link:hover &__function-item-link-icon {
-        opacity: 1;
-        transition: 0.1s;
+        &__function-item-link:hover &__function-item-link-icon {
+            opacity: 1;
+            transition: 0.1s;
+        }
     }
 
     &__function-item-link-text {
@@ -145,6 +152,18 @@
             border-radius: 20px;
             transition: 0.1s;
         }
+
+        &:hover {
+            .sidenavbar__function-item-content-item-settings {
+                opacity: 1;
+                transition: 0.1s;
+            }
+        }
+    }
+
+    &__function-item-link-span {
+        display: flex;
+        align-items: center;
     }
 
     &__function-item-content-item-name {
@@ -157,6 +176,7 @@
 
     &__function-item-content-item-settings {
         margin-right: 0.5em;
+        opacity: 0;
     }
 
     &__settings-themes {
@@ -223,6 +243,11 @@
         height: 0;
         border: none;
         border-top: 2px solid hsl(0, 0%, 70%, 50%);
+    }
+
+    &__loading {
+        margin-left: 11em;
+        margin-top: 3em;
     }
 }
 

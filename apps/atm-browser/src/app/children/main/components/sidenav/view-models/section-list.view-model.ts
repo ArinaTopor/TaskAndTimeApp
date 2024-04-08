@@ -16,6 +16,9 @@ export class SectionListViewModel {
         this.list = list;
     }
 
+    /**
+     *  This method toogle section: open and close space.
+     */
     public toggleSection(): void {
         this._isShow$.next(!this._isShow$.value);
     }

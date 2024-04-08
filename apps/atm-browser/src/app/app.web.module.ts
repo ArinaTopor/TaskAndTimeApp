@@ -10,10 +10,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { appRoutes } from './app.routes';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
     imports: [
         BrowserModule,
+        NgxSkeletonLoaderModule,
         NxWelcomeComponent,
         RouterModule.forRoot(appRoutes),
         TuiRootModule,
