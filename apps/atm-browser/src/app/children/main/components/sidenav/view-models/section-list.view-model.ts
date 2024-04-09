@@ -1,20 +1,21 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IProject } from '../interfaces/project.interface';
+import { ProjectType } from '../interfaces/project.interface';
 
 export class SectionListViewModel {
-
     public get isShow$(): Observable<boolean> {
         return this._isShow$.asObservable();
     }
 
+    public type: ProjectType;
     public title: string;
-    public list: IProject[];
     private _isShow$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-    constructor(title: string, list: IProject[]) {
+    constructor(title: string, type: ProjectType) {
         this.title = title;
-        this.list = list;
+        this.type = type;
     }
+
+
 
     /**
      *  This method toogle section: open and close space.

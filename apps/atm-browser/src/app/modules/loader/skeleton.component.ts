@@ -5,18 +5,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     templateUrl: './skeleton.component.html',
     styleUrl: 'skeleton.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-    ]
+    providers: []
 })
 export class SkeletonLoadingComponent {
-    /**
-     * This method turn on/off isLoading flag
-     */
-    public loadData(isLoading: boolean): boolean {
-        setTimeout(() => {
-            isLoading = false;
-        }, 3000);
 
-        return isLoading;
-    }
 }

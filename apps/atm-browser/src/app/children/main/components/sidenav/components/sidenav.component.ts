@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TabButtonViewModel } from '../view-models/tab-button.view-model';
-import { Observable } from 'rxjs';
 import { SectionListViewModel } from '../view-models/section-list.view-model';
 import { NavBarContentManagerService } from '../services/nav-bar-content-manager.service';
-import { SkeletonLoadingComponent } from 'apps/atm-browser/src/app/modules/loader/skeleton.component';
+import { SkeletonLoadingComponent } from '../../../../../modules/loader/skeleton.component';
+import { IProject, ProjectType } from '../interfaces/project.interface';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'sidenav',
@@ -17,23 +18,26 @@ import { SkeletonLoadingComponent } from 'apps/atm-browser/src/app/modules/loade
 })
 export class SidenavComponent {
     protected btnList: TabButtonViewModel[];
-    protected sectionList$: Observable<SectionListViewModel[]>;
-    protected isLoading: boolean = true;
+    protected sectionList: SectionListViewModel[];
 
     constructor(
         protected contentManager: NavBarContentManagerService,
-        protected loading: SkeletonLoadingComponent
     ) {
         this.btnList = this.contentManager.getBtnList();
-        this.sectionList$ = this.contentManager.getSectionList();
+        this.sectionList = this.contentManager.getSectionList();
     }
 
     /**
      *
-     * This method toogle section: open and close space.
+     * This method toggle section: open and close space.
      */
     protected toggleSection(section: SectionListViewModel): void {
         section.toggleSection();
-        this.isLoading = this.loading.loadData(this.isLoading);
+    }
+    /**
+     *  This method return list navbar function as Observable
+     */
+    protected getNavbarFunction(type: ProjectType): Observable<IProject[]> {
+        return this.contentManager.getNavbarFunction(type);
     }
 }
