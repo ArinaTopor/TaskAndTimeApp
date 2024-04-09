@@ -1,6 +1,6 @@
 @use '../color-vars' as *;
 
 @mixin lighten {
-    --base-bg: #{$base-bg-light};
+    --base-bg: $base-bg-light;
     --tui-base-01: var(--base-bg);
 }

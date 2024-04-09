@@ -1,16 +1,8 @@
-import { Injectable, InjectionToken } from '@angular/core';
-import { Mode } from '../children/main/components/mode/modeToggle.model';
-
-export interface IModeStorage {
-    saveMode(mode: Mode): void;
-    getCurrentMode(): Mode;
-}
-
-export const MODE_STORAGE_SERVICES: InjectionToken<IModeStorage> =
-    new InjectionToken<IModeStorage>('modeStorage');
+import { Injectable } from '@angular/core';
+import { Mode } from '../children/main/components/mode/mode-toggle.model';
 
 @Injectable()
-export class ModeToggleStorageService implements IModeStorage {
+export class ModeToggleStorageService {
     public localStorageKey: string = 'mode';
     /**
      * Function for save mode in local storage

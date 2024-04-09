@@ -1,14 +1,14 @@
-// @use './assets/styles/mixins/mixin-light' as *;
-// @import './assets/styles/globalStyles';
 @use './assets/styles/common-styles.scss' as *;
 :root {
     margin: 0;
     font-family: $font-text-base;
 }
 
-body.dark {
-    @include lighten();
+body {
+    @include darken();
+    background-color: var(--base-bg);
+    color: var(--text-color);
 }
 body.light {
-    @include darken();
+    @include lighten();
 }

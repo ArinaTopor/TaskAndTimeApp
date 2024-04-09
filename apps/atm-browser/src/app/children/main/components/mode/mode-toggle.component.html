@@ -1,8 +1,8 @@
 <div class="themes">
     <button
         class="themes-light"
-        (click)="toggleLight()"
-        *ngIf="mode === 'dark'; else activeLight"
+        (click)="toggleMode(modeType.light)"
+        *ngIf="modeChangedSubject.value === modeLight; else activeLight"
     >
         <img
             src="../../../../../assets/icons/light-mode-inactive.svg"
@@ -10,7 +10,7 @@
         />
     </button>
     <ng-template #activeLight
-        ><button class="theme-light" (click)="toggleLight()">
+        ><button class="theme-light" (click)="toggleMode(modeType.light)">
             <img
                 src="../../../../../assets/icons/light-mode-active.svg"
                 title="icon"
@@ -18,16 +18,17 @@
     ></ng-template>
     <button
         class="themes-dark"
-        (click)="toggleDark()"
-        *ngIf="mode === 'light'; else activeDark"
+        (click)="toggleMode(modeType.dark)"
+        *ngIf="modeChangedSubject.value === modeDark; else activeDark"
     >
         <img
             src="../../../../../assets/icons/dark-mode-inactive.svg"
             title="icon"
         />
     </button>
+    <!-- прописать ngClass with condition -->
     <ng-template #activeDark
-        ><button class="themes-dark" (click)="toggleDark()">
+        ><button class="themes-dark" (click)="toggleMode(modeType.dark)">
             <img
                 src="../../../../../assets/icons/dark-mode-active.svg"
                 title="icon"
