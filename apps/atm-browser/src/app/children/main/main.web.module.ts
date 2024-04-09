@@ -6,16 +6,16 @@ import { SidenavComponent } from './components/sidenav/components/sidenav.compon
 import { MainWebComponent } from './components/main.web.component';
 
 @NgModule({
-    imports: [
-        RouterModule.forChild(mainRoutes),
-        NgOptimizedImage,
-        CommonModule
-    ],
     exports: [],
     providers: [],
     declarations: [
         MainWebComponent,
-        SidenavComponent
+        SidenavComponent,
+    ],
+    imports: [
+        RouterModule.forChild(mainRoutes),
+        NgOptimizedImage,
+        CommonModule,
     ]
 })
 export class MainWebModule {

@@ -16,7 +16,7 @@
 
         <hr class="sidenavbar__divider"/>
 
-        <ul class="sidenavbar__function" *ngIf="(sectionList$ | async) as sectionList; else skeleton">
+        <ul class="sidenavbar__function" *ngIf="(sectionList$ | async) as sectionList;">
             <li class="sidenavbar__function-item" *ngFor="let section of sectionList">
                 <button class="sidenavbar__function-item-link" (click)="toggleSection(section)">
                     <span class="sidenavbar__function-item-link-span">
@@ -26,24 +26,22 @@
                     <img class="sidenavbar__function-item-link-icon-two" [ngSrc]="'../../../../../assets/icons/add.svg'" title="icon" width="24" height="24"/>
                 </button>
 
-                <div *ngIf="section.isShow$ | async" class="sidenavbar__function-item-content">
-                    <li class="sidenavbar__function-item-content-item" *ngFor="let project of section.list">
-                        <span class="sidenavbar__function-item-link-span">
-                            <img *ngIf="project.icon" [ngSrc]="project.icon" width="20" height="20" title="icon" class="sidenavbar__function-item-content-item-icon"/>
-                            <span class="sidenavbar__function-item-content-item-name">{{project.title}}</span>
-                        </span>
-                        <img class="sidenavbar__function-item-content-item-settings" src="../../../../../assets/icons/setting.svg" title="icon" width="16" height="16"/>
-                    </li>
+                <div *ngIf="(section.isShow$ | async)" class="sidenavbar__function-item-content">
+                    <ng-container *ngIf="!isLoading; else skeleton">
+                        <li class="sidenavbar__function-item-content-item" *ngFor="let project of section.list">
+                            <span class="sidenavbar__function-item-link-span">
+                                <img *ngIf="project.icon" [ngSrc]="project.icon" width="20" height="20" title="icon" class="sidenavbar__function-item-content-item-icon"/>
+                                <span class="sidenavbar__function-item-content-item-name">{{project.title}}</span>
+                            </span>
+                            <img class="sidenavbar__function-item-content-item-settings" src="../../../../../assets/icons/setting.svg" title="icon" width="16" height="16"/>
+                        </li>
+                    </ng-container>
                 </div>
             </li>
         </ul>
 
-        <ng-template #skeleton>
+        <ng-template #skeleton class="sidenavbar__loading">
             <img class="sidenavbar__loading" [ngSrc]="'../../../../../assets/icons/loading.gif'" title="icon" width="24" height="24"/>
-            <!--
-                позже здесь будет нормальный скелетон загрузки, а сейчас почему-то ошибка
-                <ngx-skeleton-loader count="5" appearance="circle"></ngx-skeleton-loader>
-            -->
         </ng-template>
 
     </div>

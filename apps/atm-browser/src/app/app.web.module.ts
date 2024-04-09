@@ -11,11 +11,12 @@ import { appRoutes } from './app.routes';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { SkeletonLoadingComponent } from './modules/loader/skeleton.component';
 
 @NgModule({
     imports: [
         BrowserModule,
-        NgxSkeletonLoaderModule,
+        NgxSkeletonLoaderModule.forRoot(),
         NxWelcomeComponent,
         RouterModule.forRoot(appRoutes),
         TuiRootModule,
@@ -33,10 +34,11 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
         importProvidersFrom(TuiRootModule)
     ],
     declarations: [
-        AppComponent
+        AppComponent,
+        SkeletonLoadingComponent
     ],
     bootstrap: [
-        AppComponent
+        AppComponent,
     ],
 })
 export class AppModule {
