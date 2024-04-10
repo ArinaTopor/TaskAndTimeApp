@@ -1,0 +1,81 @@
+<nav class="sidenavbar__container">
+    <div>
+        <div class="sidenavbar__personal-account">
+            <img class="sidenavbar__personal-account-icon" src="../../../../../assets/icons/personal-account.svg"
+                 title="personal-account"/>
+            <span class="sidenavbar__personal-account-name">Имя пользователя</span>
+        </div>
+
+        <ul class="sidenavbar__list">
+            <li class="sidenavbar__list-item" *ngFor="let btn of btnList">
+                <button class="sidenavbar__list-item-link" [routerLink]="[btn.link]">
+                    <img class="sidenavbar__list-item-link-icon" [ngSrc]="btn.icon" width="24" height="24"
+                         title="icon"/>
+                    <span class="sidenavbar__list-item-link-text">{{btn.title}}</span>
+                </button>
+            </li>
+        </ul>
+
+        <hr class="sidenavbar__divider"/>
+
+        <ul class="sidenavbar__function">
+            <li class="sidenavbar__function-item" *ngFor="let section of sectionList;">
+                <button class="sidenavbar__function-item-link" (click)="toggleSection(section)">
+                    <span class="sidenavbar__function-item-link-span">
+                        <img class="sidenavbar__function-item-link-icon"
+                             [ngSrc]="'../../../../../assets/icons/tag-close.svg'" width="16" height="16" title="icon"
+                             [ngClass]='{rotate:section.isShow$ | async}'/>
+                        <span class="sidenavbar__function-item-link-text">{{section.title}}</span>
+                    </span>
+                    <img class="sidenavbar__function-item-link-icon-two" [ngSrc]="'../../../../../assets/icons/add.svg'"
+                         title="icon" width="24" height="24"/>
+                </button>
+
+                <div *ngIf="section.isShow$ | async" class="sidenavbar__function-item-content">
+                    <div *ngIf="(section.list$ | async) as list; else skeleton">
+                        <li class="sidenavbar__function-item-content-item" *ngFor="let project of list">
+                            <span class="sidenavbar__function-item-link-span">
+                                <img *ngIf="project.icon" [ngSrc]="project.icon" width="20" height="20" title="icon"
+                                     class="sidenavbar__function-item-content-item-icon"/>
+                                <span class="sidenavbar__function-item-content-item-name">{{project.title}}</span>
+                            </span>
+                            <img class="sidenavbar__function-item-content-item-settings"
+                                 src="../../../../../assets/icons/setting.svg" title="icon" width="16" height="16"/>
+                        </li>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <ng-template #skeleton>
+            <img class="sidenavbar__loading" [ngSrc]="'../../../../../assets/icons/loading.gif'" title="icon" width="24"
+                 height="24"/>
+            <!--
+                позже здесь будет нормальный скелетон загрузки, а сейчас почему-то ошибка
+                <ngx-skeleton-loader count="5" appearance="circle"></ngx-skeleton-loader>
+            -->
+        </ng-template>
+
+    </div>
+
+    <div class="sidenavbar__settings">
+        <div class="sidenavbar__settings-themes">
+            <button class="sidenavbar__settings-themes-light">
+                <img class="sidenav-container-settings-themes-light-icon" src="../../../../../assets/icons/light.svg"
+                     title="icon"/>
+            </button>
+            <button class="sidenavbar__settings-themes-dark">
+                <img class="sidenav-container-settings-themes-dark-icon" src="../../../../../assets/icons/dark.svg"
+                     title="icon"/>
+            </button>
+        </div>
+
+        <div class="sidenavbar__settings-log-out-container">
+            <button class="sidenavbar__settings-log-out">
+                <img class="sidenav-container-settings-log-out-icon" src="../../../../../assets/icons/logout.svg"
+                     title="icon"/>
+                <span class="sidenavbar__settings-log-out-text">Выход</span>
+            </button>
+        </div>
+    </div>
+</nav>
