@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { TabButtonViewModel } from '../view-models/tab-button.view-model';
 import { delay, Observable, of } from 'rxjs';
 import { SectionListViewModel } from '../view-models/section-list.view-model';
-import { FILTERS, PROJECTS, SECTION_LIST, TAGS } from './children/section-list-content';
-import { TAB_LIST } from './children/tab-list-content';
+import { FILTERS, PROJECTS, SECTION_LIST, TAGS } from '../models/section-list-content';
+import { TAB_LIST } from '../models/tab-list-content';
 import { IProject, ProjectType } from '../interfaces/project.interface';
 
 @Injectable()

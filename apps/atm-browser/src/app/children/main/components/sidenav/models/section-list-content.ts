@@ -1,5 +1,5 @@
-import { IProject, ProjectType } from '../../interfaces/project.interface';
-import { SectionListViewModel } from '../../view-models/section-list.view-model';
+import { IProject, ProjectType } from '../interfaces/project.interface';
+import { SectionListViewModel } from '../view-models/section-list.view-model';
 
 const pathToIcons: string = '../../../../../assets/icons/';
 
