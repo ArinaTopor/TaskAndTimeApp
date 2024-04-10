@@ -1,37 +1,22 @@
 <div class="themes">
-    <button
-        class="themes-light"
-        (click)="toggleMode(modeType.light)"
-        *ngIf="modeChangedSubject.value === modeLight; else activeLight"
-    >
+    <button class="themes-light" (click)="toggleMode(modeType.light)">
         <img
-            src="../../../../../assets/icons/light-mode-inactive.svg"
+            [src]="
+                modeChangedSubject.value === modeLight
+                    ? '../../../../../assets/icons/light-mode-active.svg'
+                    : '../../../../../assets/icons/light-mode-inactive.svg'
+            "
             title="icon"
         />
     </button>
-    <ng-template #activeLight
-        ><button class="theme-light" (click)="toggleMode(modeType.light)">
-            <img
-                src="../../../../../assets/icons/light-mode-active.svg"
-                title="icon"
-            /></button
-    ></ng-template>
-    <button
-        class="themes-dark"
-        (click)="toggleMode(modeType.dark)"
-        *ngIf="modeChangedSubject.value === modeDark; else activeDark"
-    >
+    <button class="themes-dark" (click)="toggleMode(modeType.dark)">
         <img
-            src="../../../../../assets/icons/dark-mode-inactive.svg"
             title="icon"
+            [src]="
+                modeChangedSubject.value === modeDark
+                    ? '../../../../../assets/icons/dark-mode-active.svg'
+                    : '../../../../../assets/icons/dark-mode-inactive.svg'
+            "
         />
     </button>
-    <!-- прописать ngClass with condition -->
-    <ng-template #activeDark
-        ><button class="themes-dark" (click)="toggleMode(modeType.dark)">
-            <img
-                src="../../../../../assets/icons/dark-mode-active.svg"
-                title="icon"
-            /></button
-    ></ng-template>
 </div>

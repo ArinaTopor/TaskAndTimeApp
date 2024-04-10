@@ -1,14 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ModeToggleService } from '../../../../services/mode-toggle.service';
+import { ModeToggleService } from './services/mode-toggle.service';
 import { Mode } from './mode-toggle.model';
-import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 @Component({
-    standalone: true,
     selector: 'mode-toggle',
     templateUrl: './mode-toggle.component.html',
     styleUrls: ['./mode-toggle.component.scss'],
-    imports: [CommonModule],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModeToggleComponent implements OnInit {
@@ -30,7 +27,7 @@ export class ModeToggleComponent implements OnInit {
         });
     }
     /**
-     * Function that toggles the mode to dark
+     * Function that toggles the mode to dark or light
      */
     public toggleMode(mode: Mode): void {
         this._modeToggleService.toggleMode(mode);

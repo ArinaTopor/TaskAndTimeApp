@@ -7,8 +7,9 @@
         background: none;
         height: 35px;
         border-radius: 20px;
+
         &:hover {
-            background-color: var(--hoverTab);
+            background-color: var(--bg-hover-item);
         }
     }
     &-dark {
@@ -17,7 +18,7 @@
         margin-left: 0.5em;
         border-radius: 20px;
         &:hover {
-            background-color: var(--hoverTab);
+            background-color: var(--bg-hover-item);
         }
     }
 }

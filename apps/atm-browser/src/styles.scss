@@ -4,12 +4,12 @@
 }
 body {
     margin: 0;
+    background-color: var(--base-bg);
+    color: var(--text-color);
 }
 
 body.dark {
     @include darken();
-    background-color: var(--base-bg);
-    color: var(--text-color);
 }
 body.light {
     @include lighten();

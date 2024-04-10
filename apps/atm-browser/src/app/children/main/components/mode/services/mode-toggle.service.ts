@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Mode } from '../children/main/components/mode/mode-toggle.model';
+import { Mode } from '../mode-toggle.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { ModeToggleStorageService } from './mode-storage.service';
@@ -32,31 +32,16 @@ export class ModeToggleService {
      * @param mode Mode
      */
     public toggleMode(mode: Mode): void {
-        this.document.body.classList.toggle(Mode.light);
-        this.document.body.classList.toggle(Mode.dark);
         if (mode === Mode.light) {
+            this.document.body.classList.remove(Mode.dark);
+            this.document.body.classList.add(Mode.light);
             this.updateCurrentMode(Mode.light);
         } else {
+            this.document.body.classList.remove(Mode.light);
+            this.document.body.classList.add(Mode.dark);
             this.updateCurrentMode(Mode.dark);
         }
     }
-    // public toggleDarkMode(): void {
-    //     if (this.currentMode !== Mode.dark) {
-    //         this.document.body.classList.remove(Mode.light);
-    //         this.document.body.classList.add(Mode.dark);
-    //         this.updateCurrentMode(Mode.dark);
-    //     }
-    // }
-    // /**
-    //  * Function that toggles the mode to light
-    //  */
-    // public toggleLightMode(): void {
-    //     if (this.currentMode !== Mode.light) {
-    //         this.document.body.classList.remove(Mode.dark);
-    //         this.document.body.classList.add(Mode.light);
-    //         this.updateCurrentMode(Mode.light);
-    //     }
-    // }
 
     /**
      * Function for init app and set the current mode

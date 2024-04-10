@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Mode } from '../children/main/components/mode/mode-toggle.model';
+import { Mode } from '../mode-toggle.model';
 
 @Injectable()
 export class ModeToggleStorageService {
