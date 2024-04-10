@@ -1,10 +1,12 @@
 @use './assets/styles/common-styles.scss' as *;
 :root {
-    margin: 0;
     font-family: $font-text-base;
 }
-
 body {
+    margin: 0;
+}
+
+body.dark {
     @include darken();
     background-color: var(--base-bg);
     color: var(--text-color);
