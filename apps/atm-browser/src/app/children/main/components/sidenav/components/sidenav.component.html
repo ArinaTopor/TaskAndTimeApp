@@ -19,7 +19,7 @@
         <hr class="sidenavbar__divider"/>
 
         <ul class="sidenavbar__function">
-            <li class="sidenavbar__function-item" *ngFor="let section of sectionList">
+            <li class="sidenavbar__function-item" *ngFor="let section of sectionList;">
                 <button class="sidenavbar__function-item-link" (click)="toggleSection(section)">
                     <span class="sidenavbar__function-item-link-span">
                         <img class="sidenavbar__function-item-link-icon"
@@ -32,7 +32,7 @@
                 </button>
 
                 <div *ngIf="section.isShow$ | async" class="sidenavbar__function-item-content">
-                    <div *ngIf="(getNavbarFunction(section.type) | async) as list; else skeleton">
+                    <div *ngIf="(section.list$ | async) as list; else skeleton">
                         <li class="sidenavbar__function-item-content-item" *ngFor="let project of list">
                             <span class="sidenavbar__function-item-link-span">
                                 <img *ngIf="project.icon" [ngSrc]="project.icon" width="20" height="20" title="icon"

@@ -3,8 +3,6 @@ import { TabButtonViewModel } from '../view-models/tab-button.view-model';
 import { SectionListViewModel } from '../view-models/section-list.view-model';
 import { NavBarContentManagerService } from '../services/nav-bar-content-manager.service';
 import { SkeletonLoadingComponent } from '../../../../../modules/loader/skeleton.component';
-import { IProject, ProjectType } from '../interfaces/project.interface';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'sidenav',
@@ -25,6 +23,10 @@ export class SidenavComponent {
     ) {
         this.btnList = this.contentManager.getBtnList();
         this.sectionList = this.contentManager.getSectionList();
+
+        this.sectionList.forEach((section: SectionListViewModel) => {
+            this.contentManager.initSection(section);
+        });
     }
 
     /**
@@ -33,11 +35,5 @@ export class SidenavComponent {
      */
     protected toggleSection(section: SectionListViewModel): void {
         section.toggleSection();
-    }
-    /**
-     *  This method return list navbar function as Observable
-     */
-    protected getNavbarFunction(type: ProjectType): Observable<IProject[]> {
-        return this.contentManager.getNavbarFunction(type);
     }
 }

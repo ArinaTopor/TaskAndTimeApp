@@ -28,14 +28,20 @@ export class NavBarContentManagerService {
         return SECTION_LIST;
     }
 
+    /**
+     * initSection
+     * @param section
+     */
+    public initSection(section: SectionListViewModel): void {
+        section.list$ = this.getProjectListByType(section.type);
+    }
 
     /**
      *  This method return list navbar function as Observable
      */
-    public getNavbarFunction(type: ProjectType): Observable<IProject[]> {
+    protected getProjectListByType(type: ProjectType): Observable<IProject[]> {
         switch (type) {
             case ProjectType.filter:
-                console.log(FILTERS);
 
                 return of(FILTERS).pipe(delay(1000));
             case ProjectType.tag:
