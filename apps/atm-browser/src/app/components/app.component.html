@@ -1,22 +1,3 @@
 <tui-root>
-<router-outlet></router-outlet>
-    <form
-        class="b-form"
-        [formGroup]="testForm"
-    >
-        <p>
-            <tui-input
-                formControlName="testValue"
-                tuiTextfieldSize="l"
-                [tuiTextfieldCleaner]="true"
-            >
-                Type an email
-                <input
-                    autocomplete="email"
-                    tuiTextfield
-                    type="email"
-                />
-            </tui-input>
-        </p>
-    </form>
+    <router-outlet></router-outlet>
 </tui-root>

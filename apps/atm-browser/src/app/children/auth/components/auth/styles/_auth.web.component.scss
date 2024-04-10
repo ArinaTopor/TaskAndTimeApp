@@ -1,5 +1,32 @@
 .auth {
-	&__container {
-
-	}
+    &_wrapper {
+        height: 100vh;
+        background: #e0e0e0;
+        display: flex;
+    }
+    &_container {
+        display: flex;
+        flex-direction: column;
+        width: 31.25vw;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 20px 50px 4px;
+        padding: 3.7vh;
+        margin: auto;
+        justify-content: center;
+        border-radius: 20px;
+        text-align: center;
+    }
+    &_form {
+        margin-top: 5.5vh;
+        display: flex;
+        flex-direction: column;
+        gap: 2.8vh;
+        justify-content: center;
+        &__button {
+            width: 8.8vw;
+            margin: auto;
+            --tui-primary: var(--accent);
+            --tui-primary-hover: var(--accent-hover);
+            --tui-primary-active: var(--accent-hover);
+        }
+    }
 }

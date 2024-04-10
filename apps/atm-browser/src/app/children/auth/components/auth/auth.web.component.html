@@ -1,1 +1,29 @@
-This is AuthComponent!
+<div class="auth_wrapper">
+    <div class="auth_container">
+        <h1 class="auth__title">Авторизация</h1>
+        <span
+            >Еще нет аккаунта?<a class="auth__link" [routerLink]="['register']"
+                >Зарегистрироваться</a
+            ></span
+        >
+
+        <form class="auth_form" [formGroup]="authForm">
+            <tui-input
+                formControlName="login"
+                tuiTextfieldSize="s"
+                tuiTextfieldIconLeft="tuiIconMailLarge"
+                class="input"
+            >
+                Почта
+                <input tuiTextfield type="email" />
+            </tui-input>
+            <tui-input formControlName="password" tuiTextfieldSize="s">
+                Пароль
+                <input tuiTextfield type="text" />
+            </tui-input>
+            <button class="auth_form__button" tuiButton type="submit" size="s">
+                Войти
+            </button>
+        </form>
+    </div>
+</div>
