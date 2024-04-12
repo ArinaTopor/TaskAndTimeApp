@@ -10,5 +10,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
 })
 export class AppComponent {
-    protected title: string = 'atm-browser';
 }

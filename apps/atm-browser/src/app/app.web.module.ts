@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, importProvidersFrom } from '@angular/core';
 import { AppComponent } from './components/app.component';
 import { RouterModule } from '@angular/router';
 import {
@@ -7,18 +7,26 @@ import {
     TuiRootModule,
     TuiTextfieldControllerModule,
 } from '@taiga-ui/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { TuiInputModule } from '@taiga-ui/kit';
 import { ReactiveFormsModule } from '@angular/forms';
 import { appRoutes } from './app.routes';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+    BrowserAnimationsModule,
+    provideAnimations,
+} from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire/compat';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { SkeletonLoadingComponent } from './modules/loader/skeleton.component';
+import { NxWelcomeComponent } from './nx-welcome.component';
 
 @NgModule({
     imports: [
         BrowserModule,
-        BrowserAnimationsModule,
+        NgxSkeletonLoaderModule.forRoot(),
+        NxWelcomeComponent,
+        RouterModule.forRoot(appRoutes),
         TuiRootModule,
         RouterModule.forRoot(appRoutes),
         TuiDialogModule,
@@ -27,7 +35,8 @@ import { AngularFireModule } from '@angular/fire/compat';
         TuiInputModule,
         ReactiveFormsModule,
         TuiTextfieldControllerModule,
-        CommonModule,
+        BrowserAnimationsModule,
+        NgOptimizedImage,
         AngularFireModule.initializeApp({
             apiKey: 'AIzaSyAgAlk3tyWHmm2J0eXaGAGlyJlbPvtFD9Q',
             authDomain: 'timeandtaskapp.firebaseapp.com',
@@ -37,8 +46,8 @@ import { AngularFireModule } from '@angular/fire/compat';
             appId: '1:958256097591:web:2e7391740a7db1ea2d12b2',
         }),
     ],
-    providers: [],
-    declarations: [AppComponent],
+    providers: [provideAnimations(), importProvidersFrom(TuiRootModule)],
+    declarations: [AppComponent, SkeletonLoadingComponent],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
