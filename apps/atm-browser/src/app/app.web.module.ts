@@ -17,9 +17,11 @@ import {
 } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { SkeletonLoadingComponent } from './modules/loader/skeleton.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
+import { environment } from '../enviroment/envoronment';
 
 @NgModule({
     imports: [
@@ -37,14 +39,8 @@ import { NxWelcomeComponent } from './nx-welcome.component';
         TuiTextfieldControllerModule,
         BrowserAnimationsModule,
         NgOptimizedImage,
-        AngularFireModule.initializeApp({
-            apiKey: 'AIzaSyAgAlk3tyWHmm2J0eXaGAGlyJlbPvtFD9Q',
-            authDomain: 'timeandtaskapp.firebaseapp.com',
-            projectId: 'timeandtaskapp',
-            storageBucket: 'timeandtaskapp.appspot.com',
-            messagingSenderId: '958256097591',
-            appId: '1:958256097591:web:2e7391740a7db1ea2d12b2',
-        }),
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule,
     ],
     providers: [provideAnimations(), importProvidersFrom(TuiRootModule)],
     declarations: [AppComponent, SkeletonLoadingComponent],
