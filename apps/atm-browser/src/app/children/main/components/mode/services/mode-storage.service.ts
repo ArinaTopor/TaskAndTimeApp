@@ -14,10 +14,11 @@ export class ModeToggleStorageService {
 
     /**
      * Function that return mode
+     * if localStorage.getItem(this.localStorageKey) === null returned Mode.light
      */
     public getCurrentMode(): Mode {
         return (
-            (localStorage.getItem(this.localStorageKey) as Mode) || undefined
+            (localStorage.getItem(this.localStorageKey) as Mode) || Mode.light
         );
     }
 }
