@@ -1,3 +1,18 @@
+@use './assets/styles/common-styles.scss' as *;
+:root {
+    font-family: $font-text-base;
+    --primary: #{$primary};
+    --primary-active: #{$primary-active};
+}
 body {
     margin: 0;
+    background-color: var(--base-bg);
+    color: var(--text-color);
+}
+
+body.dark {
+    @include darken();
+}
+body.light {
+    @include lighten();
 }

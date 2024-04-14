@@ -6,14 +6,14 @@
         margin: 0;
         height: 100vh;
         width: 396px;
-        background-color: #F1F1F1;
-        color: #000000;
+        background-color: var(--bg-menu);
+        color: var(--text-color);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         position: fixed;
         z-index: 1;
-        font-family: "Manrope", sans-serif;
+        font-family: 'Manrope', sans-serif;
         font-weight: 600;
         font-size: 16px;
     }
@@ -54,7 +54,7 @@
 
         &:hover {
             border: 1px #000000;
-            background-color: hsl(29, 100%, 77%, 55%);
+            background-color: var(--bg-tabs);
             border-radius: 20px;
             transition: 0.1s;
         }
@@ -97,7 +97,7 @@
 
         &:hover {
             border: 1px #000000;
-            background-color: hsl(0, 0%, 88%, 46%);
+            background-color: var(--bg-hover-item);
             border-radius: 20px;
             transition: 0.1s;
         }
@@ -148,7 +148,7 @@
 
         &:hover {
             border: 1px #000000;
-            background-color: hsl(0, 0%, 88%, 46%);
+            background-color: var(--bg-hover-item);
             border-radius: 20px;
             transition: 0.1s;
         }
@@ -179,34 +179,6 @@
         opacity: 0;
     }
 
-    &__settings-themes {
-        display: flex;
-        margin-left: 2em;
-        margin-top: 1.5em;
-    }
-
-    &__settings-themes-light {
-        border: none;
-        background-color: transparent;
-        height: 35px;
-        border-radius: 20px;
-
-        &:hover {
-            background-color: hsl(0, 0%, 88%, 46%);
-        }
-    }
-
-    &__settings-themes-dark {
-        border: none;
-        background-color: transparent;
-        margin-left: 0.5em;
-        border-radius: 20px;
-
-        &:hover {
-            background-color: hsl(0, 0%, 88%, 46%);
-        }
-    }
-
     &__settings-log-out {
         display: flex;
         flex-direction: row;
@@ -219,13 +191,13 @@
         height: 35px;
 
         &:hover {
-            background-color: hsl(0, 0%, 88%, 46%);
+            background-color: var(--bg-hover-item);
             border-radius: 15px;
         }
     }
 
     &__settings-log-out-text {
-        color: #7B7B7B;
+        color: #7b7b7b;
         text-align: center;
         margin-left: 0.5em;
         font-size: 16px;
@@ -242,7 +214,7 @@
         margin-top: 0.5em;
         height: 0;
         border: none;
-        border-top: 2px solid hsl(0, 0%, 70%, 50%);
+        border-top: 2px solid var(--bg-hover-item);
     }
 
     &__loading {

@@ -3,6 +3,8 @@ import { TabButtonViewModel } from '../view-models/tab-button.view-model';
 import { SectionListViewModel } from '../view-models/section-list.view-model';
 import { NavBarContentManagerService } from '../services/nav-bar-content-manager.service';
 import { SkeletonLoadingComponent } from '../../../../../modules/loader/skeleton.component';
+import { ModeToggleService } from '../../mode/services/mode-toggle.service';
+import { ModeToggleStorageService } from '../../mode/services/mode-storage.service';
 
 @Component({
     selector: 'sidenav',
@@ -11,16 +13,16 @@ import { SkeletonLoadingComponent } from '../../../../../modules/loader/skeleton
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         NavBarContentManagerService,
-        SkeletonLoadingComponent
-    ]
+        SkeletonLoadingComponent,
+        ModeToggleService,
+        ModeToggleStorageService,
+    ],
 })
 export class SidenavComponent {
     protected btnList: TabButtonViewModel[];
     protected sectionList: SectionListViewModel[];
 
-    constructor(
-        protected contentManager: NavBarContentManagerService,
-    ) {
+    constructor(protected contentManager: NavBarContentManagerService) {
         this.btnList = this.contentManager.getBtnList();
         this.sectionList = this.contentManager.getSectionList();
 

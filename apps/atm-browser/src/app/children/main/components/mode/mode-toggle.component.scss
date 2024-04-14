@@ -1,0 +1,27 @@
+.themes {
+    display: flex;
+    margin-left: 2em;
+    margin-top: 1.5em;
+    &-light {
+        border: none;
+        background: none;
+        height: 35px;
+        border-radius: 20px;
+
+        &:hover {
+            background-color: var(--bg-hover-item);
+        }
+    }
+    &-dark {
+        border: none;
+        background: none;
+        margin-left: 0.5em;
+        border-radius: 20px;
+        &:hover {
+            background-color: var(--bg-hover-item);
+        }
+    }
+}
+.isActive path {
+    fill: var(--primary) !important;
+}
