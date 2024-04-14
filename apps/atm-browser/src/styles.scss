@@ -1,11 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+@use './assets/styles/common-styles.scss' as *;
 :root {
-    --accent: #ff7a00;
-    --accent-hover: #e06b00;
+    font-family: $font-text-base;
+    --primary: #{$primary};
+    --primary-active: #{$primary-active};
 }
 body {
     margin: 0;
-    box-sizing: border-box;
+    background-color: var(--base-bg);
+    color: var(--text-color);
+}
+
+body.dark {
+    @include darken();
+}
+body.light {
+    @include lighten();
 }
 h1 {
     padding: 0;
