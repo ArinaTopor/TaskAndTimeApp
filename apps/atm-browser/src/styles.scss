@@ -20,6 +20,10 @@ h1 {
     padding: 0;
     margin: 0;
 }
-// a{
-//     font-style: none;
-// }
+a {
+    text-decoration: none;
+    color: var(--primary);
+}
+a:hover {
+    color: var(--primary-active);
+}

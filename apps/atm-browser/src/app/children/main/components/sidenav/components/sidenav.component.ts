@@ -5,6 +5,7 @@ import { NavBarContentManagerService } from '../services/nav-bar-content-manager
 import { SkeletonLoadingComponent } from '../../../../../modules/loader/skeleton.component';
 import { ModeToggleService } from '../../mode/services/mode-toggle.service';
 import { ModeToggleStorageService } from '../../mode/services/mode-storage.service';
+import { SignInService } from '../../../../auth/components/auth/services/sign-in.service';
 
 @Component({
     selector: 'sidenav',
@@ -16,13 +17,17 @@ import { ModeToggleStorageService } from '../../mode/services/mode-storage.servi
         SkeletonLoadingComponent,
         ModeToggleService,
         ModeToggleStorageService,
+        SignInService,
     ],
 })
 export class SidenavComponent {
     protected btnList: TabButtonViewModel[];
     protected sectionList: SectionListViewModel[];
 
-    constructor(protected contentManager: NavBarContentManagerService) {
+    constructor(
+        protected contentManager: NavBarContentManagerService,
+        protected signInService: SignInService
+    ) {
         this.btnList = this.contentManager.getBtnList();
         this.sectionList = this.contentManager.getSectionList();
 
@@ -37,5 +42,11 @@ export class SidenavComponent {
      */
     protected toggleSection(section: SectionListViewModel): void {
         section.toggleSection();
+    }
+    /**
+     * function for signOut
+     */
+    protected signOut(): void {
+        this.signInService.signOut();
     }
 }

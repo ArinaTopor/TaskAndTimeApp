@@ -7,9 +7,10 @@ type FireConfig = {
         messagingSenderId: string;
         appId: string;
     };
+    production: boolean;
 };
 
-export const environment: any = {
+export const environment: FireConfig = {
     firebase: {
         apiKey: 'AIzaSyAgAlk3tyWHmm2J0eXaGAGlyJlbPvtFD9Q',
         authDomain: 'timeandtaskapp.firebaseapp.com',
