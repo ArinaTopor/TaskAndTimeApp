@@ -9,6 +9,7 @@
         display: flex;
         flex-direction: column;
         width: 31.25vw;
+        background-color: var(--bg-modal-auth);
         box-shadow: rgba(0, 0, 0, 0.3) 0px 20px 50px 4px;
         padding: 3.7vh;
         margin: 11.8vh auto auto;
@@ -19,12 +20,14 @@
     &__logo {
         display: block;
         margin: 3vh auto;
-        & path path {
-            fill: var(--text-color);
-        }
+        // & path {
+        //     fill: var(--text-color);
+        //     stroke: var(--text-color);
+        // }
     }
     &__title {
         margin-bottom: 1.2vh;
+        font-size: 1.6vw;
     }
     &_form {
         margin-top: 5.5vh;
@@ -32,11 +35,16 @@
         flex-direction: column;
         justify-content: center;
         &__input {
-            box-shadow: none !important;
+            --tui-primary: var(--primary);
+            --tui-primary-active: var(--primary);
+            --tui-ficus: var(--primary);
+            --tui-error-fill: red;
         }
         &__button {
             width: 8.8vw;
             margin: 2.8vh auto 0;
+            border-radius: 25px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 10px 2px;
             --tui-primary: var(--primary);
             --tui-primary-hover: var(--primary-active);
             --tui-primary-active: var(--primary-active);

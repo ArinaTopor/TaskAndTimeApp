@@ -16,7 +16,7 @@
                 d="M15.0357 5.013C26.5402 0.0481976 33.0308 -0.183229 45.9992 4.62756"
                 stroke="#252525"
                 stroke-linecap="round"
-                fill="#252525"
+                fill="none"
             />
         </svg>
         <h1 class="auth__title">Авторизация</h1>
@@ -30,8 +30,8 @@
         <form class="auth_form" [formGroup]="authForm">
             <tui-input
                 formControlName="email"
-                tuiTextfieldSize="s"
-                tuiTextfieldIconLeft="tuiIconSearchLarge"
+                tuiTextfieldSize="m"
+                tuiTextfieldIconLeft="tuiIconMailLarge"
                 class="auth_form__input"
             >
                 Почта
@@ -58,9 +58,11 @@
                 </p>
             </div>
             <tui-input-password
-                tuiTextfieldSize="S"
+                tuiTextfieldSize="m"
                 formControlName="password"
                 style="margin-top: 2.8vh"
+                tuiTextfieldIconLeft="tuiIconKeyLarge"
+                class="auth_form__input"
             >
                 Пароль
                 <input tuiTextfield type="password" />
@@ -75,7 +77,7 @@
                 class="auth_form__button"
                 tuiButton
                 type="submit"
-                size="s"
+                size="m"
                 (click)="onSubmit()"
                 [disabled]="!authForm.valid"
             >

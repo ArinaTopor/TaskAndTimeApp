@@ -7,7 +7,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthWebComponent } from './components/auth/auth.web.component';
 import {
     TuiButtonModule,
+    TuiLinkModule,
     TuiSvgModule,
+    TuiTextfieldControllerModule,
 } from '@taiga-ui/core';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -19,9 +21,11 @@ import { HttpClientModule } from '@angular/common/http';
         RouterLink,
         TuiInputModule,
         TuiInputPasswordModule,
+        TuiTextfieldControllerModule,
         TuiButtonModule,
         TuiSvgModule,
         HttpClientModule,
+        TuiLinkModule,
     ],
     exports: [],
     providers: [],

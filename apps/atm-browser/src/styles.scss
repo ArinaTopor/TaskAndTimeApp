@@ -27,3 +27,6 @@ a {
 a:hover {
     color: var(--primary-active);
 }
+[tuiWrapper][data-appearance='textfield'] {
+    box-shadow: none;
+}
