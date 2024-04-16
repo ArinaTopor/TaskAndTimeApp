@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ILogin } from '../../interfaces/login.interface';
 import { SignInService } from './services/sign-in.service';
-import { ILoginForm } from '../../interfaces/loginForm.interface';
+import { ILoginForm } from '../../interfaces/login-form.interface';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -18,6 +18,7 @@ export class AuthWebComponent {
     public isAuthError: BehaviorSubject<string | null> = new BehaviorSubject<
         string | null
     >(null);
+
     protected authForm: FormGroup<ILoginForm> = new FormGroup({
         email: new FormControl('', {
             nonNullable: true,

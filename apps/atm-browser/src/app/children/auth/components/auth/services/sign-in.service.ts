@@ -19,11 +19,13 @@ export class SignInService {
      * @param params
      */
     public async signIn(params: ILogin): Promise<firebase.auth.UserCredential> {
+        //UserCredential only
         return this._afAuth.signInWithEmailAndPassword(
             params.email,
             params.password
         );
     }
+    //на уровне модуля мейн получать данные через токен
     /**
      * this is func for save user info in localStorage
      */
@@ -33,7 +35,7 @@ export class SignInService {
             uid: sessionInfo.user?.uid,
             email: sessionInfo.user?.email,
             displayName: sessionInfo.user?.displayName,
-        };
+        }; //хранить через subject
         this._isAuth.next(true);
     }
     /**

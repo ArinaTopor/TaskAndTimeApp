@@ -1,11 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RegisterWebComponent } from './components/register.web.component';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterLink, RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import {
+    TuiTextfieldControllerModule,
+    TuiButtonModule,
+    TuiSvgModule,
+    TuiLinkModule,
+} from '@taiga-ui/core';
+import { TuiInputModule, TuiInputPasswordModule } from '@taiga-ui/kit';
 
 const routes: Routes = [
     {
         path: '',
-        component: RegisterWebComponent
+        component: RegisterWebComponent,
     },
 ];
 
@@ -14,10 +24,17 @@ const routes: Routes = [
     providers: [],
     imports: [
         RouterModule.forChild(routes),
+        CommonModule,
+        ReactiveFormsModule,
+        RouterLink,
+        TuiInputModule,
+        TuiInputPasswordModule,
+        TuiTextfieldControllerModule,
+        TuiButtonModule,
+        TuiSvgModule,
+        HttpClientModule,
+        TuiLinkModule,
     ],
-    declarations:[
-        RegisterWebComponent
-    ]
+    declarations: [RegisterWebComponent],
 })
-export class RegisterWebModule {
-}
+export class RegisterWebModule {}

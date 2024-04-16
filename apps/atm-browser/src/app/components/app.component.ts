@@ -7,4 +7,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [],
 })
-export class AppComponent {}
+export class AppComponent {} // NgOnInit for modeToggle
