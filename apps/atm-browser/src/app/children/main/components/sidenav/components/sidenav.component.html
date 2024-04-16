@@ -7,7 +7,7 @@
                 title="personal-account"
             />
             <span class="sidenavbar__personal-account-name">
-                {{ signInService.user.displayName }}
+                {{ this.fbAuthService.user$.value?.displayName }}
             </span>
         </div>
 

@@ -1,16 +1,16 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ILogin } from '../../interfaces/login.interface';
-import { SignInService } from './services/sign-in.service';
-import { ILoginForm } from '../../interfaces/login-form.interface';
+import { ILogin } from '@atm-project/common';
+import { FirebaseAuthService } from '@atm-project/common';
+import { ILoginForm } from '@atm-project/common';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
     selector: 'auth-web-component',
     templateUrl: 'auth.web.component.html',
     styleUrls: ['./styles/_auth.web.component.scss'],
-    providers: [SignInService],
+    providers: [FirebaseAuthService],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthWebComponent {
@@ -31,18 +31,18 @@ export class AuthWebComponent {
     });
 
     constructor(
-        private _signInService: SignInService,
+        private _fbAuthService: FirebaseAuthService,
         private _router: Router
     ) {}
     /**
      * function for auth
      */
-    protected onSubmit(): void {
+    protected onSignIn(): void {
         const rawForm: ILogin = this.authForm.getRawValue();
-        this._signInService
+        this._fbAuthService
             .signIn(rawForm)
             .then((userCredentials) => {
-                this._signInService.saveSessionInfo(userCredentials);
+                this._fbAuthService.saveSessionInfo(userCredentials);
                 this._router.navigate(['main']);
             })
             .catch(() =>

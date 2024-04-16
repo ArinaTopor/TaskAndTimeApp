@@ -1,13 +1,16 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IRegisterForm } from '../interfaces/register-form.interface';
-import { SignUpService } from '../services/register.service';
-import { IRegisterData } from '../interfaces/register.interface';
+import { IRegisterForm } from '@atm-project/common';
+import { FirebaseAuthService } from '@atm-project/common';
+import { IRegisterData } from '@atm-project/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'register-web-component',
     templateUrl: './register.web.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: ['../../../styles/login.web.master.scss'],
+    providers: [FirebaseAuthService],
 })
 export class RegisterWebComponent {
     protected registerForm: FormGroup<IRegisterForm> = new FormGroup({
@@ -30,15 +33,23 @@ export class RegisterWebComponent {
     });
     constructor(
         private _router: Router,
-        private _signUpService: SignUpService
+        private _fbAuthService: FirebaseAuthService,
+        private _destroyRef: DestroyRef
     ) {}
+    /**
+     * function for navigate to auth
+     */
+    public navigateAuth(): void {
+        this._router.navigate(['auth']);
+    }
     /**
      * register func
      */
     public signUp(): void {
         const rawForm: IRegisterData = this.registerForm.getRawValue();
-        this._signUpService
+        this._fbAuthService
             .signUp(rawForm)
-            .subscribe(() => this._router.navigate(['auth']));
+            .pipe(takeUntilDestroyed(this._destroyRef))
+            .subscribe(() => this.navigateAuth());
     }
 }

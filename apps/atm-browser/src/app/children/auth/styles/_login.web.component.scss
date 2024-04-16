@@ -1,0 +1,63 @@
+.auth {
+    &_wrapper {
+        height: 100vh;
+        background: var(--bg-auth);
+        display: flex;
+        font-size: 16px;
+    }
+    &_container {
+        display: flex;
+        flex-direction: column;
+        width: 31.25vw;
+        background-color: var(--bg-modal-auth);
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 20px 50px 4px;
+        padding: 3.7vh;
+        margin: 11.8vh auto auto;
+        justify-content: center;
+        border-radius: 20px;
+        text-align: center;
+    }
+    &__logo {
+        display: block;
+        margin: 3vh auto;
+        // & path {
+        //     fill: var(--text-color);
+        //     stroke: var(--text-color);
+        // }
+    }
+    &__title {
+        margin-bottom: 1.2vh;
+        font-size: 1.6vw;
+    }
+    &__link {
+        cursor: pointer;
+    }
+    &_form {
+        margin-top: 5.5vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        &__input {
+            --tui-primary: var(--primary);
+            --tui-primary-active: var(--primary);
+            --tui-ficus: var(--primary);
+            --tui-error-fill: red;
+        }
+        &__button {
+            width: 8.8vw;
+            margin: 2.8vh auto 0;
+            border-radius: 25px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 10px 2px;
+            --tui-primary: var(--primary);
+            --tui-primary-hover: var(--primary-active);
+            --tui-primary-active: var(--primary-active);
+        }
+        &_error {
+            color: red;
+            font-size: 16px;
+            padding: 0;
+            margin: 2px 0;
+            text-align: start;
+        }
+    }
+}

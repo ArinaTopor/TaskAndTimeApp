@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'atm-project-root',
@@ -7,4 +7,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [],
 })
-export class AppComponent {} // NgOnInit for modeToggle
+export class AppComponent implements OnInit {
+    public ngOnInit(): void {
+        const mode: string | null = localStorage.getItem('mode');
+        mode
+            ? document.body.classList.add(mode)
+            : document.body.classList.add('light');
+    }
+}

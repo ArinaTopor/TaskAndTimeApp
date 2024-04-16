@@ -22,7 +22,7 @@
         <h1 class="auth__title">Регистрация</h1>
         <span
             >Уже есть аккаунт?
-            <a class="auth__link" [routerLink]="['auth']">Войти</a></span
+            <a class="auth__link" (click)="navigateAuth()">Войти</a></span
         >
 
         <form class="auth_form" [formGroup]="registerForm">
@@ -84,12 +84,6 @@
                 Повторите пароль
                 <input tuiTextfield type="password" />
             </tui-input-password>
-            <!-- @if (!authForm.controls.password.valid &&
-            authForm.controls.password.touched){
-            <p class="auth_form_error" style="color: red">Обязательное поле</p>
-            } @if(isAuthError.value !== null){
-            <p class="auth_form_error">{{ isAuthError.value }}</p>
-            } -->
             <button
                 class="auth_form__button"
                 tuiButton
