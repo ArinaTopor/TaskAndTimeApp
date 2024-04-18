@@ -38,10 +38,15 @@
         flex-direction: column;
         justify-content: center;
         &__input {
+            margin-top: 2.8vh;
             --tui-primary: var(--primary);
             --tui-primary-active: var(--primary);
-            --tui-ficus: var(--primary);
+            --tui-primary-hover: var(--primary-active);
+            --tui-focus: var(--primary);
             --tui-error-fill: red;
+        }
+        &__input:nth-child(1) {
+            margin-top: 0;
         }
         &__button {
             width: 8.8vw;

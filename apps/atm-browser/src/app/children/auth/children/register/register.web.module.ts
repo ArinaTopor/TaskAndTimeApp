@@ -11,7 +11,7 @@ import {
     TuiLinkModule,
 } from '@taiga-ui/core';
 import { TuiInputModule, TuiInputPasswordModule } from '@taiga-ui/kit';
-
+import { ControlErrorModule } from 'apps/atm-browser/src/app/modules/atm-controls/control-error.module';
 const routes: Routes = [
     {
         path: '',
@@ -34,6 +34,7 @@ const routes: Routes = [
         TuiSvgModule,
         HttpClientModule,
         TuiLinkModule,
+        ControlErrorModule,
     ],
     declarations: [RegisterWebComponent],
 })

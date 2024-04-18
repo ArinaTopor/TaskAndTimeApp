@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
     selector: 'auth-web-component',
     templateUrl: 'auth.web.component.html',
-    styleUrls: ['./styles/_auth.web.component.scss'],
+    styleUrls: ['../../styles/login.web.master.scss'],
     providers: [FirebaseAuthService],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

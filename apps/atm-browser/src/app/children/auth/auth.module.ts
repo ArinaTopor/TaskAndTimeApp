@@ -12,6 +12,7 @@ import {
     TuiTextfieldControllerModule,
 } from '@taiga-ui/core';
 import { HttpClientModule } from '@angular/common/http';
+import { ControlErrorModule } from '../../modules/atm-controls/control-error.module';
 
 @NgModule({
     imports: [
@@ -26,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
         TuiSvgModule,
         HttpClientModule,
         TuiLinkModule,
+        ControlErrorModule,
     ],
     exports: [],
     providers: [],

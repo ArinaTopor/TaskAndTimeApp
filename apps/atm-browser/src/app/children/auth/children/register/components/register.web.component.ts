@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IRegisterForm } from '@atm-project/common';
+import { IRegisterForm, conformPassword } from '@atm-project/common';
 import { FirebaseAuthService } from '@atm-project/common';
 import { IRegisterData } from '@atm-project/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -13,24 +13,27 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     providers: [FirebaseAuthService],
 })
 export class RegisterWebComponent {
-    protected registerForm: FormGroup<IRegisterForm> = new FormGroup({
-        name: new FormControl('', {
-            nonNullable: true,
-            validators: Validators.required,
-        }),
-        email: new FormControl('', {
-            nonNullable: true,
-            validators: [Validators.required, Validators.email],
-        }),
-        password: new FormControl('', {
-            nonNullable: true,
-            validators: Validators.required,
-        }),
-        repeatPassword: new FormControl('', {
-            nonNullable: true,
-            validators: Validators.required,
-        }),
-    });
+    protected registerForm: FormGroup<IRegisterForm> = new FormGroup(
+        {
+            name: new FormControl('', {
+                nonNullable: true,
+                validators: Validators.required,
+            }),
+            email: new FormControl('', {
+                nonNullable: true,
+                validators: [Validators.required, Validators.email],
+            }),
+            password: new FormControl('', {
+                nonNullable: true,
+                validators: Validators.required,
+            }),
+            repeatPassword: new FormControl('', {
+                nonNullable: true,
+                validators: Validators.required,
+            }),
+        },
+        conformPassword
+    );
     constructor(
         private _router: Router,
         private _fbAuthService: FirebaseAuthService,

@@ -33,8 +33,18 @@
                 class="auth_form__input"
             >
                 Имя пользователя
-                <input tuiTextfield type="email" />
+                <input tuiTextfield type="text" />
             </tui-input>
+            <ng-container
+                *ngIf="
+                    registerForm.controls.name.invalid &&
+                    registerForm.controls.name.touched
+                "
+            >
+                <control-error
+                    [errors]="registerForm.controls.name.errors"
+                ></control-error>
+            </ng-container>
             <tui-input
                 formControlName="email"
                 tuiTextfieldSize="m"
@@ -44,46 +54,66 @@
                 Почта
                 <input tuiTextfield type="email" />
             </tui-input>
-            <div
+            <ng-container
                 *ngIf="
                     registerForm.controls.email.invalid &&
                     (registerForm.controls.email.dirty ||
                         registerForm.controls.email.touched)
                 "
             >
-                <p
-                    class="auth_form_error"
-                    *ngIf="registerForm.controls.email.errors?.['required'];"
-                >
-                    Обязательное поле
-                </p>
-                <p
-                    class="auth_form_error"
-                    *ngIf="registerForm.controls.email.errors?.['email'];"
-                >
-                    Почта должна соответствовать маске mail&#64;mail.ru
-                </p>
-            </div>
+                <control-error
+                    [errors]="registerForm.controls.email.errors"
+                ></control-error>
+            </ng-container>
             <tui-input-password
                 tuiTextfieldSize="m"
-                formControlName="repeatPassword"
-                style="margin-top: 2.8vh"
+                formControlName="password"
                 tuiTextfieldIconLeft="tuiIconKeyLarge"
                 class="auth_form__input"
             >
                 Пароль
                 <input tuiTextfield type="password" />
             </tui-input-password>
+            <ng-container
+                *ngIf="
+                    registerForm.controls.password.invalid &&
+                    registerForm.controls.password.touched
+                "
+            >
+                <control-error
+                    [errors]="registerForm.controls.password.errors"
+                ></control-error>
+            </ng-container>
             <tui-input-password
                 tuiTextfieldSize="m"
-                formControlName="password"
-                style="margin-top: 2.8vh"
+                formControlName="repeatPassword"
                 tuiTextfieldIconLeft="tuiIconKeyLarge"
                 class="auth_form__input"
             >
                 Повторите пароль
                 <input tuiTextfield type="password" />
             </tui-input-password>
+            <ng-container
+                *ngIf="
+                    registerForm.controls.repeatPassword.invalid &&
+                    registerForm.controls.repeatPassword.touched
+                "
+            >
+                <control-error
+                    [errors]="registerForm.controls.repeatPassword.errors"
+                ></control-error>
+            </ng-container>
+            <ng-container
+                *ngIf="
+                    registerForm.errors &&
+                    registerForm.controls.password.touched &&
+                    registerForm.controls.repeatPassword.touched &&
+                    registerForm.controls.password.dirty &&
+                    registerForm.controls.repeatPassword.dirty
+                "
+            >
+                <control-error [errors]="registerForm.errors"></control-error>
+            </ng-container>
             <button
                 class="auth_form__button"
                 tuiButton

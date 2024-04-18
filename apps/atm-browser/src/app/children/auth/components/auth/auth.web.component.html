@@ -37,42 +37,37 @@
                 Почта
                 <input tuiTextfield type="email" />
             </tui-input>
-            <div
+            <ng-container
                 *ngIf="
                     authForm.controls.email.invalid &&
                     (authForm.controls.email.dirty ||
                         authForm.controls.email.touched)
                 "
             >
-                <p
-                    class="auth_form_error"
-                    *ngIf="authForm.controls.email.errors?.['required'];"
-                >
-                    Обязательное поле
-                </p>
-                <p
-                    class="auth_form_error"
-                    *ngIf="authForm.controls.email.errors?.['email'];"
-                >
-                    Почта должна соответствовать маске mail&#64;mail.ru
-                </p>
-            </div>
+                <control-error
+                    [errors]="authForm.controls.email.errors"
+                ></control-error>
+            </ng-container>
             <tui-input-password
                 tuiTextfieldSize="m"
                 formControlName="password"
-                style="margin-top: 2.8vh"
                 tuiTextfieldIconLeft="tuiIconKeyLarge"
                 class="auth_form__input"
             >
                 Пароль
                 <input tuiTextfield type="password" />
             </tui-input-password>
-            @if (!authForm.controls.password.valid &&
-            authForm.controls.password.touched){
-            <p class="auth_form_error" style="color: red">Обязательное поле</p>
-            } @if(isAuthError.value !== null){
-            <p class="auth_form_error">{{ isAuthError.value }}</p>
-            }
+            <ng-container
+                *ngIf="
+                    authForm.controls.password.invalid &&
+                    authForm.controls.password.touched
+                "
+            >
+                <p class="auth_form_error">
+                    {{ isAuthError.value }}
+                </p></ng-container
+            >
+            <ng-container *ngIf="isAuthError.value !== null"> </ng-container>
             <button
                 class="auth_form__button"
                 tuiButton

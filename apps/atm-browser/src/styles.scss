@@ -3,6 +3,7 @@
     font-family: $font-text-base;
     --primary: #{$primary};
     --primary-active: #{$primary-active};
+    --grey-input: #{$grey-input};
 }
 body {
     margin: 0;
@@ -27,6 +28,6 @@ a {
 a:hover {
     color: var(--primary-active);
 }
-[tuiWrapper][data-appearance='textfield'] {
-    box-shadow: none;
-}
+// [tuiWrapper][data-appearance='textfield'] {
+//     box-shadow: none;
+// }

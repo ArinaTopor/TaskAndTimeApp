@@ -59,6 +59,7 @@ import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
         }),
     ],
     declarations: [AppComponent, SkeletonLoadingComponent],
+    exports: [],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
