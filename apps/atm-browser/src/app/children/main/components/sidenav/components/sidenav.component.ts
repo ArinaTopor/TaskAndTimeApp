@@ -1,12 +1,19 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    DestroyRef,
+    Inject,
+    OnInit,
+} from '@angular/core';
 import { TabButtonViewModel } from '../view-models/tab-button.view-model';
 import { SectionListViewModel } from '../view-models/section-list.view-model';
 import { NavBarContentManagerService } from '../services/nav-bar-content-manager.service';
 import { SkeletonLoadingComponent } from '../../../../../modules/loader/skeleton.component';
 import { ModeToggleService } from '../../mode/services/mode-toggle.service';
 import { ModeToggleStorageService } from '../../mode/services/mode-storage.service';
-import { FirebaseAuthService } from '@atm-project/common';
-
+import { FirebaseAuthService, USER_INFO_TOKEN } from '@atm-project/common';
+import firebase from 'firebase/compat/app';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'sidenav',
     templateUrl: './sidenav.component.html',
@@ -17,16 +24,17 @@ import { FirebaseAuthService } from '@atm-project/common';
         SkeletonLoadingComponent,
         ModeToggleService,
         ModeToggleStorageService,
-        FirebaseAuthService,
     ],
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnInit {
     protected btnList: TabButtonViewModel[];
     protected sectionList: SectionListViewModel[];
+    protected userInfo: firebase.User | null = null;
 
     constructor(
         protected contentManager: NavBarContentManagerService,
-        protected fbAuthService: FirebaseAuthService
+        @Inject(USER_INFO_TOKEN) public fbAuthService: FirebaseAuthService,
+        private _destroyRef: DestroyRef
     ) {
         this.btnList = this.contentManager.getBtnList();
         this.sectionList = this.contentManager.getSectionList();
@@ -35,6 +43,15 @@ export class SidenavComponent {
             this.contentManager.initSection(section);
         });
     }
+    public ngOnInit(): void {
+        this.fbAuthService.user$
+            .pipe(takeUntilDestroyed(this._destroyRef))
+            .subscribe((user) => {
+                if (user) {
+                    this.userInfo = user;
+                }
+            });
+    }
 
     /**
      *
@@ -42,7 +59,6 @@ export class SidenavComponent {
      */
     protected toggleSection(section: SectionListViewModel): void {
         section.toggleSection();
-        console.log(this.fbAuthService.user$.value?.displayName);
     }
     /**
      * function for signOut
