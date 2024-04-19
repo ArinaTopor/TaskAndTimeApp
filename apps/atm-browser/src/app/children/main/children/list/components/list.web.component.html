@@ -1,0 +1,50 @@
+<nav class="list-today__container">
+    <h1 class="list-today__header-page">
+        Сегодня
+    </h1>
+
+    <div class="list-today__current-tasks">
+        <span class="list-today__header">19 марта • Сегодня</span>
+        <hr class="list-today__divider"/>
+
+        <div class="list-today__task">
+
+            <tui-checkbox class="list-today__checkbox"></tui-checkbox>
+
+            <span>time</span>
+            <span>tag</span>
+        </div>
+
+        <hr class="list-today__divider"/>
+
+        <button class="list-today__add-task">
+
+            Добавить задачу
+        </button>
+    </div>
+
+    <div class="list-today__completed-tasks">
+        <div class="list-today__header-complete">
+            <img
+                class="list-today__link-icon"
+                [ngSrc]="'../../../../../assets/icons/tag-close.svg'"
+                width="16"
+                height="16"
+                title="icon"
+                alt=""
+            />
+            <span class="list-today__header">Выполненные</span>
+        </div>
+
+        <hr class="list-today__divider"/>
+
+        <div class="list-today__task">
+            <tui-checkbox></tui-checkbox>
+            <span>name</span>
+            <span>time</span>
+            <span>tag</span>
+        </div>
+
+        <hr class="list-today__divider"/>
+    </div>
+</nav>

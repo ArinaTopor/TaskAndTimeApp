@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { ListWebComponent } from './components/list.web.component';
 import { RouterModule, Routes } from '@angular/router';
+import { TuiCheckboxModule, TuiInputModule, TuiMarkerIconModule } from '@taiga-ui/kit';
+import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 
 const routes: Routes = [
     {
@@ -14,6 +16,11 @@ const routes: Routes = [
     providers: [],
     imports: [
         RouterModule.forChild(routes),
+        TuiCheckboxModule,
+        TuiInputModule,
+        TuiMarkerIconModule,
+        AsyncPipe,
+        NgOptimizedImage
     ],
     declarations:[
         ListWebComponent
