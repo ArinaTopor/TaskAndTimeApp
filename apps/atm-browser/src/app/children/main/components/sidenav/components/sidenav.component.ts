@@ -13,7 +13,7 @@ import { ModeToggleService } from '../../mode/services/mode-toggle.service';
 import { ModeToggleStorageService } from '../../mode/services/mode-storage.service';
 import { FirebaseAuthService, USER_INFO_TOKEN } from '@atm-project/common';
 import firebase from 'firebase/compat/app';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Observable, filter, of } from 'rxjs';
 @Component({
     selector: 'sidenav',
     templateUrl: './sidenav.component.html',
@@ -29,7 +29,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class SidenavComponent implements OnInit {
     protected btnList: TabButtonViewModel[];
     protected sectionList: SectionListViewModel[];
-    protected userInfo: firebase.User | null = null;
+    public user$: Observable<firebase.User | null> = of(null);
 
     constructor(
         protected contentManager: NavBarContentManagerService,
@@ -44,13 +44,7 @@ export class SidenavComponent implements OnInit {
         });
     }
     public ngOnInit(): void {
-        this.fbAuthService.user$
-            .pipe(takeUntilDestroyed(this._destroyRef))
-            .subscribe((user) => {
-                if (user) {
-                    this.userInfo = user;
-                }
-            });
+        this.user$ = this.fbAuthService.user$.pipe(filter((user) => !!user));
     }
 
     /**

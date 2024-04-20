@@ -7,7 +7,7 @@
                 title="personal-account"
             />
             <span class="sidenavbar__personal-account-name">
-                {{ this.userInfo?.displayName }}
+                {{ (user$ | async)?.displayName }}
             </span>
         </div>
 
