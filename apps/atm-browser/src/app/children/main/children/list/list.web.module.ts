@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { ListWebComponent } from './components/list.web.component';
 import { RouterModule, Routes } from '@angular/router';
 import { TuiCheckboxModule, TuiInputModule, TuiMarkerIconModule } from '@taiga-ui/kit';
-import { AsyncPipe, NgOptimizedImage } from '@angular/common';
+import { AsyncPipe, NgClass, NgForOf, NgOptimizedImage } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
     {
@@ -20,7 +22,12 @@ const routes: Routes = [
         TuiInputModule,
         TuiMarkerIconModule,
         AsyncPipe,
-        NgOptimizedImage
+        NgOptimizedImage,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        NgClass,
+        NgForOf
     ],
     declarations:[
         ListWebComponent

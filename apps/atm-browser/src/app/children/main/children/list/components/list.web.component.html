@@ -4,21 +4,38 @@
     </h1>
 
     <div class="list-today__current-tasks">
-        <span class="list-today__header">19 марта • Сегодня</span>
+        <span class="list-today__header">{{ currentDate }} • Сегодня</span>
         <hr class="list-today__divider"/>
 
-        <div class="list-today__task">
+        <div class="list-today__task" *ngFor="let task of taskAll; let i = index">
+            <div class="list-today__task">
+                <div class="list-today__checkbox">
+                    <input type="checkbox" id="custom{{i}}" [(ngModel)]="task.checkbox" (ngModelChange)="completeTask(i)"/>
+                    <label for="custom{{i}}"></label>
+                </div>
 
-            <tui-checkbox class="list-today__checkbox"></tui-checkbox>
-
-            <span>time</span>
-            <span>tag</span>
+                <div style="display: flex; flex-direction: column">
+                    <span class="list-today__task-name">{{task.name}}</span>
+                    <span class="list-today__task-start-time">{{task.timeStart}}</span>
+                </div>
+            </div>
+            <div>
+                <span class="list-today__task-tags">#{{task.tags}}</span>
+            </div>
         </div>
 
         <hr class="list-today__divider"/>
 
-        <button class="list-today__add-task">
-
+        <input placeholder="Add task" [(ngModel)] = "taskValueAdd">
+        <button class="list-today__add-task" (click)="addTask()" >
+            <img
+                class="list-today__link-icon"
+                [ngSrc]="'../../../../../assets/icons/add-task.svg'"
+                width="24"
+                height="24"
+                title="icon"
+                alt=""
+            />
             Добавить задачу
         </button>
     </div>
@@ -32,17 +49,29 @@
                 height="16"
                 title="icon"
                 alt=""
+                [ngClass]="{ rotate: isShow }"
             />
             <span class="list-today__header">Выполненные</span>
         </div>
 
         <hr class="list-today__divider"/>
 
-        <div class="list-today__task">
-            <tui-checkbox></tui-checkbox>
-            <span>name</span>
-            <span>time</span>
-            <span>tag</span>
+        <div class="list-today__task" *ngFor="let task of comletedTask; let i = index">
+            <div class="list-today__task">
+                <div class="list-today__checkbox" >
+                    <input type="checkbox" id="custom{{i}}" [(ngModel)]="task.checkbox" (ngModelChange)="unCompleteTask(i)"/>
+                    <label for="custom{{i}}"></label>
+                </div>
+
+                <div style="display: flex; flex-direction: column">
+                    <span class="list-today__task-name">{{task.name}}</span>
+                    <span class="list-today__task-start-time">{{task.timeStart}}</span>
+                </div>
+            </div>
+            <div>
+                <span class="list-today__task-tags">#{{task.tags}}</span>
+            </div>
+
         </div>
 
         <hr class="list-today__divider"/>

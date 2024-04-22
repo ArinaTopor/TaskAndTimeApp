@@ -20,10 +20,12 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { SkeletonLoadingComponent } from './modules/loader/skeleton.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     imports: [
         BrowserModule,
+        HttpClientModule,
         NgxSkeletonLoaderModule.forRoot(),
         NxWelcomeComponent,
         RouterModule.forRoot(appRoutes),

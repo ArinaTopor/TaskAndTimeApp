@@ -1,0 +1,28 @@
+{
+  "tasks": [
+    {
+      "id": "0",
+      "name": "Сделать задачу по проекту",
+      "description": "Нужно создать лист по текущим задачам",
+      "date": "20.04.24",
+      "time_start": "08:00",
+      "time_end": "20:00",
+      "tags": [
+        "ВАЖНО, срочно, учеба"
+      ],
+      "checkbox": ""
+    },
+    {
+      "id": null,
+      "name": "Купить молоко",
+      "description": "",
+      "date": "",
+      "time_start": "22:00",
+      "time_end": "23:00",
+      "tags": [
+        "STUDY"
+      ],
+      "checkbox": false
+    }
+  ]
+}
