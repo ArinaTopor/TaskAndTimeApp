@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Task } from '../models/task';
+import { TaskModel } from '../models/task-model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -16,44 +16,37 @@ export class ListContentManagerService {
     /**
      * Добавляет задачу на сервер
      */
-    public addTask(task: Task): Observable<Task> {
-        return this._http.post<Task>(this.serviceURL, task);
+    public addTask(task: TaskModel): Observable<TaskModel> {
+        return this._http.post<TaskModel>(this.serviceURL, task);
     }
 
     /**
-     * Получаем те задачи от сервера, которые "невыполненные"
+     * Получаем невыполненные задачи от сервера
      */
-    public getAllTask(): Observable<Task[]> {
-        return this._http.get<Task[]>(this.serviceURL).pipe(
+    public getAllTask(): Observable<TaskModel[]> {
+        return this._http.get<TaskModel[]>(this.serviceURL).pipe(
             map(allTasks => allTasks.filter(task => !task.checkbox))
         );
     }
 
     /**
-     * Добавляет выполненную задачу на сервер
-     */
-    public addCompleteTask(task: Task): Observable<Task[]> {
-        return this._http.post<Task[]>(this.serviceURL, task);
-    }
-
-    /**
      * Получает все выполненные задачи
      */
-    public getCompleteTask(): Observable<Task[]> {
-        return this._http.get<Task[]>(this.serviceURL);
+    public getCompleteTask(): Observable<TaskModel[]> {
+        return this._http.get<TaskModel[]>(`${this.serviceURL}?checkbox=${true}`);
     }
 
     /**
      * Удаляет задачу из сервера
      */
-    public deleteTask(task: Task): Observable<Task> {
-        return this._http.delete<Task>(this.serviceURL + '/' + task.id);
+    public deleteTask(task: TaskModel): Observable<TaskModel> {
+        return this._http.delete<TaskModel>(this.serviceURL + '/' + task.id);
     }
 
     /**
      * Редактирование задачи
      */
-    public editTask(task: Task): Observable<Task> {
-        return this._http.put<Task>(this.serviceURL + '/' + task.id, task);
+    public editTask(task: TaskModel): Observable<TaskModel> {
+        return this._http.put<TaskModel>(this.serviceURL + '/' + task.id, task);
     }
 }

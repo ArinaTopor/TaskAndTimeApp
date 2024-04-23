@@ -10,7 +10,7 @@
       "tags": [
         "ВАЖНО, срочно, учеба"
       ],
-      "checkbox": ""
+      "checkbox": "true"
     },
     {
       "id": null,
@@ -23,6 +23,27 @@
         "STUDY"
       ],
       "checkbox": false
+    },
+    {
+      "id": 1,
+      "name": "Выкинуть мусор",
+      "description": "",
+      "date": "",
+      "timeStart": "22:00",
+      "timeEnd": "23:00",
+      "tags": [
+        "STUDY"
+      ],
+      "checkbox": false,
+      "_isShow$": {
+        "closed": false,
+        "currentObservers": null,
+        "observers": [],
+        "isStopped": false,
+        "hasError": false,
+        "thrownError": null,
+        "_value": false
+      }
     }
   ]
 }

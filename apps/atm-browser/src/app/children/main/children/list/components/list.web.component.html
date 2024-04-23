@@ -41,7 +41,7 @@
     </div>
 
     <div class="list-today__completed-tasks">
-        <div class="list-today__header-complete">
+        <button class="list-today__header-complete">
             <img
                 class="list-today__link-icon"
                 [ngSrc]="'../../../../../assets/icons/tag-close.svg'"
@@ -49,13 +49,11 @@
                 height="16"
                 title="icon"
                 alt=""
-                [ngClass]="{ rotate: isShow }"
+                [ngClass]="{ rotate: true }"
             />
             <span class="list-today__header">Выполненные</span>
-        </div>
-
+        </button>
         <hr class="list-today__divider"/>
-
         <div class="list-today__task" *ngFor="let task of comletedTask; let i = index">
             <div class="list-today__task">
                 <div class="list-today__checkbox" >
@@ -71,9 +69,7 @@
             <div>
                 <span class="list-today__task-tags">#{{task.tags}}</span>
             </div>
-
         </div>
-
         <hr class="list-today__divider"/>
     </div>
 </nav>
