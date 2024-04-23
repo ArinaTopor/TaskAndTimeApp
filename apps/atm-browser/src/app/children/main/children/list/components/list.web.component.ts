@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { TaskModel } from '../models/task-model';
 import { ListContentManagerService } from '../services/list-content-manager.service';
-import { Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, startWith, Subject, switchMap, tap } from 'rxjs';
 
 @Component({
     selector: 'list-web-component',
@@ -13,88 +13,100 @@ import { Observable, switchMap, tap } from 'rxjs';
 })
 export class ListWebComponent {
     protected readonly currentDate: string = format(new Date(), 'd MMMM', { locale: ru });
-    protected taskObject: TaskModel = new TaskModel();
-    protected taskAll: TaskModel[] = [];
-    protected comletedTask: TaskModel[] = [];
+    protected taskAll$: Observable<TaskModel[]>;
+    protected completedTask$: Observable<TaskModel[]>;
+
+    public get isShow$(): Observable<boolean> {
+        return this._isShow$.asObservable();
+    }
+
+    private _isShow$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
     protected taskValueAdd: string = '';
 
-    constructor(protected listService: ListContentManagerService) {
-        this.getAllTask().subscribe(tasks => {
-            this.taskAll = tasks.filter(task => !task.checkbox);
-        });
+    protected refreshSubject$: Subject<void> = new Subject<void>();
 
-        this.getCompleteTask().subscribe(tasks => {
-            this.comletedTask = tasks.filter(task => task.checkbox);
-        });
+    constructor(protected listService: ListContentManagerService) {
+        this.taskAll$ = this.refreshSubject$
+            .pipe(
+                startWith(null),
+                switchMap(() => this.getAllTask()),
+                map((taskList: TaskModel[]) => taskList.filter(task => !task.checkbox))
+            );
+
+
+        this.completedTask$ = this.refreshSubject$
+            .pipe(
+                startWith(null),
+                switchMap(() => this.getCompleteTask()),
+            );
     }
+
     /**
      * Добавляем новую задачу и обновляем список задач
      */
-    public addTask():void {
+    public addTask(): void {
         if (this.taskValueAdd.trim() === '') {
             return;
         }
-        this.taskObject.id = Math.max(...this.taskAll.map(o => o.id)) + 1;
-        this.taskObject.name = this.taskValueAdd;
-        this.listService.addTask(this.taskObject).pipe(
-            tap(() => {
-                this.taskObject = new TaskModel();
-                this.taskValueAdd = '';
-            }),
-            switchMap(() => this.getAllTask())
-        ).subscribe(res => {
-            this.taskAll = res;
-        });
+
+        const newTask: TaskModel = {
+            // заполнить модель из модалки
+        } as TaskModel;
+
+        this.listService.addTask(newTask)
+            .pipe(
+                tap(() => {
+                    this.taskValueAdd = '';
+                }),
+                switchMap(() => this.getAllTask())
+                //TODO takeUntilDestroyed(),
+            )
+            .subscribe(() => {
+                this.refreshSubject$.next();
+            });
     }
 
     /**
      * Получаем список задач
      */
-    public getAllTask(): Observable<TaskModel[]> {
-        return this.listService.getAllTask().pipe(
-            tap(res => this.taskAll = res)
-        );
+    protected getAllTask(): Observable<TaskModel[]> {
+        return this.listService.getAllTask();
     }
+
     /**
      * Получаем список выполненных задач
      */
-    public getCompleteTask(): Observable<TaskModel[]> {
-        return this.listService.getCompleteTask().pipe(
-            tap(res => this.comletedTask = res)
-        );
+    protected getCompleteTask(): Observable<TaskModel[]> {
+        return this.listService.getCompleteTask();
     }
 
     /**
      * Удаляем выполненную задачу из списка невыполненных задач и помещаем ее в список выполненных задач
      */
-    public completeTask(i: number): void {
-        console.log(i);
-        const item: TaskModel[] = this.taskAll.splice(i, 1);
-        this.comletedTask.push(item[0]);
+    public completeTask(task: TaskModel): void {
+        //TODO: Отправлять запрос на частичное изменение задачи patch ()
     }
 
     /**
      * Возвращаем задачу в список невыполненных задач и удаляем из списка выполненных
      */
-    public unCompleteTask(i: number): void {
-        console.log(i);
-        const item: TaskModel[] = this.comletedTask.splice(i, 1);
-        this.taskAll.push(item[0]);
+    public unCompleteTask(task: TaskModel): void {
+        //TODO: аналогично
     }
 
     /**
      *
      * Показываем и скрываем список выполненных задач
      */
-    protected toggleSection(task: TaskModel): void {
-        task.toggleSection();
+    protected toggleSection(): void {
     }
 
     /**
      * Редактируем задачу
      */
-    protected editTask():void {
-        this.listService.editTask(this.taskObject).subscribe( () => {
+    protected editTask(task: TaskModel): void {
+        this.listService.editTask(task).subscribe(() => {
             // при нажатии на задачу открывается модалка реадктирования задачи
         });
     }
@@ -102,8 +114,8 @@ export class ListWebComponent {
     /**
      * Удаляем задачу
      */
-    protected deleteTask(curTask: TaskModel):void {
-        this.listService.deleteTask(curTask).subscribe( () => {
+    protected deleteTask(curTask: TaskModel): void {
+        this.listService.deleteTask(curTask).subscribe(() => {
             // удалить задачу можно в модалке редактирования задачи
         });
     }

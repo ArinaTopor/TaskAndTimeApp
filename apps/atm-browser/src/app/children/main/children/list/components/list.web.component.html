@@ -5,29 +5,33 @@
 
     <div class="list-today__current-tasks">
         <span class="list-today__header">{{ currentDate }} • Сегодня</span>
-        <hr class="list-today__divider"/>
+        <hr class="list-today__divider" />
 
-        <div class="list-today__task" *ngFor="let task of taskAll; let i = index">
-            <div class="list-today__task">
-                <div class="list-today__checkbox">
-                    <input type="checkbox" id="custom{{i}}" [(ngModel)]="task.checkbox" (ngModelChange)="completeTask(i)"/>
-                    <label for="custom{{i}}"></label>
+        <ng-container *ngIf="taskAll$ | async as taskList">
+            <div class="list-today__task" *ngFor="let task of taskList">
+                <div class="list-today__task">
+                    <div class="list-today__checkbox">
+                        <input type="checkbox" id="custom{{task.id}}" [(ngModel)]="task.checkbox"
+                               (ngModelChange)="completeTask(task)" />
+                        <label for="custom{{task.id}}"></label>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column">
+                        <span class="list-today__task-name">{{ task.name }}</span>
+                        <span class="list-today__task-start-time">{{ task.timeStart }}</span>
+                    </div>
                 </div>
-
-                <div style="display: flex; flex-direction: column">
-                    <span class="list-today__task-name">{{task.name}}</span>
-                    <span class="list-today__task-start-time">{{task.timeStart}}</span>
+                <div>
+                    <span class="list-today__task-tags">#{{ task.tags }}</span>
                 </div>
             </div>
-            <div>
-                <span class="list-today__task-tags">#{{task.tags}}</span>
-            </div>
-        </div>
+        </ng-container>
 
-        <hr class="list-today__divider"/>
 
-        <input placeholder="Add task" [(ngModel)] = "taskValueAdd">
-        <button class="list-today__add-task" (click)="addTask()" >
+        <hr class="list-today__divider" />
+
+        <input placeholder="Add task" [(ngModel)]="taskValueAdd">
+        <button class="list-today__add-task" (click)="addTask()">
             <img
                 class="list-today__link-icon"
                 [ngSrc]="'../../../../../assets/icons/add-task.svg'"
@@ -41,7 +45,7 @@
     </div>
 
     <div class="list-today__completed-tasks">
-        <button class="list-today__header-complete">
+        <button class="list-today__header-complete" (click)="toggleSection()">
             <img
                 class="list-today__link-icon"
                 [ngSrc]="'../../../../../assets/icons/tag-close.svg'"
@@ -53,23 +57,27 @@
             />
             <span class="list-today__header">Выполненные</span>
         </button>
-        <hr class="list-today__divider"/>
-        <div class="list-today__task" *ngFor="let task of comletedTask; let i = index">
-            <div class="list-today__task">
-                <div class="list-today__checkbox" >
-                    <input type="checkbox" id="custom{{i}}" [(ngModel)]="task.checkbox" (ngModelChange)="unCompleteTask(i)"/>
-                    <label for="custom{{i}}"></label>
-                </div>
+        <hr class="list-today__divider" />
+        <ng-container *ngIf="completedTask$ | async as completedTask">
+            <div class="list-today__task" *ngFor="let task of completedTask">
+                <div class="list-today__task">
+                    <div class="list-today__checkbox">
+                        <input type="checkbox" id="custom{{task.id}}" [(ngModel)]="task.checkbox"
+                               (ngModelChange)="unCompleteTask(task)" />
+                        <label for="custom{{task.id}}"></label>
+                    </div>
 
-                <div style="display: flex; flex-direction: column">
-                    <span class="list-today__task-name">{{task.name}}</span>
-                    <span class="list-today__task-start-time">{{task.timeStart}}</span>
+                    <div style="display: flex; flex-direction: column">
+                        <span class="list-today__task-name">{{ task.name }}</span>
+                        <span class="list-today__task-start-time">{{ task.timeStart }}</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="list-today__task-tags">#{{ task.tags }}</span>
                 </div>
             </div>
-            <div>
-                <span class="list-today__task-tags">#{{task.tags}}</span>
-            </div>
-        </div>
-        <hr class="list-today__divider"/>
+        </ng-container>
+
+        <hr class="list-today__divider" />
     </div>
 </nav>

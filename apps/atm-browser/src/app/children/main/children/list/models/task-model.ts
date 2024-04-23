@@ -1,7 +1,7 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export class TaskModel {
-    public id: number = 0;
+    public id: string = crypto.randomUUID();
     public name: string = '';
     public description: string = '';
     public date: string = '';

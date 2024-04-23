@@ -24,9 +24,7 @@ export class ListContentManagerService {
      * Получаем невыполненные задачи от сервера
      */
     public getAllTask(): Observable<TaskModel[]> {
-        return this._http.get<TaskModel[]>(this.serviceURL).pipe(
-            map(allTasks => allTasks.filter(task => !task.checkbox))
-        );
+        return this._http.get<TaskModel[]>(this.serviceURL);
     }
 
     /**
