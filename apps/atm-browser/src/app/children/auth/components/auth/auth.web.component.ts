@@ -14,7 +14,6 @@ import { BehaviorSubject } from 'rxjs';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthWebComponent {
-    public isLoggingIn: boolean = false;
     public isAuthError: BehaviorSubject<string | null> = new BehaviorSubject<
         string | null
     >(null);

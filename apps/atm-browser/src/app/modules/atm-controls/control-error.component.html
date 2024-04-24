@@ -1,1 +1,1 @@
-<p *ngFor="let err of msgErrors" class="error">{{ err }}</p>
+<p *ngFor="let err of msgErrors$ | async" class="error">{{ err }}</p>

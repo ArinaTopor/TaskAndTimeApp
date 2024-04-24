@@ -4,6 +4,9 @@
     --primary: #{$primary};
     --primary-active: #{$primary-active};
     --grey-input: #{$grey-input};
+    --shadow-modal: #{$shadow-modal};
+    --shadow-btn: #{$shadow-btn};
+    --error: #{$error};
 }
 body {
     margin: 0;
