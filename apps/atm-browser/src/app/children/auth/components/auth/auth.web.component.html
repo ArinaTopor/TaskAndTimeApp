@@ -35,7 +35,10 @@
                 Почта
                 <input tuiTextfield type="email" />
             </tui-input>
-            <control-error [control]="authForm.controls.email"></control-error>
+            <control-error
+                *ngIf="isValidContol(authForm.controls.email)"
+                [errors]="authForm.controls.email.errors"
+            ></control-error>
             <tui-input-password
                 tuiTextfieldSize="m"
                 formControlName="password"
@@ -45,17 +48,15 @@
                 Пароль
                 <input tuiTextfield type="password" />
             </tui-input-password>
-            <!-- <ng-container
-                *ngIf="
-                    authForm.controls.password.invalid &&
-                    authForm.controls.password.touched
-                "
+            <control-error
+                *ngIf="isValidContol(authForm.controls.password)"
+                [errors]="authForm.controls.password.errors"
             >
-                <p class="auth_form_error">
-                    {{ isAuthError.value }}
-                </p></ng-container
-            >
-            <ng-container *ngIf="isAuthError.value !== null"> </ng-container> -->
+            </control-error>
+
+            <p class="auth_form_error" *ngIf="isAuthError.value !== null">
+                {{ isAuthError.value }}
+            </p>
             <button
                 class="auth_form__button"
                 tuiButton

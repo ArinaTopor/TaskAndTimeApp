@@ -33,16 +33,10 @@
                 Имя пользователя
                 <input tuiTextfield type="text" />
             </tui-input>
-            <!-- <ng-container
-                *ngIf="
-                    registerForm.controls.name.invalid &&
-                    registerForm.controls.name.touched
-                "
-            >
-                <control-error
-                    [errors]="registerForm.controls.name.errors"
-                ></control-error> -->
-            <!-- </ng-container> -->
+            <control-error
+                *ngIf="isValidContol(registerForm.controls.name)"
+                [errors]="registerForm.controls.name.errors"
+            ></control-error>
             <tui-input
                 formControlName="email"
                 tuiTextfieldSize="m"
@@ -52,17 +46,10 @@
                 Почта
                 <input tuiTextfield type="email" />
             </tui-input>
-            <!-- <ng-container
-                *ngIf="
-                    registerForm.controls.email.invalid &&
-                    (registerForm.controls.email.dirty ||
-                        registerForm.controls.email.touched)
-                "
-            >
-                <control-error
-                    [errors]="registerForm.controls.email.errors"
-                ></control-error>
-            </ng-container> -->
+            <control-error
+                *ngIf="isValidContol(registerForm.controls.email)"
+                [errors]="registerForm.controls.email.errors"
+            ></control-error>
             <tui-input-password
                 tuiTextfieldSize="m"
                 formControlName="password"
@@ -72,16 +59,10 @@
                 Пароль
                 <input tuiTextfield type="password" />
             </tui-input-password>
-            <!-- <ng-container
-                *ngIf="
-                    registerForm.controls.password.invalid &&
-                    registerForm.controls.password.touched
-                "
-            >
-                <control-error
-                    [errors]="registerForm.controls.password.errors"
-                ></control-error>
-            </ng-container> -->
+            <control-error
+                *ngIf="isValidContol(registerForm.controls.password)"
+                [errors]="registerForm.controls.password.errors"
+            ></control-error>
             <tui-input-password
                 tuiTextfieldSize="m"
                 formControlName="repeatPassword"
@@ -91,27 +72,21 @@
                 Повторите пароль
                 <input tuiTextfield type="password" />
             </tui-input-password>
-            <!-- <ng-container
-                *ngIf="
-                    registerForm.controls.repeatPassword.invalid &&
-                    registerForm.controls.repeatPassword.touched
-                "
-            >
-                <control-error
-                    [errors]="registerForm.controls.repeatPassword.errors"
-                ></control-error>
-            </ng-container>
-            <ng-container
+            <control-error
+                *ngIf="isValidContol(registerForm.controls.repeatPassword)"
+                [errors]="registerForm.controls.repeatPassword.errors"
+            ></control-error>
+            <control-error
                 *ngIf="
                     registerForm.errors &&
-                    registerForm.controls.password.touched &&
-                    registerForm.controls.repeatPassword.touched &&
-                    registerForm.controls.password.dirty &&
-                    registerForm.controls.repeatPassword.dirty
+                    registerForm.controls.repeatPassword.dirty &&
+                    registerForm.controls.password.dirty
                 "
-            >
-                <control-error [errors]="registerForm.errors"></control-error>
-            </ng-container> -->
+                [errors]="registerForm.errors"
+            ></control-error>
+            <p class="auth_form_error" *ngIf="isRegisterError.value !== null">
+                {{ isRegisterError.value }}
+            </p>
             <button
                 class="auth_form__button"
                 tuiButton
