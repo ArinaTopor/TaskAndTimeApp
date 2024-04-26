@@ -3,7 +3,16 @@ import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { TaskModel } from '../models/task-model';
 import { ListContentManagerService } from '../services/list-content-manager.service';
-import { BehaviorSubject, map, Observable, startWith, Subject, switchMap, tap } from 'rxjs';
+import {
+    BehaviorSubject, delay,
+    map,
+    Observable,
+    shareReplay,
+    startWith,
+    Subject,
+    switchMap,
+    tap
+} from 'rxjs';
 
 @Component({
     selector: 'list-web-component',
@@ -14,6 +23,7 @@ import { BehaviorSubject, map, Observable, startWith, Subject, switchMap, tap } 
 export class ListWebComponent {
     protected readonly currentDate: string = format(new Date(), 'd MMMM', { locale: ru });
     protected taskAll$: Observable<TaskModel[]>;
+    protected unCompletedTask$: Observable<TaskModel[]>;
     protected completedTask$: Observable<TaskModel[]>;
 
     public get isShow$(): Observable<boolean> {
@@ -31,14 +41,19 @@ export class ListWebComponent {
             .pipe(
                 startWith(null),
                 switchMap(() => this.getAllTask()),
-                map((taskList: TaskModel[]) => taskList.filter(task => !task.checkbox))
+                shareReplay(1)
             );
 
-
-        this.completedTask$ = this.refreshSubject$
+        this.unCompletedTask$ = this.taskAll$
             .pipe(
-                startWith(null),
-                switchMap(() => this.getCompleteTask()),
+                map((taskList: TaskModel[]) => taskList.filter(task => !task.checkbox)),
+                delay(300)
+            );
+
+        this.completedTask$ = this.taskAll$
+            .pipe(
+                map((taskList: TaskModel[]) => taskList.filter(task => task.checkbox)),
+                delay(300)
             );
     }
 
@@ -75,24 +90,12 @@ export class ListWebComponent {
     }
 
     /**
-     * Получаем список выполненных задач
+     * Обновляем задачу
      */
-    protected getCompleteTask(): Observable<TaskModel[]> {
-        return this.listService.getCompleteTask();
-    }
-
-    /**
-     * Удаляем выполненную задачу из списка невыполненных задач и помещаем ее в список выполненных задач
-     */
-    public completeTask(task: TaskModel): void {
-        //TODO: Отправлять запрос на частичное изменение задачи patch ()
-    }
-
-    /**
-     * Возвращаем задачу в список невыполненных задач и удаляем из списка выполненных
-     */
-    public unCompleteTask(task: TaskModel): void {
-        //TODO: аналогично
+    protected updateTask(task: TaskModel): void {
+        this.listService.updateTask(task).subscribe(() => {
+            this.refreshSubject$.next();
+        });
     }
 
     /**
@@ -100,6 +103,7 @@ export class ListWebComponent {
      * Показываем и скрываем список выполненных задач
      */
     protected toggleSection(): void {
+        this._isShow$.next(!this._isShow$.value);
     }
 
     /**

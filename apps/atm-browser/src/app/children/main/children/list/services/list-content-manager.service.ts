@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TaskModel } from '../models/task-model';
 import { HttpClient } from '@angular/common/http';
 
@@ -30,8 +30,8 @@ export class ListContentManagerService {
     /**
      * Получает все выполненные задачи
      */
-    public getCompleteTask(): Observable<TaskModel[]> {
-        return this._http.get<TaskModel[]>(`${this.serviceURL}?checkbox=${true}`);
+    public updateTask(task: TaskModel): Observable<TaskModel> {
+        return this._http.patch<TaskModel>(`${this.serviceURL}/${task.id}`, { checkbox: task.checkbox });
     }
 
     /**

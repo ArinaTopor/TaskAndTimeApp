@@ -5,6 +5,7 @@ import { TuiCheckboxModule, TuiInputModule, TuiMarkerIconModule } from '@taiga-u
 import { AsyncPipe, NgClass, NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { TuiSvgModule } from '@taiga-ui/core';
 
 const routes: Routes = [
     {
@@ -19,6 +20,7 @@ const routes: Routes = [
     imports: [
         RouterModule.forChild(routes),
         TuiCheckboxModule,
+        TuiSvgModule,
         TuiInputModule,
         TuiMarkerIconModule,
         AsyncPipe,
