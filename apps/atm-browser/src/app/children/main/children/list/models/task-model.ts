@@ -1,5 +1,3 @@
-import { BehaviorSubject, Observable } from 'rxjs';
-
 export class TaskModel {
     public id: string = crypto.randomUUID();
     public name: string = '';
@@ -10,16 +8,4 @@ export class TaskModel {
     public tags: string[] = ['STUDY'];
     public checkbox: boolean = false;
 
-    public get isShow$(): Observable<boolean> {
-        return this._isShow$.asObservable();
-    }
-
-    private _isShow$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
-    /**
-     *  This method toogle section: open and close space.
-     */
-    public toggleSection(): void {
-        this._isShow$.next(!this._isShow$.value);
-    }
 }

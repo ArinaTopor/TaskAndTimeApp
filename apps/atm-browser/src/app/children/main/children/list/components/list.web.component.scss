@@ -35,7 +35,7 @@
     &__add-task {
         border: none;
         background-color: var(--base-text-color-dark);
-        color: #7b7b7b;
+        color: var(--grey);
         font-size: 16px;
         display: flex;
         flex-direction: row;
@@ -60,7 +60,7 @@
     &__task-name-complete {
         font-size: 16px;
         font-weight: 600;
-        color: #B3B3B3;
+        color: var(--complete);
     }
 
     &__task-start-time {
@@ -71,13 +71,13 @@
 
     &__task-start-time-complete {
         font-size: 12px;
-        color: #B3B3B3;
+        color: var(--complete);
         margin-top: 0.3em;
     }
 
     &__task-tags {
         font-size: 16px;
-        color: #7b7b7b;
+        color: var(--grey);
         margin-top: 3em;
     }
 
@@ -114,8 +114,8 @@
         display: inline-block;
         height: 24px;
         width: 24px;
-        background-color: #eee;
-        border: 1px solid #c8c8c8;
+        background-color: var(--checkbox-label);
+        border: 1px solid var(--checkbox-border);
         border-radius: 0.6em;
         cursor: pointer;
     }
@@ -125,8 +125,8 @@
         display: inline-block;
         height: 24px;
         width: 24px;
-        background-color: #eee;
-        border: 1px solid #c8c8c8;
+        background-color: var(--checkbox-label);
+        border: 1px solid var(--checkbox-border);
         border-radius: 0.6em;
         cursor: pointer;
     }
@@ -137,18 +137,22 @@
     }
 
     &__checkbox-complete input:checked + label {
-        background-color: #b3b3b3;
-        border: 1px solid #b3b3b3;
+        background-color: var(--checkbox-uncomplete);
+        border: 1px solid var(--checkbox-uncomplete);
     }
 
-    &__header-complete {
+    &__button-complete {
         display: flex;
         flex-direction: row;
         align-items: center;
         border: none;
         margin-right: 1em;
         margin-top: 4em;
-        background-color: white;
+        background-color: rgba(0, 0, 0, 0);
     }
+}
+
+.rotate {
+    transform: rotate(90deg);
 }
 

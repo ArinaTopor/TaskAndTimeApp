@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { TaskModel } from '../models/task-model';
 import { ListContentManagerService } from '../services/list-content-manager.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
-    BehaviorSubject, delay,
+    BehaviorSubject,
+    delay,
     map,
     Observable,
     shareReplay,
@@ -25,12 +27,12 @@ export class ListWebComponent {
     protected taskAll$: Observable<TaskModel[]>;
     protected unCompletedTask$: Observable<TaskModel[]>;
     protected completedTask$: Observable<TaskModel[]>;
+    protected destroyRef: DestroyRef = inject(DestroyRef);
+    private _isShow$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     public get isShow$(): Observable<boolean> {
         return this._isShow$.asObservable();
     }
-
-    private _isShow$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     protected taskValueAdd: string = '';
 
@@ -47,13 +49,13 @@ export class ListWebComponent {
         this.unCompletedTask$ = this.taskAll$
             .pipe(
                 map((taskList: TaskModel[]) => taskList.filter(task => !task.checkbox)),
-                delay(300)
+                delay(300),
             );
 
         this.completedTask$ = this.taskAll$
             .pipe(
                 map((taskList: TaskModel[]) => taskList.filter(task => task.checkbox)),
-                delay(300)
+                delay(300),
             );
     }
 
@@ -74,8 +76,8 @@ export class ListWebComponent {
                 tap(() => {
                     this.taskValueAdd = '';
                 }),
-                switchMap(() => this.getAllTask())
-                //TODO takeUntilDestroyed(),
+                switchMap(() => this.getAllTask()),
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => {
                 this.refreshSubject$.next();
@@ -93,9 +95,11 @@ export class ListWebComponent {
      * Обновляем задачу
      */
     protected updateTask(task: TaskModel): void {
-        this.listService.updateTask(task).subscribe(() => {
-            this.refreshSubject$.next();
-        });
+        this.listService.updateTask(task)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => {
+                this.refreshSubject$.next();
+            });
     }
 
     /**
@@ -110,7 +114,7 @@ export class ListWebComponent {
      * Редактируем задачу
      */
     protected editTask(task: TaskModel): void {
-        this.listService.editTask(task).subscribe(() => {
+        this.listService.editTask(task).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             // при нажатии на задачу открывается модалка реадктирования задачи
         });
     }
@@ -119,7 +123,7 @@ export class ListWebComponent {
      * Удаляем задачу
      */
     protected deleteTask(curTask: TaskModel): void {
-        this.listService.deleteTask(curTask).subscribe(() => {
+        this.listService.deleteTask(curTask).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             // удалить задачу можно в модалке редактирования задачи
         });
     }

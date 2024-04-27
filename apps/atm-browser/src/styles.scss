@@ -3,6 +3,11 @@
     font-family: $font-text-base;
     --primary: #{$primary};
     --primary-active: #{$primary-active};
+    --checkbox-uncomplete: #{$checkbox-uncomplete};
+    --checkbox-label: #{$checkbox-label};
+    --checkbox-border: #{$checkbox-border};
+    --grey: #{$grey};
+    --complete: #{$complete};
 }
 body {
     margin: 0;
