@@ -42,11 +42,15 @@ import { BehaviorSubject, Subject } from 'rxjs';
     standalone: true
 })
 export class TaskComponent {
-    @Input() public currentTask$?: BehaviorSubject<ITask | null>;
-    @Input() public stateModal: boolean = false;
-    @Input() public inSection?: boolean | null = false;
+    @Input()
+    public currentTask$?: BehaviorSubject<ITask | null>;
+    @Input()
+    public stateModal: boolean = false;
+    @Input()
+    public inSection?: boolean | null = false;
 
-    @Input() public set actionModal(value: 'add' | 'edit' | null) {
+    @Input()
+    public set actionModal(value: 'add' | 'edit' | null) {
         this.actionModalValue = value;
         this.getForm();
     }
@@ -90,7 +94,8 @@ export class TaskComponent {
         return this.actionModalValue === 'add'? 'margin-left: 24em' : '';
     }
 
-    constructor(protected taskService: TaskService, @Inject(TuiDialogService) protected readonly dialogs: TuiDialogService) {}
+    constructor(protected taskService: TaskService, @Inject(TuiDialogService) protected readonly dialogs: TuiDialogService) {
+    }
 
     /**
      * Получаем значение времени из формы и форматируем
@@ -130,7 +135,8 @@ export class TaskComponent {
     public getForm(): FormGroup {
         if (this.actionModalValue === 'edit') {
             this.currentTask$?.
-                pipe(takeUntilDestroyed(this.destroyRef))
+                pipe(
+                    takeUntilDestroyed(this.destroyRef))
                 .subscribe((currentTask: ITask | null) => {
                     if (currentTask !== null) {
                         this.taskForm.setValue({
@@ -209,6 +215,7 @@ export class TaskComponent {
                         .subscribe(() => {
                             this.refreshSubject$.next();
                             this.stateModal = false;
+                            this.clearForm();
                         });
                 });
         } else {
@@ -231,10 +238,9 @@ export class TaskComponent {
                         this.stateModal = false;
                     });
             }
+            this.clearForm();
         }
-        this.taskForm.reset();
-        this.valueDate = null;
-        this.emptyName = true;
+
     }
 
     /**
@@ -287,4 +293,15 @@ export class TaskComponent {
 
         return `${hours}:${minutes}`;
     }
+
+    /**
+     * Очистить форму
+     */
+    private clearForm(): void {
+        this.taskForm.reset();
+        this.valueDate = null;
+        this.emptyName = true;
+        this.currentTask$?.next(null);
+    }
+
 }
