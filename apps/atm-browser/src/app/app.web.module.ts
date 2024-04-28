@@ -1,4 +1,4 @@
-import { importProvidersFrom, NgModule } from '@angular/core';
+import { ErrorHandler, importProvidersFrom, NgModule } from '@angular/core';
 
 import { AppComponent } from './components/app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import {
     TuiAlertModule,
     TuiDialogModule,
+    TuiNotificationModule,
     TuiRootModule,
     TuiTextfieldControllerModule,
 } from '@taiga-ui/core';
@@ -20,6 +21,9 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { SkeletonLoadingComponent } from './modules/loader/skeleton.component';
+import { GlobalErrorHandler } from './services/global-error-handling.service';
+import { HttpClientModule } from '@angular/common/http';
+import { AlertWithCustomLabelComponent } from './modules/widget-error/widget-error.component';
 
 @NgModule({
     imports: [
@@ -34,11 +38,21 @@ import { SkeletonLoadingComponent } from './modules/loader/skeleton.component';
         TuiInputModule,
         ReactiveFormsModule,
         TuiTextfieldControllerModule,
+        TuiNotificationModule,
         BrowserAnimationsModule,
         NgOptimizedImage,
+        HttpClientModule,
     ],
-    providers: [provideAnimations(), importProvidersFrom(TuiRootModule)],
-    declarations: [AppComponent, SkeletonLoadingComponent],
+    providers: [
+        provideAnimations(),
+        importProvidersFrom(TuiRootModule),
+        { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    ],
+    declarations: [
+        AppComponent,
+        SkeletonLoadingComponent,
+        AlertWithCustomLabelComponent,
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
