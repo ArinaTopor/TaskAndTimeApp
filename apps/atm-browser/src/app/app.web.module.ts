@@ -23,7 +23,6 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { SkeletonLoadingComponent } from './modules/loader/skeleton.component';
 import { GlobalErrorHandler } from './services/global-error-handling.service';
 import { HttpClientModule } from '@angular/common/http';
-import { AlertWithCustomLabelComponent } from './modules/widget-error/widget-error.component';
 
 @NgModule({
     imports: [
@@ -48,11 +47,7 @@ import { AlertWithCustomLabelComponent } from './modules/widget-error/widget-err
         importProvidersFrom(TuiRootModule),
         { provide: ErrorHandler, useClass: GlobalErrorHandler },
     ],
-    declarations: [
-        AppComponent,
-        SkeletonLoadingComponent,
-        AlertWithCustomLabelComponent,
-    ],
+    declarations: [AppComponent, SkeletonLoadingComponent],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
