@@ -2,7 +2,6 @@ import {
     ErrorHandler,
     Inject,
     Injectable,
-    Injector,
     NgZone,
 } from '@angular/core';
 import { TuiAlertService } from '@taiga-ui/core';
@@ -11,7 +10,6 @@ import { TuiAlertService } from '@taiga-ui/core';
 })
 export class GlobalErrorHandler implements ErrorHandler {
     constructor(
-        private _injector: Injector,
         @Inject(TuiAlertService) private readonly _alerts: TuiAlertService,
         private _zone: NgZone
     ) {}

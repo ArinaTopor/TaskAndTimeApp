@@ -4,25 +4,19 @@ import { tap } from 'rxjs';
 
 @Directive()
 export class LoginBaseComponent implements OnInit {
-
-    constructor(
-        @Inject(STORAGE) protected storageService: IStorage
-    ) {
-    }
+    constructor(@Inject(STORAGE) protected storageService: IStorage) {}
 
     /**
      * инициализация компоненты и получения
      */
     public ngOnInit(): void {
         // init
-        this.storageService.getDataByKey<string>('login')
-            .pipe(
-                tap((login: string): void => {
-                    if (login) {
-                        //...
-                    }
-                })
-            );
+        this.storageService.getDataByKey<string>('login').pipe(
+            tap((login: string): void => {
+                if (login) {
+                    //...
+                }
+            })
+        );
     }
-
 }

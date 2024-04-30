@@ -1,0 +1,70 @@
+.auth {
+    &_wrapper {
+        height: 100vh;
+        background: var(--bg-auth);
+        display: flex;
+        font-size: 16px;
+    }
+    &_container {
+        display: flex;
+        flex-direction: column;
+        width: 31.25vw;
+        background-color: var(--bg-modal-auth);
+        box-shadow: var(--shadow-modal);
+        padding: 3.7vh;
+        margin: 11.8vh auto auto;
+        justify-content: center;
+        border-radius: 20px;
+        text-align: center;
+    }
+    &__logo {
+        display: block;
+        margin: 3vh auto;
+        &_text {
+            fill: var(--text-color);
+        }
+        &_line {
+            stroke: var(--text-color);
+        }
+    }
+    &__title {
+        margin-bottom: 1.2vh;
+        font-size: 1.6vw;
+    }
+    &__link {
+        cursor: pointer;
+    }
+    &_form {
+        margin-top: 5.5vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        &__input {
+            margin-top: 2.8vh;
+            --tui-primary: var(--primary);
+            --tui-primary-active: var(--primary);
+            --tui-primary-hover: var(--primary-active);
+            --tui-focus: var(--primary);
+            --tui-error-fill: var(--error);
+        }
+        &__input:nth-child(1) {
+            margin-top: 0;
+        }
+        &__button {
+            width: 8.8vw;
+            margin: 2.8vh auto 0;
+            border-radius: 25px;
+            box-shadow: var(--shadow-btn);
+            --tui-primary: var(--primary);
+            --tui-primary-hover: var(--primary-active);
+            --tui-primary-active: var(--primary-active);
+        }
+        &_error {
+            color: var(--error);
+            font-size: 16px;
+            padding: 0;
+            margin: 2px 0;
+            text-align: start;
+        }
+    }
+}
