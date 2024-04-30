@@ -2,6 +2,8 @@
 
 Приложение представляет собой таск-менеджер и приложение для ведения списка дел.
 
+Учетная запись: почта: admin@gmail.com пароль: 123456
+
 ## Функционал приложения
 
 https://docs.google.com/document/d/1bvkUENSayelI5ft-9M-YKob8-oJ8i-z9nkL6eS0d8Ug/edit
