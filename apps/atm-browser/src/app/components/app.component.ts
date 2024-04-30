@@ -1,15 +1,17 @@
-import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
-import {
-    TUI_SANITIZER,
-} from '@taiga-ui/core';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'atm-project-root',
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }]
+    providers: [],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+    public ngOnInit(): void {
+        const mode: string | null = localStorage.getItem('mode');
+        mode
+            ? document.body.classList.add(mode)
+            : document.body.classList.add('light');
+    }
 }

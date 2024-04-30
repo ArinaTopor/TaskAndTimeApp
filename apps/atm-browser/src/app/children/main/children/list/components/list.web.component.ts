@@ -28,15 +28,13 @@ export class ListWebComponent {
     protected unCompletedTask$: Observable<TaskModel[]>;
     protected completedTask$: Observable<TaskModel[]>;
     protected destroyRef: DestroyRef = inject(DestroyRef);
+    protected taskValueAdd: string = '';
+    protected refreshSubject$: Subject<void> = new Subject<void>();
     private _isShow$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     public get isShow$(): Observable<boolean> {
         return this._isShow$.asObservable();
     }
-
-    protected taskValueAdd: string = '';
-
-    protected refreshSubject$: Subject<void> = new Subject<void>();
 
     constructor(protected listService: ListContentManagerService) {
         this.taskAll$ = this.refreshSubject$
@@ -108,23 +106,5 @@ export class ListWebComponent {
      */
     protected toggleSection(): void {
         this._isShow$.next(!this._isShow$.value);
-    }
-
-    /**
-     * Редактируем задачу
-     */
-    protected editTask(task: TaskModel): void {
-        this.listService.editTask(task).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-            // при нажатии на задачу открывается модалка реадктирования задачи
-        });
-    }
-
-    /**
-     * Удаляем задачу
-     */
-    protected deleteTask(curTask: TaskModel): void {
-        this.listService.deleteTask(curTask).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-            // удалить задачу можно в модалке редактирования задачи
-        });
     }
 }

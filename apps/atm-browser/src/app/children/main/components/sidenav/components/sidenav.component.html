@@ -6,9 +6,9 @@
                 src="../../../../../assets/icons/personal-account.svg"
                 title="personal-account"
             />
-            <span class="sidenavbar__personal-account-name"
-                >Имя пользователя</span
-            >
+            <span class="sidenavbar__personal-account-name">
+                {{ (user$ | async)?.displayName }}
+            </span>
         </div>
 
         <ul class="sidenavbar__list">
@@ -126,7 +126,11 @@
                     src="../../../../../assets/icons/logout.svg"
                     title="icon"
                 />
-                <span class="sidenavbar__settings-log-out-text">Выход</span>
+                <span
+                    class="sidenavbar__settings-log-out-text"
+                    (click)="signOut()"
+                    >Выход</span
+                >
             </button>
         </div>
     </div>

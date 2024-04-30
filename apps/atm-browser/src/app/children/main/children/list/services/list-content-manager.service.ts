@@ -34,17 +34,4 @@ export class ListContentManagerService {
         return this._http.patch<TaskModel>(`${this.serviceURL}/${task.id}`, { checkbox: task.checkbox });
     }
 
-    /**
-     * Удаляет задачу из сервера
-     */
-    public deleteTask(task: TaskModel): Observable<TaskModel> {
-        return this._http.delete<TaskModel>(this.serviceURL + '/' + task.id);
-    }
-
-    /**
-     * Редактирование задачи
-     */
-    public editTask(task: TaskModel): Observable<TaskModel> {
-        return this._http.put<TaskModel>(this.serviceURL + '/' + task.id, task);
-    }
 }

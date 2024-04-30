@@ -3,6 +3,10 @@
     font-family: $font-text-base;
     --primary: #{$primary};
     --primary-active: #{$primary-active};
+    --grey-input: #{$grey-input};
+    --shadow-modal: #{$shadow-modal};
+    --shadow-btn: #{$shadow-btn};
+    --error: #{$error};
     --checkbox-uncomplete: #{$checkbox-uncomplete};
     --checkbox-label: #{$checkbox-label};
     --checkbox-border: #{$checkbox-border};
@@ -20,4 +24,15 @@ body.dark {
 }
 body.light {
     @include lighten();
+}
+h1 {
+    padding: 0;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: var(--primary);
+}
+a:hover {
+    color: var(--primary-active);
 }
