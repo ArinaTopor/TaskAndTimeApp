@@ -26,10 +26,12 @@ export class FirebaseAuthService {
      * this func for SignIn
      * @param params is email and login from login form
      */
-    public async signIn(params: ILogin): Promise<IUserCredential> {
-        return this._afAuth.signInWithEmailAndPassword(
-            params.email,
-            params.password
+    public signIn(params: ILogin): Observable<IUserCredential> {
+        return from(
+            this._afAuth.signInWithEmailAndPassword(
+                params.email,
+                params.password
+            )
         );
     }
     /**
