@@ -31,7 +31,7 @@
       "tags": [
         "Home"
       ],
-      "checkbox": false,
+      "checkbox": true,
       "_isShow$": {
         "closed": false,
         "currentObservers": null,
