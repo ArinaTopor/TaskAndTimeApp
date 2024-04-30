@@ -7,5 +7,4 @@ export class TaskModel {
     public timeEnd: string = '23:00';
     public tags: string[] = ['STUDY'];
     public checkbox: boolean = false;
-
 }
