@@ -35,7 +35,6 @@ import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
         BrowserModule,
         NgxSkeletonLoaderModule.forRoot(),
         NxWelcomeComponent,
-        RouterModule.forRoot(appRoutes),
         TuiRootModule,
         RouterModule.forRoot(appRoutes),
         TuiDialogModule,
@@ -49,8 +48,8 @@ import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
         NgOptimizedImage,
         HttpClientModule,
         AngularFireModule.initializeApp(environment.firebase),
-        AngularFireAuthModule,
         AngularFirestoreModule,
+        AngularFireAuthModule,
     ],
     providers: [
         provideAnimations(),

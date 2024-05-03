@@ -3,8 +3,11 @@ import {
     Inject,
     Injectable,
     NgZone,
+    isDevMode,
 } from '@angular/core';
 import { TuiAlertService } from '@taiga-ui/core';
+import { FirebaseError } from 'firebase/app';
+import { take } from 'rxjs';
 @Injectable({
     providedIn: 'root',
 })
@@ -17,6 +20,9 @@ export class GlobalErrorHandler implements ErrorHandler {
      * function for handle error
      */
     public handleError(error: unknown): void {
+        if (error instanceof FirebaseError) {
+            return;
+        }
         this._zone.run(() => {
             this._alerts
                 .open('', {
@@ -24,8 +30,11 @@ export class GlobalErrorHandler implements ErrorHandler {
                     status: 'error',
                     autoClose: false,
                 })
+                .pipe(take(1))
                 .subscribe();
-            console.log(error);
+            if (isDevMode()) {
+                console.log(error);
+            }
         });
     }
 }

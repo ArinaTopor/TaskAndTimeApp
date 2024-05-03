@@ -55,7 +55,6 @@ export class AuthWebComponent {
             .pipe(
                 tap((userCredentials: IUserCredential) => {
                     this._fbAuthService.saveSessionInfo(userCredentials);
-
                     this._router.navigate(['main']);
                 }),
                 catchError(() => {
