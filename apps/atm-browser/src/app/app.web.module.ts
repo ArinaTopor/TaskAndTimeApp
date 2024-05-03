@@ -29,10 +29,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { NxWelcomeComponent } from './nx-welcome.component';
 import { environment } from '../enviroment/envoronment';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     imports: [
         BrowserModule,
+        HttpClientModule,
         NgxSkeletonLoaderModule.forRoot(),
         NxWelcomeComponent,
         TuiRootModule,

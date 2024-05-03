@@ -7,6 +7,11 @@
     --shadow-modal: #{$shadow-modal};
     --shadow-btn: #{$shadow-btn};
     --error: #{$error};
+    --checkbox-uncomplete: #{$checkbox-uncomplete};
+    --checkbox-label: #{$checkbox-label};
+    --checkbox-border: #{$checkbox-border};
+    --grey: #{$grey};
+    --complete: #{$complete};
 }
 body {
     margin: 0;

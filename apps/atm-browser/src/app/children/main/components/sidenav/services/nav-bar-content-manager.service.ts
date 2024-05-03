@@ -42,7 +42,6 @@ export class NavBarContentManagerService {
     protected getProjectListByType(type: ProjectType): Observable<IProject[]> {
         switch (type) {
             case ProjectType.filter:
-
                 return of(FILTERS).pipe(delay(1000));
             case ProjectType.tag:
                 return of(TAGS);

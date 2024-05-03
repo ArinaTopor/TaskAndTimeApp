@@ -1,0 +1,46 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "name": "Выкинуть мусор",
+      "description": "",
+      "date": "",
+      "timeStart": "22:00",
+      "timeEnd": "23:00",
+      "tags": [
+        "STUDY"
+      ],
+      "checkbox": false,
+      "_isShow$": {
+        "closed": false,
+        "currentObservers": null,
+        "observers": [],
+        "isStopped": false,
+        "hasError": false,
+        "thrownError": null,
+        "_value": false
+      }
+    },
+    {
+      "id": "2",
+      "name": "Купить молоко",
+      "description": "",
+      "date": "",
+      "timeStart": "15:00",
+      "timeEnd": "23:00",
+      "tags": [
+        "Home"
+      ],
+      "checkbox": true,
+      "_isShow$": {
+        "closed": false,
+        "currentObservers": null,
+        "observers": [],
+        "isStopped": false,
+        "hasError": false,
+        "thrownError": null,
+        "_value": false
+      }
+    }
+  ]
+}
