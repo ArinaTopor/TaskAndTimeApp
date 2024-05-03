@@ -24,7 +24,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { SkeletonLoadingComponent } from './modules/loader/skeleton.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
-import { environment } from '../enviroment/envoronment';
+import { environment } from '../enviroment/environment';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -36,7 +36,6 @@ import { HttpClientModule } from '@angular/common/http';
         NxWelcomeComponent,
         RouterModule.forRoot(appRoutes),
         TuiRootModule,
-        RouterModule.forRoot(appRoutes),
         TuiDialogModule,
         TuiAlertModule,
         CommonModule,
