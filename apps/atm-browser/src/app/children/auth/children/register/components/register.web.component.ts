@@ -11,7 +11,7 @@ import { FirebaseAuthService } from '@atm-project/common';
 import { IRegisterData } from '@atm-project/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { checkValid } from '@atm-project/common';
-import { BehaviorSubject, catchError } from 'rxjs';
+import { BehaviorSubject, catchError, finalize, tap } from 'rxjs';
 @Component({
     selector: 'register-web-component',
     templateUrl: './register.web.component.html',
@@ -41,6 +41,9 @@ export class RegisterWebComponent {
         },
         conformPassword
     );
+    protected isLoad: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+        false
+    );
     public isRegisterError: BehaviorSubject<string | null> =
         new BehaviorSubject<string | null>(null);
     constructor(
@@ -66,16 +69,21 @@ export class RegisterWebComponent {
      */
     public signUp(): void {
         const rawForm: IRegisterData = this.registerForm.getRawValue();
+        this.isLoad.next(true);
         this._fbAuthService
             .signUp(rawForm)
             .pipe(
-                takeUntilDestroyed(this._destroyRef),
-                catchError(async () =>
+                tap(() => {
+                    this.navigateAuth();
+                }),
+                catchError(async () => {
                     this.isRegisterError.next(
                         'Не удалось зарегистрировать пользователя. Попробуйте снова.'
-                    )
-                )
+                    );
+                }),
+                finalize(() => this.isLoad.next(false)),
+                takeUntilDestroyed(this._destroyRef)
             )
-            .subscribe(() => this.navigateAuth());
+            .subscribe();
     }
 }
