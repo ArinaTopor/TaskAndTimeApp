@@ -10,13 +10,7 @@ import { Router } from '@angular/router';
 import { ILogin, IUserCredential, checkValid } from '@atm-project/common';
 import { FirebaseAuthService } from '@atm-project/common';
 import { ILoginForm } from '@atm-project/common';
-import {
-    BehaviorSubject,
-    catchError,
-    finalize,
-    from,
-    tap,
-} from 'rxjs';
+import { BehaviorSubject, EMPTY, catchError, finalize, tap } from 'rxjs';
 
 @Component({
     selector: 'auth-web-component',
@@ -61,15 +55,18 @@ export class AuthWebComponent {
     protected onSignIn(): void {
         const rawForm: ILogin = this.authForm.getRawValue();
         this.isLoad.next(true);
-        from(this._fbAuthService.signIn(rawForm))
+        this._fbAuthService
+            .signIn(rawForm)
             .pipe(
                 tap((userCredentials: IUserCredential) => {
                     this._fbAuthService.saveSessionInfo(userCredentials);
                     this._router.navigate(['main']);
                 }),
-                catchError(async () =>
-                    this.isAuthError.next('Неправильный логин или пароль')
-                ),
+                catchError(() => {
+                    this.isAuthError.next('Неправильный логин или пароль');
+
+                    return EMPTY;
+                }),
                 finalize(() => this.isLoad.next(false)),
                 takeUntilDestroyed(this._destroyRef)
             )
