@@ -13,14 +13,12 @@ import {
 } from 'rxjs';
 import { IUserCredential } from '@atm-project/common';
 import { updateProfile } from '@angular/fire/auth';
-
 @Injectable()
 export class FirebaseAuthService {
     public user$: Observable<firebase.User | null> = this._afAuth.user;
     private _isAuth: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
         false
     );
-
     constructor(private _router: Router, private _afAuth: AngularFireAuth) {}
     /**
      * this func for SignIn
