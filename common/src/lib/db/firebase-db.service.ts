@@ -11,7 +11,7 @@ export class FirebaseDatabaseService {
      */
     public addUser(user: firebase.default.User, name: string): void {
         this._afs
-            .doc('/users/' + user.uid)
+            .doc<IUser>('/users/' + user.uid)
             .set({ name: name, email: user.email });
     }
 }
