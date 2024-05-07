@@ -1,0 +1,55 @@
+<button (click)="showDialog()">+</button>
+<ng-template
+    let-observer
+    [tuiDialogOptions]="{ label: 'Добавить проект', size: 'auto' }"
+    [(tuiDialog)]="isOpen"
+>
+    <div class="new_project">
+        <!-- <h1>Добавить проект</h1> -->
+        <form
+            class="new_project__form"
+            [formGroup]="newProjectForm"
+            (ngSubmit)="observer.complete()"
+        >
+            <tui-input
+                class="new_project_input"
+                tuiAutoFocus
+                formControlName="projectName"
+                tuiTextfieldSize="m"
+            >
+                Введите название проекта
+            </tui-input>
+            <div class="new_project__color_picker_wrapper">
+                <input
+                    class="new_project__color_picker"
+                    type="text"
+                    [(colorPicker)]="color"
+                    [cpOutputFormat]="'rgba'"
+                    name="color"
+                    [style.background]="color"
+                    formControlName="color"
+                />
+                <div class="new_project__color_picker_wrapper_container">
+                    <p
+                        class="new_project__color_picker_wrapper_container_title"
+                    >
+                        Выберите цвет проекта
+                    </p>
+                    <p
+                        class="new_project__color_picker_wrapper_container_color"
+                    >
+                        {{ color }}
+                    </p>
+                </div>
+            </div>
+            <button
+                tuiButton
+                class="new_project__button"
+                size="m"
+                type="submit"
+            >
+                Добавить
+            </button>
+        </form>
+    </div>
+</ng-template>
