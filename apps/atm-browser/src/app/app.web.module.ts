@@ -27,10 +27,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { NxWelcomeComponent } from './nx-welcome.component';
 import { environment } from '../enviroment/environment';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from './app.routes';
 
 @NgModule({
     imports: [
         BrowserModule,
+        RouterModule.forRoot(appRoutes),
         HttpClientModule,
         NgxSkeletonLoaderModule.forRoot(),
         NxWelcomeComponent,
