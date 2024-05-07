@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { ILogin, IUserCredential, checkValid } from '@atm-project/common';
 import { FirebaseAuthService } from '@atm-project/common';
 import { ILoginForm } from '@atm-project/common';
-import { BehaviorSubject, EMPTY, catchError, from, tap } from 'rxjs';
+import { BehaviorSubject, EMPTY, catchError, finalize, tap } from 'rxjs';
 
 @Component({
     selector: 'auth-web-component',
@@ -23,6 +23,9 @@ export class AuthWebComponent {
     public isAuthError: BehaviorSubject<string | null> = new BehaviorSubject<
         string | null
     >(null);
+    protected isLoad: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+        false
+    );
 
     protected authForm: FormGroup<ILoginForm> = new FormGroup({
         email: new FormControl('', {
@@ -51,7 +54,9 @@ export class AuthWebComponent {
      */
     protected onSignIn(): void {
         const rawForm: ILogin = this.authForm.getRawValue();
-        from(this._fbAuthService.signIn(rawForm))
+        this.isLoad.next(true);
+        this._fbAuthService
+            .signIn(rawForm)
             .pipe(
                 tap((userCredentials: IUserCredential) => {
                     this._fbAuthService.saveSessionInfo(userCredentials);
@@ -62,6 +67,7 @@ export class AuthWebComponent {
 
                     return EMPTY;
                 }),
+                finalize(() => this.isLoad.next(false)),
                 takeUntilDestroyed(this._destroyRef)
             )
             .subscribe();

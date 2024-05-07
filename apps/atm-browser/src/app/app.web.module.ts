@@ -1,6 +1,5 @@
 import { ErrorHandler, importProvidersFrom, NgModule } from '@angular/core';
 import { AppComponent } from './components/app.component';
-import { RouterModule } from '@angular/router';
 import {
     TUI_SANITIZER,
     TuiAlertModule,
@@ -13,7 +12,6 @@ import {
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { TuiInputModule } from '@taiga-ui/kit';
 import { ReactiveFormsModule } from '@angular/forms';
-import { appRoutes } from './app.routes';
 import {
     BrowserAnimationsModule,
     provideAnimations,
@@ -27,17 +25,19 @@ import { SkeletonLoadingComponent } from './modules/loader/skeleton.component';
 import { GlobalErrorHandler } from './services/global-error-handling.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NxWelcomeComponent } from './nx-welcome.component';
-import { environment } from '../enviroment/envoronment';
+import { environment } from '../enviroment/environment';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from './app.routes';
 
 @NgModule({
     imports: [
         BrowserModule,
+        RouterModule.forRoot(appRoutes),
         HttpClientModule,
         NgxSkeletonLoaderModule.forRoot(),
         NxWelcomeComponent,
         TuiRootModule,
-        RouterModule.forRoot(appRoutes),
         TuiDialogModule,
         TuiAlertModule,
         CommonModule,
