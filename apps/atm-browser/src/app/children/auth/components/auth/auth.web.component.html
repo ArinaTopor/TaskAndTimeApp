@@ -64,6 +64,7 @@
                 size="m"
                 (click)="onSignIn()"
                 [disabled]="!authForm.valid"
+                [showLoader]="isLoad.value"
             >
                 Войти
             </button>

@@ -95,6 +95,7 @@
                 style="width: 17.2vw"
                 (click)="signUp()"
                 [disabled]="!registerForm.valid"
+                [showLoader]="isLoad.value"
             >
                 Зарегистрироваться
             </button>

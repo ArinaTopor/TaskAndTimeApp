@@ -13,13 +13,20 @@ import {
 } from 'rxjs';
 import { IUserCredential } from '@atm-project/common';
 import { updateProfile } from '@angular/fire/auth';
+import { FirebaseDatabaseService } from '../../db/firebase-db.service';
+
 @Injectable()
 export class FirebaseAuthService {
     public user$: Observable<firebase.User | null> = this._afAuth.user;
     private _isAuth: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
         false
     );
-    constructor(private _router: Router, private _afAuth: AngularFireAuth) {}
+
+    constructor(
+        private _router: Router,
+        private _afAuth: AngularFireAuth,
+        private _fbDb: FirebaseDatabaseService
+    ) {}
     /**
      * this func for SignIn
      * @param params is email and login from login form
@@ -53,6 +60,8 @@ export class FirebaseAuthService {
         ).pipe(
             switchMap((response) => {
                 if (response.user) {
+                    this._fbDb.addUser(response.user, params.name);
+
                     return from(
                         updateProfile(response.user, {
                             displayName: params.name,

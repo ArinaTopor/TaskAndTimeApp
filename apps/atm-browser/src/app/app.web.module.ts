@@ -1,12 +1,9 @@
 import {
     ErrorHandler,
     importProvidersFrom,
-    INJECTOR,
-    Injector,
     NgModule,
 } from '@angular/core';
 import { AppComponent } from './components/app.component';
-import { RouterModule } from '@angular/router';
 import {
     TUI_SANITIZER,
     TuiAlertModule,
@@ -19,7 +16,6 @@ import {
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { TuiInputModule } from '@taiga-ui/kit';
 import { ReactiveFormsModule } from '@angular/forms';
-import { appRoutes } from './app.routes';
 import {
     BrowserAnimationsModule,
     provideAnimations,
@@ -33,21 +29,19 @@ import { SkeletonLoadingComponent } from './modules/loader/skeleton.component';
 import { GlobalErrorHandler } from './services/global-error-handling.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NxWelcomeComponent } from './nx-welcome.component';
-import { environment } from '../enviroment/envoronment';
+import { environment } from '../enviroment/environment';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
-import {
-    TuiEditorModule,
-    TUI_EDITOR_EXTENSIONS,
-    TUI_EDITOR_DEFAULT_EXTENSIONS,
-} from '@tinkoff/tui-editor';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from './app.routes';
+
 @NgModule({
     imports: [
         BrowserModule,
+        RouterModule.forRoot(appRoutes),
         HttpClientModule,
         NgxSkeletonLoaderModule.forRoot(),
         NxWelcomeComponent,
         TuiRootModule,
-        RouterModule.forRoot(appRoutes),
         TuiDialogModule,
         TuiAlertModule,
         CommonModule,
@@ -60,7 +54,6 @@ import {
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule,
         AngularFireAuthModule,
-        TuiEditorModule,
     ],
     providers: [
         provideAnimations(),
@@ -73,18 +66,6 @@ import {
         tuiSvgOptionsProvider({
             path: 'https://taiga-ui.dev/assets/taiga-ui/icons',
         }),
-        {
-            provide: TUI_EDITOR_EXTENSIONS,
-            deps: [INJECTOR],
-            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-            useFactory: (injector: Injector) => [
-                ...TUI_EDITOR_DEFAULT_EXTENSIONS,
-                import('@tinkoff/tui-editor/extensions/image-editor').then(
-                    ({ tuiCreateImageEditorExtension }) =>
-                        tuiCreateImageEditorExtension({ injector })
-                ),
-            ],
-        },
     ],
     declarations: [AppComponent, SkeletonLoadingComponent],
     exports: [],
