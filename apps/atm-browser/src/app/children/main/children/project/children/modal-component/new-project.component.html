@@ -1,11 +1,18 @@
-<button (click)="showDialog()">+</button>
+<button class="new_project__open_btn" (click)="showDialog()">
+    <img
+        class="new_project__open_btn-icon"
+        src="../../../../../../../assets/icons/add.svg"
+        title="icon"
+        width="24"
+        height="24"
+    />
+</button>
 <ng-template
     let-observer
     [tuiDialogOptions]="{ label: 'Добавить проект', size: 'auto' }"
     [(tuiDialog)]="isOpen"
 >
     <div class="new_project">
-        <!-- <h1>Добавить проект</h1> -->
         <form
             class="new_project__form"
             [formGroup]="newProjectForm"
