@@ -3,16 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProjectWebComponent } from './components/project.web.component';
 import { HttpClientModule } from '@angular/common/http';
 import {
-    TuiButtonModule,
     TuiSvgModule,
     TuiLinkModule,
-    TuiTextfieldControllerModule,
     TuiDialogModule,
     TuiRootModule,
 } from '@taiga-ui/core';
-import { TuiInputModule, TuiInputPasswordModule } from '@taiga-ui/kit';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NewProjectComponent } from './children/modal-component/new-project.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { CommonModule } from '@angular/common';
 
@@ -24,14 +20,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    exports: [ProjectWebComponent, NewProjectComponent],
+    exports: [ProjectWebComponent],
     providers: [],
     imports: [
         RouterModule.forChild(routes),
-        TuiInputModule,
-        TuiInputPasswordModule,
-        TuiTextfieldControllerModule,
-        TuiButtonModule,
         TuiSvgModule,
         HttpClientModule,
         TuiLinkModule,
@@ -42,6 +34,6 @@ const routes: Routes = [
         TuiRootModule,
         TuiDialogModule,
     ],
-    declarations: [ProjectWebComponent, NewProjectComponent],
+    declarations: [ProjectWebComponent],
 })
 export class ProjectWebModule {}

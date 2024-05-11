@@ -29,9 +29,9 @@
         display: flex;
         background: var(--base-bg);
         gap: 0 4px;
-        border: 1px solid #edecec;
+        border: 1px solid var(--border-input-color);
         border-radius: 12px;
-        box-shadow: 0 0.125rem 0.1875rem rgba(0, 0, 0, 0.1);
+        box-shadow: var(--border-input-shadow);
         align-items: center;
         padding: 0 8px;
         height: 44px;
@@ -46,7 +46,7 @@
                 line-height: normal;
             }
             &_color {
-                color: black;
+                color: (--text-color);
             }
             &_title {
                 color: var(--grey);

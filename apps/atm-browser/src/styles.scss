@@ -12,6 +12,8 @@
     --checkbox-border: #{$checkbox-border};
     --grey: #{$grey};
     --complete: #{$complete};
+    --border-input-color: #{$border-input-color};
+    --border-input-shadow: #{$border-input-shadow};
 }
 body {
     margin: 0;
@@ -41,7 +43,8 @@ a:hover {
 }
 .t-heading[_ngcontent-ng-c1591437670] {
     font-size: 24px !important;
+    color: var(--text-color);
 }
-// [tuiWrapper]:after {
-//     border: 1px solid var(--grey);
-// }
+.t-content[_ngcontent-ng-c1591437670] {
+    --tui-elevation-01: var(--base-bg);
+}
