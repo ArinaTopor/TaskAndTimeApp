@@ -1,0 +1,11 @@
+<ng-template
+    let-observer
+    [tuiDialogOptions]="{ label: title, size: 'auto' }"
+    [(tuiDialog)]="isOpen"
+>
+    <div>
+        <tui-input tuiTextfieldSize="m"> placeholder </tui-input>
+        <button>Сохранить</button>
+        <button>Отмена</button>
+    </div>
+</ng-template>
