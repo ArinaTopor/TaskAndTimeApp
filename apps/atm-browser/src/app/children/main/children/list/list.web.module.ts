@@ -26,6 +26,7 @@ import {
     USER_INFO_TOKEN
 } from '@atm-project/common';
 import { NewTaskComponent } from '../../components/new-task/components/new-task.component';
+import { NewTaskService } from '../../components/new-task/services/new-task.service';
 
 const routes: Routes = [
     {
@@ -40,6 +41,7 @@ const routes: Routes = [
         { provide: USER_INFO_TOKEN, useClass: FirebaseAuthService },
         { provide: DATABASE_INFO_TOKEN, useClass: FirebaseDatabaseService },
         FirebaseDatabaseService,
+        NewTaskService
 
     ],
     imports: [
