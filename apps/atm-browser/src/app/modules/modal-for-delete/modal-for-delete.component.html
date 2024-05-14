@@ -1,0 +1,15 @@
+<ng-template
+    let-observer
+    [tuiDialogOptions]="{
+        label: 'Вы уверены, что хотите удалить?',
+        size: 'auto',
+        closeable: false,
+        dismissible: false
+    }"
+    [(tuiDialog)]="isOpen"
+>
+    <div>
+        <button tuiButton (click)="onConfirm(observer)">Да</button>
+        <button tuiButton (click)="onCancel()">Отмена</button>
+    </div>
+</ng-template>

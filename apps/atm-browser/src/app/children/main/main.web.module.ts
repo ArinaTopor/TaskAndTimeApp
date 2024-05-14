@@ -13,9 +13,12 @@ import {
     TuiTextfieldControllerModule,
     TuiButtonModule,
     TuiHostedDropdownModule,
+    TuiDataListModule,
 } from '@taiga-ui/core';
 import { TuiInputModule } from '@taiga-ui/kit';
 import { CommonModalComponent } from './components/common-modal/common-modal.component';
+import { SettingsTabComponent } from './components/settings-tab-popap/settings-tab-popap.component';
+import { ModalForDeleteComponent } from '../../modules/modal-for-delete/modal-for-delete.component';
 @NgModule({
     exports: [],
     providers: [{ provide: USER_INFO_TOKEN, useClass: FirebaseAuthService }],
@@ -24,6 +27,8 @@ import { CommonModalComponent } from './components/common-modal/common-modal.com
         SidenavComponent,
         ModeToggleComponent,
         CommonModalComponent,
+        SettingsTabComponent,
+        ModalForDeleteComponent,
     ],
     imports: [
         RouterModule.forChild(mainRoutes),
@@ -36,6 +41,7 @@ import { CommonModalComponent } from './components/common-modal/common-modal.com
         TuiTextfieldControllerModule,
         TuiButtonModule,
         TuiHostedDropdownModule,
+        TuiDataListModule,
     ],
 })
 export class MainWebModule {}

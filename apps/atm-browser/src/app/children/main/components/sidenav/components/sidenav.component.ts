@@ -14,6 +14,7 @@ import { ModeToggleStorageService } from '../../mode/services/mode-storage.servi
 import { FirebaseAuthService, USER_INFO_TOKEN } from '@atm-project/common';
 import firebase from 'firebase/compat/app';
 import { Observable, filter, of } from 'rxjs';
+import { SettingsTabComponent } from '../../settings-tab-popap/settings-tab-popap.component';
 @Component({
     selector: 'sidenav',
     templateUrl: './sidenav.component.html',
@@ -24,6 +25,7 @@ import { Observable, filter, of } from 'rxjs';
         SkeletonLoadingComponent,
         ModeToggleService,
         ModeToggleStorageService,
+        SettingsTabComponent,
     ],
 })
 export class SidenavComponent implements OnInit {
