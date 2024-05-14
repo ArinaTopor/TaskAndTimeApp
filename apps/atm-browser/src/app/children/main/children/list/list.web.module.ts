@@ -20,7 +20,6 @@ import {
 } from '@taiga-ui/core';
 import { TuiAutoFocusModule } from '@taiga-ui/cdk';
 import {
-    DATABASE_INFO_TOKEN,
     FirebaseAuthService,
     FirebaseDatabaseService,
     USER_INFO_TOKEN
@@ -39,7 +38,6 @@ const routes: Routes = [
     exports: [ListTodayWebComponent],
     providers: [
         { provide: USER_INFO_TOKEN, useClass: FirebaseAuthService },
-        { provide: DATABASE_INFO_TOKEN, useClass: FirebaseDatabaseService },
         FirebaseDatabaseService,
         NewTaskService
 

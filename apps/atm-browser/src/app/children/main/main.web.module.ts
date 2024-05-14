@@ -2,7 +2,6 @@ import { SidenavComponent } from './components/sidenav/components/sidenav.compon
 import { MainWebComponent } from './components/main.web.component';
 import { ModeToggleComponent } from './components/mode/mode-toggle.component';
 import {
-    DATABASE_INFO_TOKEN,
     FirebaseAuthService,
     FirebaseDatabaseService,
     USER_INFO_TOKEN,
@@ -25,7 +24,6 @@ import { NewTaskComponent } from './components/new-task/components/new-task.comp
     exports: [],
     providers: [
         { provide: USER_INFO_TOKEN, useClass: FirebaseAuthService },
-        { provide: DATABASE_INFO_TOKEN, useClass: FirebaseDatabaseService },
         FirebaseDatabaseService,
     ],
     declarations: [

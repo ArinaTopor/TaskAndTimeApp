@@ -30,9 +30,7 @@ import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './app.routes';
 import {
-    DATABASE_INFO_TOKEN,
     FirebaseAuthService,
-    FirebaseDatabaseService,
     USER_INFO_TOKEN
 } from '@atm-project/common';
 
@@ -69,7 +67,6 @@ import {
             path: 'https://taiga-ui.dev/assets/taiga-ui/icons',
         }),
         { provide: USER_INFO_TOKEN, useClass: FirebaseAuthService },
-        { provide: DATABASE_INFO_TOKEN, useClass: FirebaseDatabaseService },
         FirebaseAuthService
     ],
     declarations: [AppComponent, SkeletonLoadingComponent],

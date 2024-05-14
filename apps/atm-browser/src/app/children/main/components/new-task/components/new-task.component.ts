@@ -1,17 +1,15 @@
 import {
     ChangeDetectionStrategy,
-    Component, DestroyRef, inject,
-    Input
+    Component
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiDay, TuiTime } from '@taiga-ui/cdk';
 import { NewTaskService } from '../services/new-task.service';
 import dayjs from 'dayjs';
-import { Subject } from 'rxjs';
 import { ITask } from '../../../../../../../../../common/src/lib/db/interfaces/task.interface';
 import { TuiInputTimeModule, TuiSelectModule, TuiTextareaModule } from '@taiga-ui/kit';
 import { TuiButtonModule, TuiCalendarModule, TuiDialogModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
@@ -30,16 +28,15 @@ import { HttpClientModule } from '@angular/common/http';
         TuiTextareaModule,
         TuiSelectModule,
         CommonModule,
-        HttpClientModule
+        HttpClientModule,
+        NgOptimizedImage
     ],
     standalone: true
 })
 export class NewTaskComponent {
-    @Input() public stateModal: boolean = false;
-    @Input() public stateModalDate: boolean = false;
+    public stateModal: boolean = false;
+    public stateModalDate: boolean = false;
 
-    protected destroyRef: DestroyRef = inject(DestroyRef);
-    protected refreshSubject$: Subject<void> = new Subject<void>();
     protected valueDate: TuiDay | null = null;
     protected value: never[] = [];
 
@@ -113,6 +110,8 @@ export class NewTaskComponent {
         };
 
         this._newTaskService.addTask(newTask);
+        this.addTaskForm.reset();
+        this.valueDate = null;
     }
 
     /**

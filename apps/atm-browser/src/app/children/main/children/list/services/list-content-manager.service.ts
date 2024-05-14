@@ -1,15 +1,18 @@
-import { Injectable } from '@angular/core';
+import { DestroyRef, inject, Injectable } from '@angular/core';
 import {
     FirebaseAuthService,
     FirebaseDatabaseService,
 } from '@atm-project/common';
 import { ITask } from '../../../../../../../../../common/src/lib/db/interfaces/task.interface';
 import { Observable, of, switchMap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ListContentManagerService {
+    protected destroyRef: DestroyRef = inject(DestroyRef);
+
     constructor(
         private _afs: FirebaseDatabaseService,
         public fbAuthService: FirebaseAuthService
@@ -23,11 +26,10 @@ export class ListContentManagerService {
                 if (user) {
                     return this._afs.getAllTasks(user.uid);
                 } else {
-                    console.error('User is null');
-
                     return of([]);
                 }
-            })
+            }),
+            takeUntilDestroyed(this.destroyRef)
         );
     }
 }

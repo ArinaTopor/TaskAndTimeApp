@@ -1,17 +1,20 @@
-import { Inject, Injectable } from '@angular/core';
+import { DestroyRef, inject, Inject, Injectable } from '@angular/core';
 import {
-    DATABASE_INFO_TOKEN,
     FirebaseAuthService,
     FirebaseDatabaseService,
     USER_INFO_TOKEN,
 } from '@atm-project/common';
 
 import { ITask } from '../../../../../../../../../common/src/lib/db/interfaces/task.interface';
+import { of } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable()
 export class NewTaskService {
+    protected destroyRef: DestroyRef = inject(DestroyRef);
+
     constructor(
-        @Inject(DATABASE_INFO_TOKEN) private _afs: FirebaseDatabaseService,
+        private _afs: FirebaseDatabaseService,
         @Inject(USER_INFO_TOKEN) public fbAuthService: FirebaseAuthService
     ) {}
 
@@ -22,11 +25,12 @@ export class NewTaskService {
         this.fbAuthService.user$.subscribe(
             (user: firebase.default.User | null) => {
                 if (user) {
-                    this._afs.addNewTask(task, user.uid).then();
+                    return this._afs.addNewTask(task, user.uid).then();
                 } else {
-                    console.error('User is null');
+                    return of([]);
                 }
-            }
+            },
+            takeUntilDestroyed(this.destroyRef)
         );
     }
 
@@ -37,11 +41,12 @@ export class NewTaskService {
         this.fbAuthService.user$.subscribe(
             (user: firebase.default.User | null) => {
                 if (user) {
-                    this._afs.updateTask(task, user.uid).then();
+                    return this._afs.updateTask(task, user.uid).then();
                 } else {
-                    console.error('User is null');
+                    return of([]);
                 }
-            }
+            },
+            takeUntilDestroyed(this.destroyRef)
         );
     }
 }

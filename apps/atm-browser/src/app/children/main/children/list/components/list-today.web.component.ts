@@ -52,7 +52,7 @@ export class ListTodayWebComponent {
                         const taskDate: dayjs.Dayjs = dayjs(task.date, 'YYYY-MM-DD');
                         const currentDate: dayjs.Dayjs = dayjs(this.currentDateFull, 'YYYY-MM-DD');
 
-                        return!task.checkbox && taskDate.format('YYYY MM DD') === currentDate.format('YYYY MM DD');
+                        return !task.checkbox && taskDate.format('YYYY MM DD') === currentDate.format('YYYY MM DD');
                     })
                 ),
                 delay(300),
@@ -62,21 +62,15 @@ export class ListTodayWebComponent {
             .pipe(
                 map((taskList: ITask[]) =>
                     taskList.filter(task => {
-                        const taskDate: dayjs.Dayjs | null = task.date? dayjs(task.date) : null;
+                        const taskDate: dayjs.Dayjs = dayjs(task.date, 'YYYY-MM-DD');
+                        const currentDate: dayjs.Dayjs = dayjs(this.currentDateFull, 'YYYY-MM-DD');
 
-                        return task.checkbox && (taskDate === this.currentDateFull);
+                        return task.checkbox && taskDate.format('YYYY MM DD') === currentDate.format('YYYY MM DD');
                     })
                 ),
                 delay(300),
             );
 
-    }
-
-    /**
-     * Открываем модалку
-     */
-    protected showDialog(): void {
-        this.isModalOpen = true;
     }
 
     /**

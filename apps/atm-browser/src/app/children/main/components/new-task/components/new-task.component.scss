@@ -23,7 +23,7 @@
         border: none;
         background-color: rgba(255, 255, 255, 0);
         font-size: 20px;
-        color: #252525;
+        color: var(--text-color);
         font-weight: 800;
 
         &:focus {
@@ -55,10 +55,10 @@
         font-weight: 400;
         width: 128px;
         border-radius: 24px;
-        color: #7b7b7b;
-        --tui-primary: #c8c8c8;
-        --tui-primary-hover: #676767;
-        --tui-primary-active: #676767;
+        color: var(--grey);
+        --tui-primary: var(--grey-light);
+        --tui-primary-hover: var(--grey-active);
+        --tui-primary-active: var(--grey-active);
     }
 
     &__select {
@@ -74,6 +74,22 @@
         --tui-primary-active: var(--primary-active);
         width: 544px;
         height: 131px;
+    }
+
+    &__add-task {
+        border: none;
+        background-color: var(--base-text-color-dark);
+        color: var(--grey);
+        font-size: 16px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 1em;
+        margin-left: -5px;
+    }
+
+    &__link-icon {
+        margin-right: 0.5em;
     }
 
     &__modal {
@@ -111,10 +127,6 @@
         --tui-primary: var(--primary);
         --tui-primary-hover: var(--primary-active);
         --tui-primary-active: var(--primary-active);
-
-    }
-
-    &__chosen-date {
 
     }
 }
