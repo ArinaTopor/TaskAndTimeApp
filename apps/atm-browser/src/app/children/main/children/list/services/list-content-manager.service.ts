@@ -1,37 +1,51 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { TaskModel } from '../models/task-model';
-import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import {
+    DATABASE_INFO_TOKEN,
+    FirebaseAuthService,
+    FirebaseDatabaseService,
+    USER_INFO_TOKEN
+} from '@atm-project/common';
+import { ITask } from '../../../../../../../../../common/src/lib/db/interfaces/task.interface';
+import { Observable, of, switchMap } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ListContentManagerService {
-    public serviceURL: string;
-
-    constructor(private _http: HttpClient) {
-        this.serviceURL = 'http://localhost:3000/tasks';
-    }
+    constructor(
+        @Inject(DATABASE_INFO_TOKEN) private _afs: FirebaseDatabaseService,
+        @Inject(USER_INFO_TOKEN) public fbAuthService: FirebaseAuthService
+    ) {}
 
     /**
-     * Добавляет задачу на сервер
-     */
-    public addTask(task: TaskModel): Observable<TaskModel> {
-        return this._http.post<TaskModel>(this.serviceURL, task);
+     * Получаем невыполненные задачи от сервера*/
+    public getAllTask(): Observable<ITask[]> {
+        return this.fbAuthService.user$.pipe(
+            switchMap((user: firebase.default.User | null) => {
+                if (user) {
+                    return this._afs.getAllTasks(user.uid);
+                } else {
+                    console.error('User is null');
+
+                    return of([]);
+                }
+            })
+        );
     }
 
     /**
      * Получаем невыполненные задачи от сервера
-     */
-    public getAllTask(): Observable<TaskModel[]> {
-        return this._http.get<TaskModel[]>(this.serviceURL);
-    }
 
-    /**
-     * Получает все выполненные задачи
-     */
-    public updateTask(task: TaskModel): Observable<TaskModel> {
-        return this._http.patch<TaskModel>(`${this.serviceURL}/${task.id}`, { checkbox: task.checkbox });
-    }
-
+    public getAllTask(): Observable<ITask[]> {
+        return this.fbAuthService.user$.subscribe(
+            (user: firebase.default.User | null) => {
+                if (user) {
+                    return this._afs.getAllTasks(user.uid);
+                } else {
+                    console.error('User is null');
+                    return of([]);
+                }
+            }
+        );
+    }*/
 }

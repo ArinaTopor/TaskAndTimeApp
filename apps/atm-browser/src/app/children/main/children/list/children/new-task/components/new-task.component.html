@@ -1,0 +1,120 @@
+<ng-template
+    let-observer
+    [(tuiDialog)]="stateModal"
+    [tuiDialogOptions]="{ size: 'auto' }"
+>
+    <form
+        [formGroup]="addTaskForm"
+        (ngSubmit)="observer.complete()"
+        class="list-today__modal-task"
+    >
+
+        <input placeholder="Название задачи..." class="list-today__name-task" formControlName="taskValueAdd">
+
+        <button
+            tuiButton
+            type="submit"
+            (click)="showDialogDate()"
+            icon="tuiIconCalendar"
+            class="list-today__modal-btn-date"
+            size="s"
+        >
+            <ng-container *ngIf="valueTimeEnd == null && valueTimeStart!= null && valueDate; else noEndTime">
+                {{ valueDate }}, {{ valueTimeStart }}
+            </ng-container>
+            <ng-template #noEndTime>
+                <ng-container *ngIf="valueTimeStart == null && valueDate; else noStartTime">
+                    {{ valueDate }}
+                </ng-container>
+                <ng-template #noStartTime>
+                    <ng-container *ngIf="valueTimeEnd!= null && valueTimeStart && valueDate; else defaultText">
+                        {{ valueDate }}, {{ valueTimeStart }} - {{ valueDate }}, {{ valueTimeEnd }}
+                    </ng-container>
+                    <ng-template #defaultText>
+                        Выбрать дату и время
+                    </ng-template>
+                </ng-template>
+            </ng-template>
+        </button>
+
+        <tui-textarea formControlName="textarea" class="list-today__textarea">Описание задачи</tui-textarea>
+
+        <tui-select
+            class="list-today__select"
+            formControlName="tags"
+        >
+            Добавить тег
+        </tui-select>
+
+        <p>
+            <button
+                tuiButton
+                type="submit"
+                (click)="addTask()"
+                class="list-today__modal-btn-add"
+                size="m"
+            >
+                Добавить
+            </button>
+        </p>
+    </form>
+</ng-template>
+
+<ng-template
+    let-observer
+    [(tuiDialog)]="stateModalDate"
+    [tuiDialogOptions]="{ size: 'auto' }"
+    class="list-today__modal"
+
+>
+    <form
+        [formGroup]="addTaskForm"
+        (ngSubmit)="observer.complete()"
+        class="list-today__date-form"
+    >
+        <tui-calendar
+            [value]="value"
+            (dayClick)="onDayClick($event)"
+            class="list-today__calendar"
+        ></tui-calendar>
+
+        <tui-input-time
+            formControlName="timeValueStart"
+            class="list-today__input-time"
+            [tuiTextfieldCleaner]="true"
+
+        >
+            Время начала
+        </tui-input-time>
+
+        <tui-input-time
+            formControlName="timeValueEnd"
+            class="list-today__input-time"
+            [tuiTextfieldCleaner]="true"
+            itemSize="s"
+        >
+            Время конца
+        </tui-input-time>
+
+        <p style="display: flex; gap: 1em">
+            <button
+                tuiButton
+                (click)="onDayClickDefault()"
+                class="list-today__modal-btn-cancel"
+                size="m"
+            >
+                Очистить
+            </button>
+
+            <button
+                tuiButton
+                type="submit"
+                (click)="showDialog()"
+                class="list-today__modal-btn-ok"
+                size="m"
+            >
+                Сохранить
+            </button>
+        </p>
+    </form>
+</ng-template>

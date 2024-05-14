@@ -30,7 +30,7 @@
             </div>
         </ng-container>
 
-        <button class="list-today__add-task" (click)="addTask()">
+        <button class="list-today__add-task" (click)="showDialog()">
             <img
                 class="list-today__link-icon"
                 [ngSrc]="'../../../../../assets/icons/add-task.svg'"
@@ -41,6 +41,10 @@
             />
             Добавить задачу
         </button>
+
+        <new-task-modal *ngIf="isModalOpen" [stateModal]="true"
+        ></new-task-modal>
+
     </div>
 
     <div class="list-today__completed-tasks">
