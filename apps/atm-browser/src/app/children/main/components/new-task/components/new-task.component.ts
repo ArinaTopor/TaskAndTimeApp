@@ -3,18 +3,36 @@ import {
     Component, DestroyRef, inject,
     Input
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiDay, TuiTime } from '@taiga-ui/cdk';
 import { NewTaskService } from '../services/new-task.service';
 import dayjs from 'dayjs';
 import { Subject } from 'rxjs';
-import { ITask } from '../../../../../../../../../../../common/src/lib/db/interfaces/task.interface';
+import { ITask } from '../../../../../../../../../common/src/lib/db/interfaces/task.interface';
+import { TuiInputTimeModule, TuiSelectModule, TuiTextareaModule } from '@taiga-ui/kit';
+import { TuiButtonModule, TuiCalendarModule, TuiDialogModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
     selector: 'new-task-modal',
     templateUrl: './new-task.component.html',
     styleUrl: './new-task.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        TuiInputTimeModule,
+        TuiTextfieldControllerModule,
+        TuiButtonModule,
+        FormsModule,
+        TuiCalendarModule,
+        ReactiveFormsModule,
+        TuiDialogModule,
+        TuiTextareaModule,
+        TuiSelectModule,
+        CommonModule,
+        HttpClientModule
+    ],
+    standalone: true
 })
 export class NewTaskComponent {
     @Input() public stateModal: boolean = false;

@@ -19,13 +19,13 @@ import {
     TuiTextfieldControllerModule
 } from '@taiga-ui/core';
 import { TuiAutoFocusModule } from '@taiga-ui/cdk';
-import { NewTaskComponent } from './children/new-task/components/new-task.component';
 import {
     DATABASE_INFO_TOKEN,
     FirebaseAuthService,
     FirebaseDatabaseService,
     USER_INFO_TOKEN
 } from '@atm-project/common';
+import { NewTaskComponent } from '../../components/new-task/components/new-task.component';
 
 const routes: Routes = [
     {
@@ -40,6 +40,7 @@ const routes: Routes = [
         { provide: USER_INFO_TOKEN, useClass: FirebaseAuthService },
         { provide: DATABASE_INFO_TOKEN, useClass: FirebaseDatabaseService },
         FirebaseDatabaseService,
+
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -59,11 +60,11 @@ const routes: Routes = [
         TuiSelectModule,
         TuiTextfieldControllerModule,
         TuiInputTimeModule,
-        TuiTextareaModule
+        TuiTextareaModule,
+        NewTaskComponent
     ],
     declarations: [
         ListTodayWebComponent,
-        NewTaskComponent,
     ]
 })
 export class ListWebModule {

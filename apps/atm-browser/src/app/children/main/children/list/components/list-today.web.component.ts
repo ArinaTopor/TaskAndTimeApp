@@ -12,7 +12,7 @@ import {
     Subject,
     switchMap,
 } from 'rxjs';
-import { NewTaskService } from '../children/new-task/services/new-task.service';
+import { NewTaskService } from '../../../components/new-task/services/new-task.service';
 import { ITask } from '../../../../../../../../../common/src/lib/db/interfaces/task.interface';
 
 @Component({

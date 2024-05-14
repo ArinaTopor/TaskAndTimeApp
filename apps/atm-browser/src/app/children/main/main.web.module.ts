@@ -19,6 +19,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { mainRoutes } from './main.routes';
+import { NewTaskComponent } from './components/new-task/components/new-task.component';
 
 @NgModule({
     exports: [],
@@ -42,6 +43,7 @@ import { mainRoutes } from './main.routes';
         TuiInputModule,
         TuiTextfieldControllerModule,
         TuiButtonModule,
+        NewTaskComponent
     ],
 })
 export class MainWebModule {}

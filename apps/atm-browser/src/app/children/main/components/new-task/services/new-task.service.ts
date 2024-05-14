@@ -6,7 +6,7 @@ import {
     USER_INFO_TOKEN,
 } from '@atm-project/common';
 
-import { ITask } from '../../../../../../../../../../../common/src/lib/db/interfaces/task.interface';
+import { ITask } from '../../../../../../../../../common/src/lib/db/interfaces/task.interface';
 
 @Injectable()
 export class NewTaskService {
