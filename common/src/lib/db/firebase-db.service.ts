@@ -2,11 +2,15 @@
 import { Injectable } from '@angular/core';
 import {
     AngularFirestore,
+    CollectionReference,
+    DocumentData,
     DocumentReference,
 } from '@angular/fire/compat/firestore';
 import { IUser } from './interfaces/user.interface';
 import { IProject } from './interfaces/project.interface';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import { inboxProject } from './models/inbox.model';
+import { defaultSection } from './models/default.section';
 @Injectable({
     providedIn: 'root',
 })
@@ -23,18 +27,23 @@ export class FirebaseDatabaseService {
             .doc<IUser>('/users/' + user.uid)
             .set({ name: name, email: user.email });
         this.user.next(user);
+        this.addNewProject(inboxProject, user.uid);
     }
 
     /**
      * function for add new project to db
      */
     public addNewProject(project: IProject, userId: string): Promise<void> {
-        const newTodo: DocumentReference<IProject> = this._afs
+        const newProject: DocumentReference<IProject> = this._afs
             .collection<IProject>(`/userProjects/${userId}/projects`)
             .doc().ref;
-        project.id = newTodo.id;
+        project.id = newProject.id;
+        const newSection: CollectionReference<DocumentData> =
+            newProject.collection('sections');
+        defaultSection.id = newSection.id;
+        newSection.add(defaultSection);
 
-        return newTodo.set(project);
+        return newProject.set(project);
     }
 
     /**

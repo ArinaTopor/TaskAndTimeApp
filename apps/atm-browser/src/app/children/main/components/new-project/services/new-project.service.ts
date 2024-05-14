@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
 import {
-    DATABASE_INFO_TOKEN,
     FirebaseAuthService,
     FirebaseDatabaseService,
     IProject,
@@ -10,7 +9,7 @@ import {
 @Injectable()
 export class NewProjectService {
     constructor(
-        @Inject(DATABASE_INFO_TOKEN) private _afs: FirebaseDatabaseService,
+        private _afs: FirebaseDatabaseService,
         @Inject(USER_INFO_TOKEN) public fbAuthService: FirebaseAuthService
     ) {}
     /**
