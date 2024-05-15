@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModalComponent } from '../common-modal/common-modal.component';
+import { CommonModalComponent } from 'apps/atm-browser/src/app/modules/common-modal/common-modal.component';
 import { ModalForDeleteComponent } from 'apps/atm-browser/src/app/modules/modal-for-delete/modal-for-delete.component';
 
 @Component({
-    selector: 'settinds-tab-popap',
+    selector: 'settings-tab-popap',
     templateUrl: './settings-tab-popap.component.html',
     styleUrl: './settings-tab-popap.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,15 +1,44 @@
-import { Injectable } from '@angular/core';
+import { DestroyRef, Inject, Injectable } from '@angular/core';
 import { TabButtonViewModel } from '../view-models/tab-button.view-model';
-import { delay, Observable, of } from 'rxjs';
+import {
+    BehaviorSubject,
+    delay,
+    filter,
+    Observable,
+    of,
+    switchMap,
+} from 'rxjs';
 import { SectionListViewModel } from '../view-models/section-list.view-model';
-import { FILTERS, PROJECTS, SECTION_LIST, TAGS } from '../models/section-list-content';
+import {
+    FILTERS,
+    PROJECTS,
+    SECTION_LIST,
+    TAGS,
+} from '../models/section-list-content';
 import { TAB_LIST } from '../models/tab-list-content';
 import { IProject, ProjectType } from '../interfaces/project.interface';
-
+import {
+    FirebaseAuthService,
+    FirebaseDatabaseService,
+    USER_INFO_TOKEN,
+} from '@atm-project/common';
+import { IProject as project } from '@atm-project/common';
+import firebase from 'firebase/compat/app';
 @Injectable()
 export class NavBarContentManagerService {
+    public user$: BehaviorSubject<firebase.User | null> =
+        new BehaviorSubject<firebase.User | null>(null);
 
-    constructor() {
+    constructor(
+        public afs: FirebaseDatabaseService,
+        @Inject(USER_INFO_TOKEN) public fbAuthService: FirebaseAuthService,
+        private _destroyRef: DestroyRef
+    ) {
+        this.fbAuthService.user$
+            .pipe(filter((user) => !!user))
+            .subscribe((user) => {
+                this.user$.next(user);
+            });
     }
 
     /**
@@ -34,6 +63,15 @@ export class NavBarContentManagerService {
      */
     public initSection(section: SectionListViewModel): void {
         section.list$ = this.getProjectListByType(section.type);
+    }
+    /**
+     * this method for take project from fb
+     */
+    public getProject(): Observable<project[]> {
+        return this.user$.pipe(
+            filter((user): user is firebase.User => !!user),
+            switchMap((user) => this.afs.formattedProjectsInfo(user.uid))
+        );
     }
 
     /**

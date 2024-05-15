@@ -32,8 +32,59 @@
         </ul>
 
         <hr class="sidenavbar__divider" />
+        <div>
+            <button
+                class="sidenavbar__function-item-link"
+                (click)="toggleSection(projectType.project)"
+            >
+                <span class="sidenavbar__function-item-link-span">
+                    <img
+                        class="sidenavbar__function-item-link-icon"
+                        [ngSrc]="'../../../../../assets/icons/tag-close.svg'"
+                        width="16"
+                        height="16"
+                        title="icon"
+                        [ngClass]="{ rotate: showProject }"
+                    />
+                    <span class="sidenavbar__function-item-link-text"
+                        >Проекты</span
+                    >
+                </span>
+                <img
+                    class="sidenavbar__function-item-link-icon-two"
+                    [ngSrc]="'../../../../../assets/icons/add.svg'"
+                    title="icon"
+                    width="24"
+                    height="24"
+                />
+            </button>
+            <div *ngIf="showProject" class="sidenavbar__function-item-content">
+                <ul *ngIf="allProject$ | async as list; else skeleton">
+                    <li
+                        class="sidenavbar__function-item-content-item"
+                        *ngFor="let project of list"
+                        [routerLink]="['project/' + project.id]"
+                    >
+                        <span class="sidenavbar__function-item-link-span">
+                            <!-- <img
+                                width="20"
+                                height="20"
+                                title="icon"
+                                class="sidenavbar__function-item-content-item-icon"
 
-        <ul class="sidenavbar__function">
+                            /> -->
+                            <span
+                                class="sidenavbar__function-item-content-item-name"
+                                >{{ project.title }}</span
+                            >
+                        </span>
+                        <settings-tab-popap></settings-tab-popap>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- <ul class="sidenavbar__function">
             <li
                 class="sidenavbar__function-item"
                 *ngFor="let section of sectionList"
@@ -89,18 +140,12 @@
                                     >{{ project.title }}</span
                                 >
                             </span>
-                            <img
-                                class="sidenavbar__function-item-content-item-settings"
-                                src="../../../../../assets/icons/setting.svg"
-                                title="icon"
-                                width="16"
-                                height="16"
-                            />
+                            <settings-tab-popap></settings-tab-popap>
                         </li>
                     </div>
                 </div>
             </li>
-        </ul>
+        </ul> -->
 
         <ng-template #skeleton>
             <img
@@ -116,7 +161,7 @@
             -->
         </ng-template>
     </div>
-    <settinds-tab-popap></settinds-tab-popap>
+
     <div class="sidenavbar__settings">
         <mode-toggle></mode-toggle>
         <div class="sidenavbar__settings-log-out-container">

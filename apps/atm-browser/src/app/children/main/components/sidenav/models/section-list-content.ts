@@ -6,7 +6,7 @@ const pathToIcons: string = '../../../../../assets/icons/';
 export const SECTION_LIST: SectionListViewModel[] = [
     new SectionListViewModel('Проекты', ProjectType.project),
     new SectionListViewModel('Фильтры', ProjectType.filter),
-    new SectionListViewModel('Теги', ProjectType.tag)
+    new SectionListViewModel('Теги', ProjectType.tag),
 ];
 
 export const PROJECTS: IProject[] = [
@@ -14,14 +14,14 @@ export const PROJECTS: IProject[] = [
         id: '1',
         title: 'Книги',
         type: ProjectType.project,
-        icon: pathToIcons + 'fake.svg',
+        color: '#fddd',
     },
     {
         id: '2',
         title: 'Учеба',
         type: ProjectType.project,
-        icon: pathToIcons + 'fake.svg',
-    }
+        color: '#k009e',
+    },
 ];
 
 export const TAGS: IProject[] = [
@@ -36,7 +36,7 @@ export const TAGS: IProject[] = [
         title: 'прочитано',
         type: ProjectType.tag,
         icon: pathToIcons + 'tag.svg',
-    }
+    },
 ];
 
 export const FILTERS: IProject[] = [
@@ -51,5 +51,5 @@ export const FILTERS: IProject[] = [
         title: 'Только срочные',
         type: ProjectType.filter,
         icon: pathToIcons + 'filter.svg',
-    }
+    },
 ];
