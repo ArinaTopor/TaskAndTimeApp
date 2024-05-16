@@ -1,17 +1,15 @@
-import { DestroyRef, inject, Inject, Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
     FirebaseAuthService,
-    FirebaseDatabaseService,
     USER_INFO_TOKEN,
 } from '@atm-project/common';
 
-import { ITask } from '../../../../../../../../../common/src/lib/db/interfaces/task.interface';
-import { of } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ITask } from '@atm-project/interfaces';
+import { Observable, of, switchMap } from 'rxjs';
+import { FirebaseDatabaseService } from '@atm-project/common';
 
 @Injectable()
 export class NewTaskService {
-    protected destroyRef: DestroyRef = inject(DestroyRef);
 
     constructor(
         private _afs: FirebaseDatabaseService,
@@ -21,32 +19,30 @@ export class NewTaskService {
     /**
      * Добавляем задачу
      */
-    public addTask(task: ITask): void {
-        this.fbAuthService.user$.subscribe(
-            (user: firebase.default.User | null) => {
+    public addTask(task: ITask): Observable<void | null> {
+        return this.fbAuthService.user$.pipe(
+            switchMap((user: firebase.default.User | null) => {
                 if (user) {
-                    return this._afs.addNewTask(task, user.uid).then();
+                    return this._afs.addNewTask(task, user.uid);
                 } else {
-                    return of([]);
+                    return of(null);
                 }
-            },
-            takeUntilDestroyed(this.destroyRef)
+            })
         );
     }
 
     /**
      * Обновляем задачу
      */
-    public updateTask(task: ITask): void {
-        this.fbAuthService.user$.subscribe(
-            (user: firebase.default.User | null) => {
+    public updateTask(task: ITask): Observable<void | null> {
+        return this.fbAuthService.user$.pipe(
+            switchMap((user: firebase.default.User | null) => {
                 if (user) {
-                    return this._afs.updateTask(task, user.uid).then();
+                    return this._afs.updateTask(task, user.uid);
                 } else {
-                    return of([]);
+                    return of(null);
                 }
-            },
-            takeUntilDestroyed(this.destroyRef)
+            })
         );
     }
 }

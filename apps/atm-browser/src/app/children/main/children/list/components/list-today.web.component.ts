@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { ListContentManagerService } from '../services/list-content-manager.service';
@@ -13,7 +13,8 @@ import {
     switchMap,
 } from 'rxjs';
 import { NewTaskService } from '../../../components/new-task/services/new-task.service';
-import { ITask } from '../../../../../../../../../common/src/lib/db/interfaces/task.interface';
+import { ITask } from '@atm-project/interfaces';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'list-web-component',
@@ -24,12 +25,12 @@ import { ITask } from '../../../../../../../../../common/src/lib/db/interfaces/t
 export class ListTodayWebComponent {
     protected readonly currentDate: string = dayjs().locale('ru').format('D MMMM');
     protected currentDateFull: dayjs.Dayjs = dayjs().locale('ru');
-    protected isModalOpen: boolean = false;
 
     protected taskAll$: Observable<ITask[]>;
     protected unCompletedTask$: Observable<ITask[]>;
     protected completedTask$: Observable<ITask[]>;
 
+    protected destroyRef: DestroyRef = inject(DestroyRef);
     protected refreshSubject$: Subject<void> = new Subject<void>();
     private _isShow$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -84,7 +85,11 @@ export class ListTodayWebComponent {
      * Обновляем задачу
      */
     protected updateTask(task: ITask): void {
-        this.taskService.updateTask(task);
+        this.taskService.updateTask(task)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => {
+                this.refreshSubject$.next();
+            });
     }
 
     /**

@@ -15,8 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@atm-project/common": ["common/src/index.ts"],
-      "@assets": ["apps/atm-browser/src/assets/*"]
+        "@atm-project/common": ["common/src/index.ts"],
+        "@assets": ["apps/atm-browser/src/assets/*"],
+        "@atm-project/interfaces": ["common/src/lib/db/interfaces/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

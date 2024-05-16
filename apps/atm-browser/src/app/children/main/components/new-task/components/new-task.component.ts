@@ -1,16 +1,18 @@
 import {
     ChangeDetectionStrategy,
-    Component
+    Component, DestroyRef, inject
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiDay, TuiTime } from '@taiga-ui/cdk';
 import { NewTaskService } from '../services/new-task.service';
 import dayjs from 'dayjs';
-import { ITask } from '../../../../../../../../../common/src/lib/db/interfaces/task.interface';
+import { ITask } from '@atm-project/interfaces';
 import { TuiInputTimeModule, TuiSelectModule, TuiTextareaModule } from '@taiga-ui/kit';
 import { TuiButtonModule, TuiCalendarModule, TuiDialogModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'new-task-modal',
@@ -39,6 +41,9 @@ export class NewTaskComponent {
 
     protected valueDate: TuiDay | null = null;
     protected value: never[] = [];
+
+    protected refreshSubject$: Subject<void> = new Subject<void>();
+    protected destroyRef: DestroyRef = inject(DestroyRef);
 
     protected addTaskForm: FormGroup = new FormGroup({
         taskValueAdd: new FormControl(''),
@@ -109,7 +114,12 @@ export class NewTaskComponent {
             checkbox: false,
         };
 
-        this._newTaskService.addTask(newTask);
+        this._newTaskService.addTask(newTask)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => {
+                this.refreshSubject$.next();
+            });
+
         this.addTaskForm.reset();
         this.valueDate = null;
     }
@@ -145,7 +155,7 @@ export class NewTaskComponent {
     }
 
     /**
-     * Форматируем данные
+     * Форматировать данные из tuiTime в string для бд
      */
     protected formatTuiTime(time: TuiTime): string {
         const hours: string = time.hours.toString().padStart(2, '0');

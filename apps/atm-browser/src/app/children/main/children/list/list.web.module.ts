@@ -26,6 +26,7 @@ import {
 } from '@atm-project/common';
 import { NewTaskComponent } from '../../components/new-task/components/new-task.component';
 import { NewTaskService } from '../../components/new-task/services/new-task.service';
+import { FormatTimeDirective } from '../../directives/formatTime.directive';
 
 const routes: Routes = [
     {
@@ -61,10 +62,11 @@ const routes: Routes = [
         TuiTextfieldControllerModule,
         TuiInputTimeModule,
         TuiTextareaModule,
-        NewTaskComponent
+        NewTaskComponent,
+        FormatTimeDirective
     ],
     declarations: [
-        ListTodayWebComponent,
+        ListTodayWebComponent
     ]
 })
 export class ListWebModule {

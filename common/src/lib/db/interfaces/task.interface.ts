@@ -7,4 +7,6 @@ export interface ITask {
     timeEnd: string | null;
     tags: string | null | undefined;
     checkbox: boolean | null | undefined;
+    projectId?: string;
+    sectionId?: string;
 }

@@ -4,8 +4,8 @@ import {
     AngularFirestoreDocument,
     DocumentReference
 } from '@angular/fire/compat/firestore';
-import { IUser } from './interfaces/user.interface';
-import { ITask } from './interfaces/task.interface';
+import { IUser } from './interfaces';
+import { ITask } from './interfaces';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 @Injectable({
     providedIn: 'root',
@@ -31,7 +31,7 @@ export class FirebaseDatabaseService {
      */
     public addNewTask(task: ITask, userId: string): Promise<void> {
         const newTodoRef: DocumentReference<ITask> = this._afs
-            .collection<ITask>(`/userProjects/${userId}/projects/inbox/todos`)
+            .collection<ITask>(`/userProjects/${userId}/todos`)
             .doc()
             .ref;
         task.id = newTodoRef.id;
@@ -44,7 +44,7 @@ export class FirebaseDatabaseService {
      */
     public getAllTasks(userId: string): Observable<ITask[]> {
         return this._afs
-            .collection<ITask>(`/userProjects/${userId}/projects/inbox/todos`)
+            .collection<ITask>(`/userProjects/${userId}/todos`)
             .snapshotChanges()
             .pipe(
                 map(actions => actions
@@ -62,7 +62,7 @@ export class FirebaseDatabaseService {
      */
     public updateTask(task: ITask, userId: string): Promise<void> {
         const taskRef: AngularFirestoreDocument<ITask> = this._afs
-            .collection<ITask>(`/userProjects/${userId}/projects/inbox/todos`)
+            .collection<ITask>(`/userProjects/${userId}/todos`)
             .doc(task.id);
 
         return taskRef.update(task);
