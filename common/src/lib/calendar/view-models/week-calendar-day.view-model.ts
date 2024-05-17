@@ -1,77 +1,41 @@
 import dayjs from 'dayjs';
 import { ITask } from '@atm-project/common';
+import { CalendarDayViewModel } from './calendar-day.view-model';
 
 interface ITaskBlock {
-    blockPosition: number,
-    isFirst: boolean;
-    color: string | undefined;
+    height: number;
+    startPosition: number;
     task: ITask;
 }
 
-export class WeekCalendarDayViewModel {
-    public currentDay: boolean;
-    public dayData: dayjs.Dayjs;
-    public tasks: ITask[];
-    public blocks: ITaskBlock[];
-    private _blockSize: number = 15;
+export class WeekCalendarDayViewModel extends CalendarDayViewModel {
+    public blocks!: ITaskBlock[];
+    public height!: number;
 
     constructor(
         currentDay: dayjs.Dayjs,
         dayData: dayjs.Dayjs,
         tasks: ITask[]
     ) {
-        this.currentDay = dayData.day() === currentDay.day();
-        this.dayData = dayData;
-        this.tasks = tasks;
-        this.blocks = this.setTasksBlock();
+        super(currentDay, dayData, tasks);
     }
+
     /**
      * создаем массив блоков для отображения задач по времени
      */
-    private setTasksBlock(): ITaskBlock[] {
-        const res: ITaskBlock[] = [];
+    public setTasksBlock(): void {
+        this.blocks = [];
+        const delta: number = this.height / 60 / 24;
 
-        for (let i: number = 0; i < 24 * (60 / this._blockSize); i++) {
-            for (const task of this.tasks) {
+        for (const task of this.tasks) {
+            const tempStart: number = (task.timeStart.hour() * 60 + task.timeStart.minute()) * delta;
+            const tempEnd: number = (task.timeEnd.hour() * 60 + task.timeEnd.minute()) * delta;
 
-                if (task.timeStart.hour() !== (i / (60 / this._blockSize))) {
-                    continue;
-                }
-
-                if (task.timeStart.minute() > 15 && task.timeStart.minute() < 30) {
-                    i++;
-                } else if (task.timeStart.minute() > 30 && task.timeStart.minute() < 45) {
-                    i += 2;
-                } else if (task.timeStart.minute() > 45 && task.timeStart.minute() < 60){
-                    i += 3;
-                }
-
-                res.push({
-                    blockPosition: i,
-                    isFirst: true,
-                    color: task.color,
-                    task: task
-                });
-
-                let dif: number = task.timeEnd.diff(task.timeStart) / 60 / 1000;
-
-                while (dif > this._blockSize) {
-                    i++;
-                    dif -= this._blockSize;
-
-                    res.push({
-                        blockPosition: i,
-                        isFirst: false,
-                        color: task.color,
-                        task: task
-                    });
-                }
-            }
-
+            this.blocks.push({
+                height: tempEnd - tempStart,
+                startPosition: tempStart,
+                task: task
+            });
         }
-
-        console.log(res);
-
-        return res;
     }
 }

@@ -3,5 +3,5 @@ import dayjs from 'dayjs';
 
 export const DATE_TOKEN: InjectionToken<dayjs.Dayjs> =
     new InjectionToken<dayjs.Dayjs>('DATE', {
-        factory: () => dayjs().locale('eu',{ weekStart: 1 })
+        factory: () => dayjs().locale('ru',{ weekStart: 1 })
     });

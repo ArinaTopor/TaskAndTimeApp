@@ -4,80 +4,40 @@
 
         <div class="calendar__top-side-header">
             <div class="calendar__title">
-                <h2>
+                <h1>
                     Календарь
-                </h2>
+                </h1>
 
-                <button>
+                <button class="calendar__btn-add-task" size="xs" tuiButton>
                     +
                 </button>
             </div>
-            <div class="calendar__switch">
-                <button>
+            <div>
+                <button
+                    [routerLink]="'../main/week'"
+                    class="calendar__switch__week"
+                    size="s"
+                    [disabled]="calendarType==='week'"
+                    tuiButton
+                >
                     Неделя
                 </button>
 
-                <button>
+
+                <button
+                    class="calendar__switch__month"
+                    [routerLink]="'../main/month'"
+                    size="s"
+                    [disabled]="calendarType==='month'"
+                    tuiButton
+                >
                     Месяц
                 </button>
             </div>
         </div>
-
-        <hr class="calendar__separator"/>
-
-        <div class="calendar__switchweek">
-            <button><</button>
-            <button>Сегодня</button>
-            <button>></button>
-        </div>
     </div>
 
-    <div class="calendar__table-container">
-        <table class="calendar__table">
+    <hr class="calendar__separator"/>
 
-            <thead>
-            <tr>
-                <th class="calendar__table__time"></th>
-
-                <th class="calendar__table__header" *ngFor="let day of week.Week">
-                    <p>{{getDay(day.DayData)}}</p>
-                    <p>{{day.DayData.format('DD.MM')}}</p>
-                </th>
-            </tr>
-            </thead>
-
-            <tbody class="calendar__tbody">
-
-            <tr *ngFor="let time of getTime()" class="calendar__table__row">
-
-                <td class="calendar__table__element">{{time + ':00'}}</td>
-
-                <ng-container *ngFor="let day of week.week">
-                    <td class="calendar__table__element">
-                        <ng-container *ngFor="let index of blockIndex">
-                            <div style="height: 25%;">
-                                <ng-container *ngFor="let block of day.Blocks">
-                                    <ng-container  *ngIf="time * 4 + index === block?.blockPosition">
-
-                                        <div class="calendar__table__element__task" style="z-index: 100;" *ngIf="block.isFirst; else void_el">
-                                            <span>{{block.task.name}}</span>
-                                            <p style="margin: 0; padding: 0">
-                                                {{block.task.timeStart.format('HH:mm')}}
-                                                -{{block.task.timeEnd.format('HH:mm')}}
-                                            </p>
-                                        </div>
-
-                                    </ng-container>
-                                </ng-container>
-                            </div>
-                        </ng-container>
-                    </td>
-
-                </ng-container>
-
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <router-outlet></router-outlet>
 </div>
-<ng-template #void_el><div class="calendar__table__element__task" ></div></ng-template>

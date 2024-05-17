@@ -6,23 +6,18 @@
         padding: 5em;
     }
 
-    &__table-container {
-        border-radius: 5px;
-        border: 1px solid;
-        margin-top: 10px;
-        height: 100%;
-        width: 100%;
-    }
-
     &__switchweek {
         display: flex;
         gap: 10px;
     }
 
-    &__header {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+    &__btn-add-task {
+        font-weight: 400;
+        font-size: 20px;
+        border-radius: 50%;
+        --tui-primary: var(--primary);
+        --tui-primary-hover: var(--primary-active);
+        --tui-primary-active: var(--primary-active);
     }
 
     &__top-side-header {
@@ -31,46 +26,45 @@
         align-items: center;
     }
 
+    &__separator {
+        margin: 15px;
+    }
+
+    &__switch {
+        &__week:disabled {
+            --tui-primary: var(--primary);
+            --tui-primary-hover: var(--primary-active);
+            --tui-primary-active: var(--primary-active);
+            --tui-disabled-opacity: 1;
+        }
+
+        &__week{
+            border-radius: 24px 0 0 24px;
+
+            --tui-primary: #454545;
+            --tui-primary-hover: var(--primary-active);
+            --tui-primary-active: var(--primary-active);
+        }
+
+        &__month {
+            border-radius: 0 24px 24px 0;
+            --tui-primary: #454545;
+            --tui-primary-hover: var(--primary-active);
+            --tui-primary-active: var(--primary-active);
+        }
+
+        &__month:disabled {
+            --tui-primary: var(--primary);
+            --tui-primary-hover: var(--primary-active);
+            --tui-primary-active: var(--primary-active);
+            --tui-disabled-opacity: 1;
+        }
+    }
+
     &__title {
         display: flex;
+        align-items: center;
         gap: 10px;
     }
-
-    &__table {
-        line-height: 1.1;
-        color: var(--table-text);
-        height: 100%;
-        width: 100%;
-
-        &__header {
-            text-align: left;
-        }
-
-        &__row{
-            min-height: 100px;
-            position:relative
-        }
-
-        &__element {
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            border: 1px solid;
-
-            &__task {
-                margin: 0;
-                padding: 0;
-                color: #000;
-                height: 100%;
-                background-color: burlywood;
-                text-align: left;
-                position: relative;
-                z-index: 1;
-            }
-        }
-
-        &__time {
-            width: 5%;
-        }
-    }
 }
+

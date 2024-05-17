@@ -1,0 +1,54 @@
+<div class="week_calendar__container">
+
+    <div class="week_calendar__switch-week">
+        <button class="week_calendar__btn-choose-week" size="xs" (click)="chooseWeek(-1)" tuiButton><</button>
+        <p class="week_calendar__current-week">
+            {{week.week[0].dayData | dateParse}} -
+            {{week.week[6].dayData | dateParse}}
+        </p>
+        <button class="week_calendar__btn-choose-week" size="xs" (click)="chooseWeek(1)" tuiButton>></button>
+    </div>
+
+    <div class="week_calendar__table-container">
+        <table class="week_calendar__table">
+
+            <thead>
+            <tr>
+
+                <th class="week_calendar__table__time"></th>
+
+                <th class="week_calendar__table__header" *ngFor="let day of week.week">
+                    <p>{{day.dayData | dayParse}}</p>
+                    <p>{{day.dayData | dateParse}}</p>
+                </th>
+            </tr>
+            </thead>
+
+            <tbody class="week_calendar__tbody" #dayContainer>
+
+            <tr>
+                <td></td>
+                <td style="position: relative; right: 1px" *ngFor="let day of week.week">
+                    <ng-container *ngFor="let taskBlock of day.blocks">
+                        <div class="week_calendar__table__element__task" [style.height]="taskBlock.height +'px'"
+                             [style.top]="taskBlock.startPosition +'px'"
+                             style="position: absolute; width: 100%; display: inline">
+
+                            <p style="margin: 0">{{taskBlock.task.name}}</p>
+                            <p style="margin: 0">{{taskBlock.task.timeStart | timeParse}}
+                                -{{taskBlock.task.timeEnd | timeParse}}</p>
+                        </div>
+                    </ng-container>
+                </td>
+            </tr>
+
+            <tr *ngFor="let time of getTime()" class="calendar__table__row">
+                <td class="week_calendar__table__element">{{time + ':00'}}</td>
+
+                <td class="week_calendar__table__element" *ngFor="let day of week.week">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
