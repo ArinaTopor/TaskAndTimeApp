@@ -4,7 +4,7 @@ import {
     DocumentChangeAction,
 } from '@angular/fire/compat/firestore';
 import { IUser } from './interfaces/user.interface';
-import { IProject } from './interfaces/project.interface';
+import { IProject, ISection } from './interfaces/project.interface';
 import { Observable, map } from 'rxjs';
 @Injectable({
     providedIn: 'root',
@@ -32,21 +32,34 @@ export class FirebaseDatabaseService {
     }
 
     /**
-     * function for formatted projects data
+     * function for data formatted projects, sections...
      */
-    public formattedProjectsInfo(userId: string): Observable<IProject[]> {
-        return this.readProject(userId).pipe(
+    public formattedData<T>(
+        observerData: Observable<Array<DocumentChangeAction<T>>>
+    ): Observable<T[]> {
+        return observerData.pipe(
             map((actions) =>
                 actions.map((a) => {
-                    const data: IProject = a.payload.doc.data();
+                    const data: T = a.payload.doc.data();
+                    console.log(data);
 
                     return data;
                 })
             )
         );
     }
-    //метод для получения раздлелов по айди проектов
-    //получение задач проекта
-    //на обновление использовать функции алены. Передавать путь?
-    //игнорировать раздел inbox в проектах
+
+    /**
+     * function for get sections of project from db
+     */
+    public getSectionsProject(
+        userId: string,
+        projectId: string
+    ): Observable<Array<DocumentChangeAction<ISection>>> {
+        return this._afs
+            .collection<ISection>(
+                `userProjects/${userId}/projects/${projectId}/sections`
+            )
+            .snapshotChanges();
+    }
 }

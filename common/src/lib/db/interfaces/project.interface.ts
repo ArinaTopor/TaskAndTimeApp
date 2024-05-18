@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 export interface IProject {
     id: string;
     title: string;
@@ -7,4 +9,14 @@ export interface IProject {
 export interface ISection {
     id: string;
     title: string;
+}
+
+export interface ITodo {
+    id: string;
+    name: string;
+}
+export interface ISectionTodo {
+    id: string;
+    title: string;
+    todos: Observable<ITodo[]>;
 }
