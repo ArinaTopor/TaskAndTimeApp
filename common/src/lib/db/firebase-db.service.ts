@@ -39,6 +39,23 @@ export class FirebaseDatabaseService {
 
         return newTodoRef.set(task);
     }
+    /**
+     * function for add section in project
+     */
+    public addNewSection(
+        projectId: string,
+        userId: string,
+        section: ISection
+    ): Promise<void> {
+        const newSection: DocumentReference<ISection> = this._afs
+            .collection<ISection>(
+                `/userProjects/${userId}/projects/${projectId}/sections`
+            )
+            .doc().ref;
+        section.id = newSection.id;
+
+        return newSection.set(section);
+    }
 
     /**
      * Получаем все задачи от сервера
@@ -110,5 +127,39 @@ export class FirebaseDatabaseService {
                 `userProjects/${userId}/projects/${projectId}/sections`
             )
             .snapshotChanges();
+    }
+
+    /**
+     * function for delete sections
+     */
+    public deleteSection(
+        userId: string,
+        projectId: string,
+        sectionId: string
+    ): Promise<void> {
+        const sectionRef: AngularFirestoreDocument<ITask> = this._afs
+            .collection<ITask>(
+                `/userProjects/${userId}/projects/${projectId}/section`
+            )
+            .doc(sectionId);
+
+        return sectionRef.delete();
+    }
+    /**
+     * function for update section
+     */
+    public updateSection(
+        userId: string,
+        projectId: string,
+        sectionId: string,
+        section: ISection
+    ): Promise<void> {
+        const sectionRef: AngularFirestoreDocument<ITask> = this._afs
+            .collection<ITask>(
+                `/userProjects/${userId}/projects/${projectId}/section`
+            )
+            .doc(sectionId);
+
+        return sectionRef.update(section);
     }
 }

@@ -8,8 +8,16 @@
     }"
     [(tuiDialog)]="isOpen"
 >
-    <div>
-        <button tuiButton (click)="onConfirm(observer)">Да</button>
-        <button tuiButton (click)="onCancel()">Отмена</button>
+    <div class="modal">
+        <button
+            class="modal_button_positive"
+            tuiButton
+            (click)="onConfirm(observer)"
+        >
+            Да
+        </button>
+        <button class="modal_button_negative" (click)="onCancel()">
+            Отмена
+        </button>
     </div>
 </ng-template>

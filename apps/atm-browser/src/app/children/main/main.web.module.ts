@@ -16,7 +16,6 @@ import {
     TuiDataListModule,
 } from '@taiga-ui/core';
 import { TuiInputModule } from '@taiga-ui/kit';
-import { SettingsTabComponent } from './components/settings-tab-popap/settings-tab-popap.component';
 import { ModalDeleteModule } from '../../modules/modal-for-delete/modal-for-delete.module';
 import { CommonModalModule } from '../../modules/common-modal/common-modal.module';
 import { NgModule } from '@angular/core';
@@ -24,6 +23,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { mainRoutes } from './main.routes';
 import { NewTaskComponent } from './components/new-task/components/new-task.component';
+import { SettingTabModule } from '../../modules/settings-tab-popap/setting-tab-popap.modal';
 
 @NgModule({
     exports: [],
@@ -31,12 +31,7 @@ import { NewTaskComponent } from './components/new-task/components/new-task.comp
         { provide: USER_INFO_TOKEN, useClass: FirebaseAuthService },
         FirebaseDatabaseService,
     ],
-    declarations: [
-        MainWebComponent,
-        SidenavComponent,
-        ModeToggleComponent,
-        SettingsTabComponent,
-    ],
+    declarations: [MainWebComponent, SidenavComponent, ModeToggleComponent],
     imports: [
         RouterModule.forChild(mainRoutes),
         NgOptimizedImage,
@@ -51,6 +46,7 @@ import { NewTaskComponent } from './components/new-task/components/new-task.comp
         TuiDataListModule,
         ModalDeleteModule,
         CommonModalModule,
+        SettingTabModule,
         NewTaskComponent,
     ],
 })

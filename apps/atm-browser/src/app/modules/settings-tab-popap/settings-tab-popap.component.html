@@ -9,7 +9,7 @@
 <ng-template #dropdown>
     <tui-data-list>
         <button tuiOption (click)="openCommon()">Редактировать</button>
-        <button tuiOption (click)="onClick()">Удалить</button>
+        <button tuiOption (click)="openDelete()">Удалить</button>
     </tui-data-list>
 </ng-template>
 <delete-element-notification
@@ -17,5 +17,10 @@
     (cancel)="handleCancel()"
     (confirm)="handleConfirm()"
 ></delete-element-notification>
-<common-modal [isOpen]="openCommonModal" [header]="'Редактировть'">
+<common-modal
+    [isOpen]="openCommonModal"
+    [header]="'Редактировать'"
+    [isCreate]="false"
+    [value]="value"
+>
 </common-modal>

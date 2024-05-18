@@ -1,0 +1,32 @@
+.project {
+    margin-top: 112px;
+    margin-left: 47px;
+    &_title {
+        font-size: 32px;
+    }
+    &_add_section {
+        margin-top: 18px;
+        border: none;
+        border-radius: 20px;
+        background-color: var(--bg-tabs);
+        font-size: 16px;
+        cursor: pointer;
+        &__container {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px;
+        }
+    }
+
+    &_section {
+        &_title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        &__settings {
+            display: flex;
+            align-items: center;
+        }
+    }
+}

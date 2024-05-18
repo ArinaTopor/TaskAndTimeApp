@@ -1,6 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ICommonForm } from './common-form.interface';
+import { ICommonForm } from './interfaces/common-form.interface';
 
 @Component({
     selector: 'common-modal',
@@ -9,16 +17,33 @@ import { ICommonForm } from './common-form.interface';
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [],
 })
-export class CommonModalComponent {
+export class CommonModalComponent implements OnChanges {
     @Input() public header: string = '';
     @Input() public isOpen: boolean = false;
-    public value?: string;
-    //возможно стоит добавить 2 флага: на редактирование и на удаление, также стоит передавать сюда метод?
-    //или подставлять необходимый метод зависимо от флага?
+    @Input() public value: string = '';
+    @Input() public placeholder: string = 'Раздел';
+    @Input() public isCreate: boolean = true;
+    @Output() public dataChanged: EventEmitter<any> = new EventEmitter<any>();
     protected commonForm: FormGroup<ICommonForm> = new FormGroup({
-        title: new FormControl('', {
+        title: new FormControl(this.isCreate ? '' : this.value, {
             nonNullable: true,
             validators: [Validators.required],
         }),
     });
+
+    public ngOnChanges(changes: SimpleChanges): void {
+        if (changes['value'] && !this.isCreate) {
+            this.commonForm.controls['title'].setValue(this.value);
+        }
+    }
+    /**
+     * function for changed or add sections, filters, tags
+     */
+    protected onDataChanged(observer: any): any {
+        const rawForm: { title: string } = this.commonForm.getRawValue();
+        console.log(rawForm);
+        this.dataChanged.emit({ ...rawForm, id: '' });
+        this.commonForm.reset();
+        observer.complete();
+    }
 }

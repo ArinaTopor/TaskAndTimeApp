@@ -13,9 +13,9 @@ import { ModeToggleStorageService } from '../../mode/services/mode-storage.servi
 import { FirebaseAuthService, USER_INFO_TOKEN } from '@atm-project/common';
 import firebase from 'firebase/compat/app';
 import { Observable, filter, of } from 'rxjs';
-import { SettingsTabComponent } from '../../settings-tab-popap/settings-tab-popap.component';
 import { IProject } from '@atm-project/common';
 import { ProjectType } from '../interfaces/project.interface';
+import { SettingsTabComponent } from 'apps/atm-browser/src/app/modules/settings-tab-popap/settings-tab-popap.component';
 @Component({
     selector: 'sidenav',
     templateUrl: './sidenav.component.html',

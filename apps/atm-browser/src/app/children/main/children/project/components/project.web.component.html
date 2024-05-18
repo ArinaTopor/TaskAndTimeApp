@@ -1,16 +1,38 @@
-<h1>Заголовок проекта</h1>
-<button>
-    <img src="../../../../../../assets/icons/add-task.svg" />
-    <span> Добавить раздел</span>
-</button>
-<div>
-    <h2>Без раздела</h2>
-    <button>...</button>
-    <button (click)="getSections()">
-        <img src="../../../../../../assets/icons/add-task.svg" />
-        <span> Добавить задачу</span>
+<div class="project">
+    <h1 class="project_title" *ngIf="currentProject$ | async as projects">
+        <span *ngFor="let project of projects">
+            <span *ngIf="project.id === id">{{ project.title }}</span></span
+        >
+    </h1>
+    <button class="project_add_section" (click)="onOpen()">
+        <div class="project_add_section__container">
+            <img src="../../../../../../assets/icons/add-task.svg" />
+            <span>Добавить раздел</span>
+        </div>
     </button>
-    <p>{{ id }}</p>
-    <hr />
+    <div
+        class="project_section__wrapper"
+        *ngIf="sections$ | async as sectionList"
+    >
+        <div *ngFor="let section of sectionList">
+            <h2 class="project_section__title">{{ section.title }}</h2>
+            <div class="project_section__settings">
+                <settings-tab-popap
+                    [value]="section.title"
+                ></settings-tab-popap>
+                <new-task-modal
+                    [projectId]="id"
+                    [sectionId]="section.id"
+                ></new-task-modal>
+            </div>
+            <hr class="project_section__line" />
+            <!--здесь нужно будет добавить todo-->
+        </div>
+    </div>
 </div>
-<ul></ul>
+<common-modal
+    [header]="'Добавить раздел'"
+    [placeholder]="'Раздел'"
+    [isOpen]="isOpen"
+    (dataChanged)="addSection($event)"
+></common-modal>

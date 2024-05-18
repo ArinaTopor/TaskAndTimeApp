@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModalComponent } from 'apps/atm-browser/src/app/modules/common-modal/common-modal.component';
 import { ModalForDeleteComponent } from 'apps/atm-browser/src/app/modules/modal-for-delete/modal-for-delete.component';
 
@@ -14,15 +14,20 @@ export class SettingsTabComponent {
     protected open: boolean = false;
     protected openDeleteNotification: boolean = false;
     protected openCommonModal: boolean = false;
+    public isCreate: boolean = false;
+    @Input() public value: string = '';
+    // @Input() public commonFunction: EventE
 
     /**
-     * errfd
+     * open modal
      */
     public openCommon(): void {
         this.openCommonModal = true;
     }
-    // eslint-disable-next-line jsdoc/require-jsdoc
-    public onClick(): void {
+    /**
+     * open delete modal
+     */
+    public openDelete(): void {
         this.openDeleteNotification = true;
         console.log(this.openDeleteNotification);
         // this.openDeleteNotification = false;
@@ -34,7 +39,7 @@ export class SettingsTabComponent {
         this.openDeleteNotification = false;
     }
     /**
-     * hjsjhd
+     * function for delete
      */
     public handleConfirm(): void {
         console.log('Удалено:');

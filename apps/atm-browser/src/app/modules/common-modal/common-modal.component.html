@@ -1,15 +1,28 @@
 <ng-template
     let-observer
-    [tuiDialogOptions]="{ label: header, size: 'auto' }"
+    [tuiDialogOptions]="{ size: 'm' }"
     [(tuiDialog)]="isOpen"
 >
-    <div>
-        <form [formGroup]="commonForm">
-            <tui-input tuiTextfieldSize="m" formControlName="title">
-                placeholder
+    <div class="form">
+        <h1 class="form_title">{{ header }}</h1>
+        <form
+            class="form_container"
+            [formGroup]="commonForm"
+            (ngSubmit)="onDataChanged(observer)"
+        >
+            <tui-input
+                class="form_input"
+                tuiTextfieldSize="m"
+                formControlName="title"
+            >
+                {{ placeholder }}
             </tui-input>
-            <button tuiButton type="submit">Сохранить</button>
-            <button tuiButton>Отмена</button>
+            <div class="form_btns_container">
+                <button class="form_button_positive" tuiButton type="submit">
+                    Сохранить
+                </button>
+                <button class="form_button_negative">Отмена</button>
+            </div>
         </form>
     </div>
 </ng-template>
