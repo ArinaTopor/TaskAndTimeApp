@@ -29,6 +29,10 @@ import { environment } from '../enviroment/environment';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './app.routes';
+import {
+    FirebaseAuthService,
+    USER_INFO_TOKEN
+} from '@atm-project/common';
 
 @NgModule({
     imports: [
@@ -62,6 +66,8 @@ import { appRoutes } from './app.routes';
         tuiSvgOptionsProvider({
             path: 'https://taiga-ui.dev/assets/taiga-ui/icons',
         }),
+        { provide: USER_INFO_TOKEN, useClass: FirebaseAuthService },
+        FirebaseAuthService
     ],
     declarations: [AppComponent, SkeletonLoadingComponent],
     exports: [],

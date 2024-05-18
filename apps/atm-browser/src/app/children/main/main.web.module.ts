@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { mainRoutes } from './main.routes';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { SidenavComponent } from './components/sidenav/components/sidenav.component';
 import { MainWebComponent } from './components/main.web.component';
 import { ModeToggleComponent } from './components/mode/mode-toggle.component';
-import { FirebaseAuthService, USER_INFO_TOKEN } from '@atm-project/common';
+import {
+    FirebaseAuthService,
+    FirebaseDatabaseService,
+    USER_INFO_TOKEN,
+} from '@atm-project/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
     TuiRootModule,
@@ -19,9 +19,18 @@ import { TuiInputModule } from '@taiga-ui/kit';
 import { SettingsTabComponent } from './components/settings-tab-popap/settings-tab-popap.component';
 import { ModalDeleteModule } from '../../modules/modal-for-delete/modal-for-delete.module';
 import { CommonModalModule } from '../../modules/common-modal/common-modal.module';
+import { NgModule } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { mainRoutes } from './main.routes';
+import { NewTaskComponent } from './components/new-task/components/new-task.component';
+
 @NgModule({
     exports: [],
-    providers: [{ provide: USER_INFO_TOKEN, useClass: FirebaseAuthService }],
+    providers: [
+        { provide: USER_INFO_TOKEN, useClass: FirebaseAuthService },
+        FirebaseDatabaseService,
+    ],
     declarations: [
         MainWebComponent,
         SidenavComponent,
@@ -42,6 +51,7 @@ import { CommonModalModule } from '../../modules/common-modal/common-modal.modul
         TuiDataListModule,
         ModalDeleteModule,
         CommonModalModule,
+        NewTaskComponent,
     ],
 })
 export class MainWebModule {}

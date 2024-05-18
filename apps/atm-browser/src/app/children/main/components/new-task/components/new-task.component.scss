@@ -1,0 +1,132 @@
+.new-task {
+    &__modal-task {
+        width: 550px;
+        height: 365px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        position: relative;
+    }
+
+    &__date-form {
+        width: 250px;
+        height: 510px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1em;
+    }
+
+    &__name-task {
+        width: 500px;
+        border: none;
+        background-color: rgba(255, 255, 255, 0);
+        font-size: 20px;
+        color: var(--text-color);
+        font-weight: 800;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__modal-btn-date {
+        font-size: 14px;
+        font-weight: 400;
+        display: inline-block;
+        max-width: 300px;
+        height: 40px;
+        --tui-primary: var(--primary);
+        --tui-primary-hover: var(--primary-active);
+        --tui-primary-active: var(--primary-active);
+    }
+
+    &__modal-btn-ok {
+        font-weight: 400;
+        width: 128px;
+        border-radius: 24px;
+        --tui-primary: var(--primary);
+        --tui-primary-hover: var(--primary-active);
+        --tui-primary-active: var(--primary-active);
+    }
+
+    &__modal-btn-cancel {
+        font-weight: 400;
+        width: 128px;
+        border-radius: 24px;
+        color: var(--grey);
+        --tui-primary: var(--grey-light);
+        --tui-primary-hover: var(--grey-active);
+        --tui-primary-active: var(--grey-active);
+    }
+
+    &__select {
+        --tui-primary: var(--primary);
+        --tui-primary-hover: var(--primary-active);
+        --tui-primary-active: var(--primary-active);
+        width: 170px;
+    }
+
+    &__textarea {
+        --tui-primary: var(--primary);
+        --tui-primary-hover: var(--primary-active);
+        --tui-primary-active: var(--primary-active);
+        width: 544px;
+        height: 131px;
+    }
+
+    &__add-task {
+        border: none;
+        background-color: var(--base-text-color-dark);
+        color: var(--grey);
+        font-size: 16px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 1em;
+        margin-left: -5px;
+    }
+
+    &__link-icon {
+        margin-right: 0.5em;
+    }
+
+    &__modal {
+        width: 320px;
+    }
+
+    &__modal-btn-add {
+        font-size: 16px;
+        font-weight: 400;
+        width: 155px;
+        height: 40px;
+        border-radius: 24px;
+        --tui-primary: var(--primary);
+        --tui-primary-hover: var(--primary-active);
+        --tui-primary-active: var(--primary-active);
+        margin-left: 24em;
+    }
+
+    &__calendar {
+        --tui-primary: var(--primary);
+        --tui-primary-hover: var(--primary-active);
+        --tui-primary-active: var(--primary-active);
+
+    }
+
+    &__input-time {
+        --tui-primary: var(--primary);
+        --tui-primary-hover: var(--primary-active);
+        --tui-primary-active: var(--primary-active);
+        width: 270px;
+
+    }
+
+    &__checkbox {
+        --tui-primary: var(--primary);
+        --tui-primary-hover: var(--primary-active);
+        --tui-primary-active: var(--primary-active);
+
+    }
+}
