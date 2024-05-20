@@ -41,7 +41,7 @@ import { NewTaskComponent } from './components/new-task/components/new-task.comp
         TuiInputModule,
         TuiTextfieldControllerModule,
         TuiButtonModule,
-        NewTaskComponent
+        NewTaskComponent,
     ],
 })
 export class MainWebModule {}

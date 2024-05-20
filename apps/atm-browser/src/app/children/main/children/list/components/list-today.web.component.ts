@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import { ListContentManagerService } from '../services/list-content-manager.service';
+import { ListService } from '../../../modules/list/services/list-manager.service';
 import {
     BehaviorSubject,
     delay,
@@ -12,12 +12,10 @@ import {
     Subject,
     switchMap,
 } from 'rxjs';
-import { NewTaskService } from '../../../components/new-task/services/new-task.service';
 import { ITask } from '@atm-project/interfaces';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-    selector: 'list-web-component',
+    selector: 'list-today-web-component',
     templateUrl: './list-today.web.component.html',
     styleUrl: './list-today.web.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -30,7 +28,6 @@ export class ListTodayWebComponent {
     protected unCompletedTask$: Observable<ITask[]>;
     protected completedTask$: Observable<ITask[]>;
 
-    protected destroyRef: DestroyRef = inject(DestroyRef);
     protected refreshSubject$: Subject<void> = new Subject<void>();
     private _isShow$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -38,11 +35,11 @@ export class ListTodayWebComponent {
         return this._isShow$.asObservable();
     }
 
-    constructor(protected listService: ListContentManagerService, protected taskService: NewTaskService) {
+    constructor(protected listService: ListService) {
         this.taskAll$ = this.refreshSubject$
             .pipe(
                 startWith(null),
-                switchMap(() => this.getAllTask()),
+                switchMap(() => this.listService.getAllTask()),
                 shareReplay(1)
             );
 
@@ -71,25 +68,6 @@ export class ListTodayWebComponent {
                 ),
                 delay(300),
             );
-
-    }
-
-    /**
-     * Получаем список задач
-     */
-    protected getAllTask(): Observable<ITask[]> {
-        return this.listService.getAllTask();
-    }
-
-    /**
-     * Обновляем задачу
-     */
-    protected updateTask(task: ITask): void {
-        this.taskService.updateTask(task)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(() => {
-                this.refreshSubject$.next();
-            });
     }
 
     /**
