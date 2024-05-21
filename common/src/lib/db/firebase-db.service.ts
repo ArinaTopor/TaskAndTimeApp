@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Injectable } from '@angular/core';
 import {
     AngularFirestore,
     CollectionReference,
+    DocumentChangeAction,
     DocumentData,
     DocumentReference,
 } from '@angular/fire/compat/firestore';
 import { IUser } from './interfaces/user.interface';
 import { IProject } from './interfaces/project.interface';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { inboxProject } from './models/inbox.model';
 import { defaultSection } from './models/default.section';
 @Injectable({
     providedIn: 'root',
@@ -27,7 +26,6 @@ export class FirebaseDatabaseService {
             .doc<IUser>('/users/' + user.uid)
             .set({ name: name, email: user.email });
         this.user.next(user);
-        this.addNewProject(inboxProject, user.uid);
     }
 
     /**
@@ -49,7 +47,9 @@ export class FirebaseDatabaseService {
     /**
      * read collection
      */
-    public readProject(userId: string) {
+    public readProject(
+        userId: string
+    ): Observable<Array<DocumentChangeAction<IProject>>> {
         return this._afs
             .collection<IProject>(`/projects/${userId}/project/`)
             .snapshotChanges();
@@ -63,7 +63,6 @@ export class FirebaseDatabaseService {
             map((actions) =>
                 actions.map((a) => {
                     const data: IProject = a.payload.doc.data();
-                    console.log(data);
 
                     return data;
                 })
