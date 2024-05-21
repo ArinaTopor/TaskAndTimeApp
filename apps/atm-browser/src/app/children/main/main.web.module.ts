@@ -6,7 +6,9 @@ import {
     FirebaseDatabaseService,
     USER_INFO_TOKEN,
 } from '@atm-project/common';
+import { ColorPickerModule } from 'ngx-color-picker';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NewProjectComponent } from './components/new-project/new-project.component';
 import {
     TuiRootModule,
     TuiDialogModule,
@@ -31,11 +33,17 @@ import { SettingTabModule } from '../../modules/settings-tab-popap/setting-tab-p
         { provide: USER_INFO_TOKEN, useClass: FirebaseAuthService },
         FirebaseDatabaseService,
     ],
-    declarations: [MainWebComponent, SidenavComponent, ModeToggleComponent],
+    declarations: [
+        MainWebComponent,
+        SidenavComponent,
+        ModeToggleComponent,
+        NewProjectComponent,
+    ],
     imports: [
         RouterModule.forChild(mainRoutes),
         NgOptimizedImage,
         CommonModule,
+        ColorPickerModule,
         ReactiveFormsModule,
         TuiRootModule,
         TuiDialogModule,

@@ -89,10 +89,7 @@
                 class="sidenavbar__function-item"
                 *ngFor="let section of sectionList"
             >
-                <button
-                    class="sidenavbar__function-item-link"
-                    (click)="toggleSection(section)"
-                >
+                <div class="sidenavbar__function-item-link">
                     <span class="sidenavbar__function-item-link-span">
                         <img
                             class="sidenavbar__function-item-link-icon"
@@ -103,6 +100,7 @@
                             height="16"
                             title="icon"
                             [ngClass]="{ rotate: section.isShow$ | async }"
+                            (click)="toggleSection(section)"
                         />
                         <span class="sidenavbar__function-item-link-text">{{
                             section.title
@@ -114,9 +112,9 @@
                         title="icon"
                         width="24"
                         height="24"
+                        (click)="toggleModal(section.type)"
                     />
-                </button>
-
+                </div>
                 <div
                     *ngIf="section.isShow$ | async"
                     class="sidenavbar__function-item-content"
@@ -180,3 +178,7 @@
         </div>
     </div>
 </nav>
+<new-project-modal
+    *ngIf="selectedTab.value === tabs.project"
+    [isOpen]="true"
+></new-project-modal>

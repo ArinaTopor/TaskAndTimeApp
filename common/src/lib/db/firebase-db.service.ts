@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
 import {
     AngularFirestore,
-    AngularFirestoreDocument,
-    DocumentReference,
+    CollectionReference,
     DocumentChangeAction,
+    DocumentData,
+    DocumentReference,
+    AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
-import { IUser } from './interfaces';
-import { ITask } from './interfaces';
 import { IProject, ISection } from './interfaces/project.interface';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import { defaultSection } from './models/default.section';
+import { IUser } from './interfaces';
+import { ITask } from './interfaces';
 @Injectable({
     providedIn: 'root',
 })
 export class FirebaseDatabaseService {
     protected user: BehaviorSubject<firebase.default.User | null> =
         new BehaviorSubject<firebase.default.User | null>(null);
-
     constructor(private _afs: AngularFirestore) {}
 
     /**
@@ -87,7 +89,23 @@ export class FirebaseDatabaseService {
         return taskRef.update(task);
     }
     /**
-     * function for get projects from db
+     * function for add new project to db
+     */
+    public addNewProject(project: IProject, userId: string): Promise<void> {
+        const newProject: DocumentReference<IProject> = this._afs
+            .collection<IProject>(`/userProjects/${userId}/projects`)
+            .doc().ref;
+        project.id = newProject.id;
+        const newSection: CollectionReference<DocumentData> =
+            newProject.collection('sections');
+        defaultSection.id = newSection.id;
+        newSection.add(defaultSection);
+
+        return newProject.set(project);
+    }
+
+    /**
+     * read collection
      */
     public readProject(
         userId: string
@@ -107,7 +125,20 @@ export class FirebaseDatabaseService {
             map((actions) =>
                 actions.map((a) => {
                     const data: T = a.payload.doc.data();
-                    console.log(data);
+
+                    return data;
+                })
+            )
+        );
+    }
+    /**
+     * function for formatted projects data
+     */
+    public formattedProjectsInfo(userId: string): Observable<IProject[]> {
+        return this.readProject(userId).pipe(
+            map((actions) =>
+                actions.map((a) => {
+                    const data: IProject = a.payload.doc.data();
 
                     return data;
                 })

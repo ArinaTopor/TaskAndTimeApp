@@ -93,6 +93,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        cursor: default;
 
         &:hover {
             border: 1px #000000;
@@ -111,11 +112,13 @@
 
     &__function-item-link-icon {
         margin-left: 1.3em;
+        cursor: pointer;
     }
 
     &__function-item-link-icon-two {
         margin-right: 0.5em;
         opacity: 0;
+        cursor: pointer;
 
         &__function-item-link:hover &__function-item-link-icon {
             opacity: 1;

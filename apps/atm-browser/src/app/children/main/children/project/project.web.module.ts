@@ -8,6 +8,15 @@ import { ProjectService } from './services/project.service';
 import { NewTaskComponent } from '../../components/new-task/components/new-task.component';
 import { NewTaskService } from '../../components/new-task/services/new-task.service';
 import { SettingTabModule } from 'apps/atm-browser/src/app/modules/settings-tab-popap/setting-tab-popap.modal';
+import { HttpClientModule } from '@angular/common/http';
+import {
+    TuiSvgModule,
+    TuiLinkModule,
+    TuiDialogModule,
+    TuiRootModule,
+} from '@taiga-ui/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ColorPickerModule } from 'ngx-color-picker';
 import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
@@ -28,6 +37,15 @@ const routes: Routes = [
         SettingTabModule,
         NewTaskComponent,
         CommonModule,
+        TuiSvgModule,
+        HttpClientModule,
+        TuiLinkModule,
+        FormsModule,
+        ColorPickerModule,
+        CommonModule,
+        ReactiveFormsModule,
+        TuiRootModule,
+        TuiDialogModule,
     ],
     declarations: [ProjectWebComponent],
 })

@@ -12,10 +12,12 @@ import { ModeToggleService } from '../../mode/services/mode-toggle.service';
 import { ModeToggleStorageService } from '../../mode/services/mode-storage.service';
 import { FirebaseAuthService, USER_INFO_TOKEN } from '@atm-project/common';
 import firebase from 'firebase/compat/app';
-import { Observable, filter, of } from 'rxjs';
 import { IProject } from '@atm-project/common';
-import { ProjectType } from '../interfaces/project.interface';
 import { SettingsTabComponent } from 'apps/atm-browser/src/app/modules/settings-tab-popap/settings-tab-popap.component';
+import { BehaviorSubject, Observable, filter, of } from 'rxjs';
+import { NewProjectComponent } from '../../new-project/new-project.component';
+import { ProjectType } from '../interfaces/project.interface';
+import { NewProjectService } from '../../new-project/services/new-project.service';
 @Component({
     selector: 'sidenav',
     templateUrl: './sidenav.component.html',
@@ -25,8 +27,10 @@ import { SettingsTabComponent } from 'apps/atm-browser/src/app/modules/settings-
         NavBarContentManagerService,
         SkeletonLoadingComponent,
         ModeToggleService,
+        NewProjectService,
         ModeToggleStorageService,
         SettingsTabComponent,
+        NewProjectComponent,
     ],
 })
 export class SidenavComponent implements OnInit {
@@ -36,6 +40,9 @@ export class SidenavComponent implements OnInit {
     protected showProject: boolean = false;
     protected showTags: boolean = false;
     protected showFilters: boolean = false;
+    protected selectedTab: BehaviorSubject<ProjectType | null> =
+        new BehaviorSubject<ProjectType | null>(null);
+    public readonly tabs: typeof ProjectType = ProjectType;
     public user$: Observable<firebase.User | null> = of(null);
 
     constructor(
@@ -48,6 +55,12 @@ export class SidenavComponent implements OnInit {
     }
     public ngOnInit(): void {
         this.user$ = this.fbAuthService.user$.pipe(filter((user) => !!user));
+    }
+    /**
+     * toogle selectedList
+     */
+    public toggleModal(tab: ProjectType): void {
+        this.selectedTab.next(tab);
     }
 
     /**
