@@ -1,7 +1,3 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { mainRoutes } from './main.routes';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { SidenavComponent } from './components/sidenav/components/sidenav.component';
 import { MainWebComponent } from './components/main.web.component';
 import { ModeToggleComponent } from './components/mode/mode-toggle.component';
@@ -20,6 +16,12 @@ import {
     TuiButtonModule,
 } from '@taiga-ui/core';
 import { TuiInputModule } from '@taiga-ui/kit';
+import { NgModule } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { mainRoutes } from './main.routes';
+import { NewTaskComponent } from './components/new-task/components/new-task.component';
+
 @NgModule({
     exports: [],
     providers: [
@@ -43,6 +45,7 @@ import { TuiInputModule } from '@taiga-ui/kit';
         TuiInputModule,
         TuiTextfieldControllerModule,
         TuiButtonModule,
+        NewTaskComponent,
     ],
 })
 export class MainWebModule {}
