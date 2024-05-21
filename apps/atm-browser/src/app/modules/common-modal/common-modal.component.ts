@@ -9,6 +9,8 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ICommonForm } from './interfaces/common-form.interface';
+import { IElement } from '@atm-project/common';
+import { universeElementModel } from '../../children/main/children/project/models/cleanSection.model';
 
 @Component({
     selector: 'common-modal',
@@ -20,12 +22,12 @@ import { ICommonForm } from './interfaces/common-form.interface';
 export class CommonModalComponent implements OnChanges {
     @Input() public header: string = '';
     @Input() public isOpen: boolean = false;
-    @Input() public value: string = '';
+    @Input() public value: IElement = universeElementModel;
     @Input() public placeholder: string = 'Раздел';
     @Input() public isCreate: boolean = true;
     @Output() public dataChanged: EventEmitter<any> = new EventEmitter<any>();
     protected commonForm: FormGroup<ICommonForm> = new FormGroup({
-        title: new FormControl(this.isCreate ? '' : this.value, {
+        title: new FormControl(this.value.title, {
             nonNullable: true,
             validators: [Validators.required],
         }),
@@ -33,7 +35,7 @@ export class CommonModalComponent implements OnChanges {
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes['value'] && !this.isCreate) {
-            this.commonForm.controls['title'].setValue(this.value);
+            this.commonForm.controls['title'].setValue(this.value.title);
         }
     }
     /**
@@ -42,7 +44,8 @@ export class CommonModalComponent implements OnChanges {
     protected onDataChanged(observer: any): any {
         const rawForm: { title: string } = this.commonForm.getRawValue();
         console.log(rawForm);
-        this.dataChanged.emit({ ...rawForm, id: '' });
+        console.log({ ...rawForm, id: this.value.id });
+        this.dataChanged.emit({ ...rawForm, id: this.value.id });
         this.commonForm.reset();
         observer.complete();
     }

@@ -8,17 +8,19 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { ModalForDeleteComponent } from 'apps/atm-browser/src/app/modules/modal-for-delete/modal-for-delete.component';
 import {
+    BehaviorSubject,
     Observable,
     Subject,
     Subscription,
+    filter,
+    map,
     shareReplay,
     startWith,
     switchMap,
 } from 'rxjs';
 import { ProjectService } from '../services/project.service';
 import { CommonModalComponent } from 'apps/atm-browser/src/app/modules/common-modal/common-modal.component';
-import { IProject, ISection } from '@atm-project/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IProject, IElement } from '@atm-project/common';
 
 @Component({
     selector: 'project-web-component',
@@ -28,9 +30,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     providers: [ModalForDeleteComponent, CommonModalComponent],
 })
 export class ProjectWebComponent implements OnDestroy {
-    protected id!: string;
+    protected id: Observable<string>;
+    protected bhvsId: BehaviorSubject<string> = new BehaviorSubject<string>('');
     protected subscription!: Subscription;
-    protected sections$: Observable<ISection[]>;
+    protected sections$: Observable<IElement[]>;
     protected currentProject$: Observable<IProject[]>;
     protected isOpen: boolean = false;
     protected refreshSubject$: Subject<void> = new Subject<void>();
@@ -41,10 +44,16 @@ export class ProjectWebComponent implements OnDestroy {
         private _projectService: ProjectService,
         private _destroyRef: DestroyRef
     ) {
-        this.subscription = _activateRoute.params.subscribe((params) => {
-            this.id = params['id'];
-            this._cdr.markForCheck();
-        });
+        this.id = this._activateRoute.params.pipe(
+            filter((params) => !!params['id']),
+            map((params) => {
+                this.bhvsId.next(params['id']);
+
+                return params['id'];
+            }),
+            shareReplay(1)
+        );
+        // _activateRoute.params.subscribe((params) => this.id = params['id']);
         this.sections$ = this.refreshSubject$.pipe(
             startWith(null),
             switchMap(() => this.getSections()),
@@ -59,14 +68,31 @@ export class ProjectWebComponent implements OnDestroy {
     /**
      * get sections
      */
-    public getSections(): Observable<ISection[]> {
-        return this._projectService.getSection(this.id);
+    public getSections(): Observable<IElement[]> {
+        return this.id.pipe(
+            filter((projectId): projectId is string => !!projectId),
+            switchMap((projectId) => this._projectService.getSection(projectId))
+        );
+        // this.id.pipe(filter((projectId): projectId is string => !!projectId)),
+        // switchMap((projectId) => {
+        //     if(projectId){
+        //         return this._projectService.getSection(projectId);
+        //     }
+        //     else {
+        //         return of();
+        //     }
+        // }
+        // );
     }
+
     /**
      * get project
      */
     public getProject(): Observable<IProject[]> {
-        return this._projectService.getProject(this.id);
+        return this.id.pipe(
+            filter((projectId): projectId is string => !!projectId),
+            switchMap((projectId) => this._projectService.getProject(projectId))
+        );
     }
 
     public ngOnDestroy(): void {
@@ -83,12 +109,39 @@ export class ProjectWebComponent implements OnDestroy {
     /**
      * add section
      */
-    public addSection(section: ISection): void {
-        if (section) {
-            this._projectService
-                .addSection(this.id, section)
-                .pipe(takeUntilDestroyed(this._destroyRef))
-                .subscribe();
-        }
+    public addSection(section: IElement): void {
+        this.id.pipe(
+            filter((projectId): projectId is string => !!projectId),
+            switchMap((projectId) =>
+                this._projectService.addSection(projectId, section)
+            )
+        );
+        // if (section) {
+        //     this._projectService
+        //         .addSection(this.id, section)
+        //         .pipe(takeUntilDestroyed(this._destroyRef))
+        //         .subscribe();
+        // }
+    }
+
+    /**
+     * updateSection
+     */
+    public updateSection(section: IElement): void {
+        // this._projectService
+        //     .updateSection(this.id, section)
+        //     .pipe(takeUntilDestroyed(this._destroyRef))
+        //     .subscribe();
+    }
+
+    /**
+     * deleteSection
+     */
+    public deleteSection(sectionId: string): void {
+        console.log('dfdf');
+        // this._projectService
+        //     .deleteSection(this.id, sectionId)
+        //     .pipe(takeUntilDestroyed(this._destroyRef))
+        //     .subscribe();
     }
 }

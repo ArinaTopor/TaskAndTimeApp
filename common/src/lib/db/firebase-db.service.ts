@@ -7,7 +7,7 @@ import {
     DocumentReference,
     AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
-import { IProject, ISection } from './interfaces/project.interface';
+import { IProject, IElement } from './interfaces/project.interface';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { defaultSection } from './models/default.section';
 import { IUser } from './interfaces';
@@ -47,10 +47,10 @@ export class FirebaseDatabaseService {
     public addNewSection(
         projectId: string,
         userId: string,
-        section: ISection
+        section: IElement
     ): Promise<void> {
-        const newSection: DocumentReference<ISection> = this._afs
-            .collection<ISection>(
+        const newSection: DocumentReference<IElement> = this._afs
+            .collection<IElement>(
                 `/userProjects/${userId}/projects/${projectId}/sections`
             )
             .doc().ref;
@@ -152,9 +152,9 @@ export class FirebaseDatabaseService {
     public getSectionsProject(
         userId: string,
         projectId: string
-    ): Observable<Array<DocumentChangeAction<ISection>>> {
+    ): Observable<Array<DocumentChangeAction<IElement>>> {
         return this._afs
-            .collection<ISection>(
+            .collection<IElement>(
                 `userProjects/${userId}/projects/${projectId}/sections`
             )
             .snapshotChanges();
@@ -170,7 +170,7 @@ export class FirebaseDatabaseService {
     ): Promise<void> {
         const sectionRef: AngularFirestoreDocument<ITask> = this._afs
             .collection<ITask>(
-                `/userProjects/${userId}/projects/${projectId}/section`
+                `/userProjects/${userId}/projects/${projectId}/sections`
             )
             .doc(sectionId);
 
@@ -183,11 +183,11 @@ export class FirebaseDatabaseService {
         userId: string,
         projectId: string,
         sectionId: string,
-        section: ISection
+        section: IElement
     ): Promise<void> {
         const sectionRef: AngularFirestoreDocument<ITask> = this._afs
             .collection<ITask>(
-                `/userProjects/${userId}/projects/${projectId}/section`
+                `/userProjects/${userId}/projects/${projectId}/sections`
             )
             .doc(sectionId);
 

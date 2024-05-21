@@ -26,6 +26,7 @@ import { RouterModule } from '@angular/router';
 import { mainRoutes } from './main.routes';
 import { NewTaskComponent } from './components/new-task/components/new-task.component';
 import { SettingTabModule } from '../../modules/settings-tab-popap/setting-tab-popap.modal';
+import { ChangeColorElementDirective } from './directives/change-color.directive';
 
 @NgModule({
     exports: [],
@@ -38,6 +39,7 @@ import { SettingTabModule } from '../../modules/settings-tab-popap/setting-tab-p
         SidenavComponent,
         ModeToggleComponent,
         NewProjectComponent,
+        ChangeColorElementDirective,
     ],
     imports: [
         RouterModule.forChild(mainRoutes),

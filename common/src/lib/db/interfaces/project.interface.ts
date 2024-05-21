@@ -4,7 +4,7 @@ export interface IProject {
     color?: string;
 }
 
-export interface ISection {
+export interface IElement {
     id: string;
     title: string;
 }

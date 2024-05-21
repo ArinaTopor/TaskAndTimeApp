@@ -40,6 +40,7 @@ export class SidenavComponent implements OnInit {
     protected showProject: boolean = false;
     protected showTags: boolean = false;
     protected showFilters: boolean = false;
+    protected isOpenModalProject: boolean = false;
     protected selectedTab: BehaviorSubject<ProjectType | null> =
         new BehaviorSubject<ProjectType | null>(null);
     public readonly tabs: typeof ProjectType = ProjectType;
@@ -57,10 +58,10 @@ export class SidenavComponent implements OnInit {
         this.user$ = this.fbAuthService.user$.pipe(filter((user) => !!user));
     }
     /**
-     * toogle selectedList
+     * toggle selectedList
      */
-    public toggleModal(tab: ProjectType): void {
-        this.selectedTab.next(tab);
+    public toggleModal(open: boolean): void {
+        this.isOpenModalProject = open;
     }
 
     /**

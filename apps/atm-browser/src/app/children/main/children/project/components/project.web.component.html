@@ -1,7 +1,9 @@
 <div class="project">
     <h1 class="project_title" *ngIf="currentProject$ | async as projects">
         <span *ngFor="let project of projects">
-            <span *ngIf="project.id === id">{{ project.title }}</span></span
+            <span *ngIf="project.id === bhvsId.value">{{
+                project.title
+            }}</span></span
         >
     </h1>
     <button class="project_add_section" (click)="onOpen()">
@@ -18,10 +20,12 @@
             <h2 class="project_section__title">{{ section.title }}</h2>
             <div class="project_section__settings">
                 <settings-tab-popap
-                    [value]="section.title"
+                    [value]="section"
+                    (changeData)="updateSection($event)"
+                    (deleteData)="deleteSection(section.id)"
                 ></settings-tab-popap>
                 <new-task-modal
-                    [projectId]="id"
+                    [projectId]="bhvsId.value"
                     [sectionId]="section.id"
                 ></new-task-modal>
             </div>

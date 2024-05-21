@@ -1,6 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Input,
+    Output,
+} from '@angular/core';
+import { IElement } from '@atm-project/common';
 import { CommonModalComponent } from 'apps/atm-browser/src/app/modules/common-modal/common-modal.component';
 import { ModalForDeleteComponent } from 'apps/atm-browser/src/app/modules/modal-for-delete/modal-for-delete.component';
+import { universeElementModel } from '../../children/main/children/project/models/cleanSection.model';
 
 @Component({
     selector: 'settings-tab-popap',
@@ -15,8 +23,9 @@ export class SettingsTabComponent {
     protected openDeleteNotification: boolean = false;
     protected openCommonModal: boolean = false;
     public isCreate: boolean = false;
-    @Input() public value: string = '';
-    // @Input() public commonFunction: EventE
+    @Input() public value: IElement = universeElementModel;
+    @Output() public changeData: EventEmitter<any> = new EventEmitter<any>();
+    @Output() public deleteData: EventEmitter<void> = new EventEmitter<void>();
 
     /**
      * open modal
@@ -42,7 +51,13 @@ export class SettingsTabComponent {
      * function for delete
      */
     public handleConfirm(): void {
-        console.log('Удалено:');
+        this.deleteData.emit();
         this.openDeleteNotification = false;
+    }
+    /**
+     * changeDataSection
+     */
+    public handleChangeData(value: IElement): void {
+        this.changeData.emit(value);
     }
 }

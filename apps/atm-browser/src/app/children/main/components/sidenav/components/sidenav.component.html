@@ -33,10 +33,7 @@
 
         <hr class="sidenavbar__divider" />
         <div>
-            <button
-                class="sidenavbar__function-item-link"
-                (click)="toggleSection(projectType.project)"
-            >
+            <div class="sidenavbar__function-item-link">
                 <span class="sidenavbar__function-item-link-span">
                     <img
                         class="sidenavbar__function-item-link-icon"
@@ -44,7 +41,10 @@
                         width="16"
                         height="16"
                         title="icon"
-                        [ngClass]="{ rotate: showProject }"
+                        [ngClass]="{
+                            rotate: showProject
+                        }"
+                        (click)="toggleSection(projectType.project)"
                     />
                     <span class="sidenavbar__function-item-link-text"
                         >Проекты</span
@@ -56,23 +56,18 @@
                     title="icon"
                     width="24"
                     height="24"
+                    (click)="toggleModal(true)"
                 />
-            </button>
+            </div>
             <div *ngIf="showProject" class="sidenavbar__function-item-content">
                 <ul *ngIf="allProject$ | async as list; else skeleton">
                     <li
                         class="sidenavbar__function-item-content-item"
                         *ngFor="let project of list"
                         [routerLink]="['project/' + project.id]"
+                        [changeColorElement]="project.color"
                     >
                         <span class="sidenavbar__function-item-link-span">
-                            <!-- <img
-                                width="20"
-                                height="20"
-                                title="icon"
-                                class="sidenavbar__function-item-content-item-icon"
-
-                            /> -->
                             <span
                                 class="sidenavbar__function-item-content-item-name"
                                 >{{ project.title }}</span
@@ -179,6 +174,6 @@
     </div>
 </nav>
 <new-project-modal
-    *ngIf="selectedTab.value === tabs.project"
-    [isOpen]="true"
+    [isOpen]="isOpenModalProject"
+    (toggleModal)="toggleModal($event)"
 ></new-project-modal>

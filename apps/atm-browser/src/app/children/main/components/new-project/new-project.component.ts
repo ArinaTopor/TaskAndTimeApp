@@ -2,7 +2,9 @@ import {
     ChangeDetectionStrategy,
     Component,
     DestroyRef,
+    EventEmitter,
     Input,
+    Output,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { INewProject } from './interfaces/new-project-form.interface';
@@ -17,6 +19,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class NewProjectComponent {
     @Input() public isOpen: boolean = false;
+    @Output() public toggleModal: EventEmitter<boolean> =
+        new EventEmitter<boolean>();
     protected color: string = 'rgb(141,207,255)';
     protected newProjectForm: FormGroup<INewProject> = new FormGroup({
         title: new FormControl('', {
@@ -40,7 +44,7 @@ export class NewProjectComponent {
         const project: IProject = {
             id: '',
             title: this.newProjectForm.getRawValue().title,
-            color: this.newProjectForm.getRawValue().color,
+            color: this.color,
         };
         this._newProjectServics
             .addProject(project)

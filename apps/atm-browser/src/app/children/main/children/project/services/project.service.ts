@@ -3,7 +3,7 @@ import {
     FirebaseAuthService,
     FirebaseDatabaseService,
     IProject,
-    ISection,
+    IElement,
     USER_INFO_TOKEN,
 } from '@atm-project/common';
 import { Observable, filter, of, switchMap } from 'rxjs';
@@ -20,7 +20,7 @@ export class ProjectService {
     /**
      * function for get sections of project
      */
-    public getSection(projectId: string): Observable<ISection[]> {
+    public getSection(projectId: string): Observable<IElement[]> {
         return this._authService.user$.pipe(
             filter((user): user is firebase.User => !!user),
             switchMap((user) => {
@@ -38,7 +38,7 @@ export class ProjectService {
     /**
      * function for get info about project by id
      */
-    public getSectionInfo(id: string): Observable<ISection[]> {
+    public getSectionInfo(id: string): Observable<IElement[]> {
         return this._authService.user$.pipe(
             filter((user): user is firebase.User => !!user),
             switchMap((user) => {
@@ -58,7 +58,7 @@ export class ProjectService {
      */
     public addSection(
         projectId: string,
-        section: ISection
+        section: IElement
     ): Observable<void | never[]> {
         return this._authService.user$.pipe(
             filter((user): user is firebase.User => !!user),
@@ -93,6 +93,56 @@ export class ProjectService {
                 }
             }),
             takeUntilDestroyed(this._destroyRef)
+        );
+    }
+
+    /**
+     * function for update section
+     * @param projectId
+     * @param section
+     * @returns
+     */
+    public updateSection(
+        projectId: string,
+        section: IElement
+    ): Observable<void> {
+        return this._authService.user$.pipe(
+            filter((user): user is firebase.User => !!user),
+            switchMap((user) => {
+                if (user) {
+                    return this._afs.updateSection(
+                        user.uid,
+                        projectId,
+                        section.id,
+                        section
+                    );
+                } else {
+                    return of();
+                }
+            })
+        );
+    }
+
+    /**
+     * delete section
+     */
+    public deleteSection(
+        projectId: string,
+        sectionId: string
+    ): Observable<void> {
+        return this._authService.user$.pipe(
+            filter((user): user is firebase.User => !!user),
+            switchMap((user) => {
+                if (user) {
+                    return this._afs.deleteSection(
+                        user.uid,
+                        projectId,
+                        sectionId
+                    );
+                } else {
+                    return of();
+                }
+            })
         );
     }
 }

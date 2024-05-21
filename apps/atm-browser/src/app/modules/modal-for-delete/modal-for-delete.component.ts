@@ -28,7 +28,7 @@ export class ModalForDeleteComponent {
      * method for delete element
      */
     public onConfirm(observer: any): void {
-        observer.complete();
         this.confirm.emit();
+        observer.complete();
     }
 }
