@@ -13,7 +13,10 @@ import { ModeToggleService } from '../../mode/services/mode-toggle.service';
 import { ModeToggleStorageService } from '../../mode/services/mode-storage.service';
 import { FirebaseAuthService, USER_INFO_TOKEN } from '@atm-project/common';
 import firebase from 'firebase/compat/app';
-import { Observable, filter, of } from 'rxjs';
+import { BehaviorSubject, Observable, filter, of } from 'rxjs';
+import { NewProjectComponent } from '../../new-project/new-project.component';
+import { ProjectType } from '../interfaces/project.interface';
+import { NewProjectService } from '../../new-project/services/new-project.service';
 @Component({
     selector: 'sidenav',
     templateUrl: './sidenav.component.html',
@@ -23,12 +26,17 @@ import { Observable, filter, of } from 'rxjs';
         NavBarContentManagerService,
         SkeletonLoadingComponent,
         ModeToggleService,
+        NewProjectService,
         ModeToggleStorageService,
+        NewProjectComponent,
     ],
 })
 export class SidenavComponent implements OnInit {
     protected btnList: TabButtonViewModel[];
     protected sectionList: SectionListViewModel[];
+    protected selectedTab: BehaviorSubject<ProjectType | null> =
+        new BehaviorSubject<ProjectType | null>(null);
+    public readonly tabs: typeof ProjectType = ProjectType;
     public user$: Observable<firebase.User | null> = of(null);
 
     constructor(
@@ -45,6 +53,12 @@ export class SidenavComponent implements OnInit {
     }
     public ngOnInit(): void {
         this.user$ = this.fbAuthService.user$.pipe(filter((user) => !!user));
+    }
+    /**
+     * toogle selectedList
+     */
+    public toggleModal(tab: ProjectType): void {
+        this.selectedTab.next(tab);
     }
 
     /**
