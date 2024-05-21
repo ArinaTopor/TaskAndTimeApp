@@ -1,14 +1,14 @@
 import {
     ChangeDetectionStrategy,
     Component,
+    DestroyRef,
     Input,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { INewProject } from './interfaces/new-project-form.interface';
-import {
-    IProject,
-} from '@atm-project/common';
+import { IProject } from '@atm-project/common';
 import { NewProjectService } from './services/new-project.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'new-project-modal',
     templateUrl: './new-project.component.html',
@@ -28,7 +28,10 @@ export class NewProjectComponent {
             validators: Validators.required,
         }),
     });
-    constructor(private _newProjectServics: NewProjectService) {}
+    constructor(
+        private _newProjectServics: NewProjectService,
+        private _destoroyRef: DestroyRef
+    ) {}
 
     /**
      * function for add new project
@@ -39,6 +42,9 @@ export class NewProjectComponent {
             title: this.newProjectForm.getRawValue().title,
             color: this.newProjectForm.getRawValue().color,
         };
-        this._newProjectServics.addProject(project);
+        this._newProjectServics
+            .addProject(project)
+            .pipe(takeUntilDestroyed(this._destoroyRef))
+            .subscribe();
     }
 }

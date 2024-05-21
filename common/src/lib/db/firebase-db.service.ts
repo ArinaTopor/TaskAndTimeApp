@@ -32,47 +32,6 @@ export class FirebaseDatabaseService {
     }
 
     /**
-     * function for add new project to db
-     */
-    public addNewProject(project: IProject, userId: string): Promise<void> {
-        const newProject: DocumentReference<IProject> = this._afs
-            .collection<IProject>(`/userProjects/${userId}/projects`)
-            .doc().ref;
-        project.id = newProject.id;
-        const newSection: CollectionReference<DocumentData> =
-            newProject.collection('sections');
-        defaultSection.id = newSection.id;
-        newSection.add(defaultSection);
-
-        return newProject.set(project);
-    }
-
-    /**
-     * read collection
-     */
-    public readProject(
-        userId: string
-    ): Observable<Array<DocumentChangeAction<IProject>>> {
-        return this._afs
-            .collection<IProject>(`/projects/${userId}/project/`)
-            .snapshotChanges();
-    }
-
-    /**
-     * function for formatted projects data
-     */
-    public formattedProjectsInfo(userId: string): Observable<IProject[]> {
-        return this.readProject(userId).pipe(
-            map((actions) =>
-                actions.map((a) => {
-                    const data: IProject = a.payload.doc.data();
-
-                    return data;
-                })
-            )
-        );
-    }
-    /**
      * Добавляем задачу на сервер
      */
     public addNewTask(task: ITask, userId: string): Promise<void> {
@@ -112,5 +71,46 @@ export class FirebaseDatabaseService {
             .doc(task.id);
 
         return taskRef.update(task);
+    }
+    /**
+     * function for add new project to db
+     */
+    public addNewProject(project: IProject, userId: string): Promise<void> {
+        const newProject: DocumentReference<IProject> = this._afs
+            .collection<IProject>(`/userProjects/${userId}/projects`)
+            .doc().ref;
+        project.id = newProject.id;
+        const newSection: CollectionReference<DocumentData> =
+            newProject.collection('sections');
+        defaultSection.id = newSection.id;
+        newSection.add(defaultSection);
+
+        return newProject.set(project);
+    }
+
+    /**
+     * read collection
+     */
+    public readProject(
+        userId: string
+    ): Observable<Array<DocumentChangeAction<IProject>>> {
+        return this._afs
+            .collection<IProject>(`/projects/${userId}/project/`)
+            .snapshotChanges();
+    }
+
+    /**
+     * function for formatted projects data
+     */
+    public formattedProjectsInfo(userId: string): Observable<IProject[]> {
+        return this.readProject(userId).pipe(
+            map((actions) =>
+                actions.map((a) => {
+                    const data: IProject = a.payload.doc.data();
+
+                    return data;
+                })
+            )
+        );
     }
 }

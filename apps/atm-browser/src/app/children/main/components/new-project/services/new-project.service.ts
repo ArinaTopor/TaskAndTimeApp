@@ -5,6 +5,7 @@ import {
     IProject,
     USER_INFO_TOKEN,
 } from '@atm-project/common';
+import { Observable, of, switchMap } from 'rxjs';
 
 @Injectable()
 export class NewProjectService {
@@ -15,15 +16,15 @@ export class NewProjectService {
     /**
      * function for add new project
      */
-    public addProject(project: IProject): void {
-        this.fbAuthService.user$.subscribe(
-            (user: firebase.default.User | null) => {
+    public addProject(project: IProject): Observable<void | null> {
+        return this.fbAuthService.user$.pipe(
+            switchMap((user: firebase.default.User | null) => {
                 if (user) {
-                    this._afs.addNewProject(project, user.uid);
+                    return this._afs.addNewProject(project, user.uid);
                 } else {
-                    console.error('User is null');
+                    return of(null);
                 }
-            }
+            })
         );
     }
 }
