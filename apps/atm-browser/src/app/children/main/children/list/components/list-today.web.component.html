@@ -6,31 +6,8 @@
     <div class="list-today__current-tasks">
         <span class="list-today__header">{{ currentDate }} • Сегодня</span>
         <hr class="list-today__divider" />
-
-        <ng-container *ngIf="unCompletedTask$ | async as taskList">
-            <div style="display: flex; flex-direction: column" *ngFor="let task of taskList">
-                <div class="list-today__task">
-                    <div class="list-today__task">
-                        <div class="list-today__checkbox">
-                            <input type="checkbox" id="custom{{task.id}}" [(ngModel)]="task.checkbox"
-                                   (ngModelChange)="updateTask(task)" />
-                            <label for="custom{{task.id}}">
-                                <tui-svg style="color: #eeeeee" src="tuiIconCheckLarge"/>
-                            </label>
-                        </div>
-
-                        <div style="display: flex; flex-direction: column; cursor: pointer" (click)="edit(task)">
-                            <span class="list-today__task-name">{{ task.name }}</span>
-                            <span class="list-today__task-start-time">{{ task.timeStart }}</span>
-                        </div>
-                    </div>
-                    <span class="list-today__task-tags">#{{ task.tags }}</span>
-                </div>
-                <hr class="list-today__divider" />
-            </div>
-            <new-task-modal [currentTask]="currentTask" [stateModal]="isEdit$"/>
-        </ng-container>
-        <new-task-modal/>
+        <list-web-component [taskList]="unCompletedTask$ | async"/>
+        <new-task-modal></new-task-modal>
     </div>
 
     <div class="list-today__completed-tasks">
@@ -48,28 +25,7 @@
         </button>
         <hr class="list-today__divider" />
         <div *ngIf="isShow$ | async">
-            <ng-container *ngIf="completedTask$ | async as completedTask">
-                <div style="display: flex; flex-direction: column" *ngFor="let task of completedTask">
-                    <div class="list-today__task">
-                        <div class="list-today__task">
-                            <div class="list-today__checkbox-complete">
-                                <input type="checkbox" id="custom{{task.id}}" [(ngModel)]="task.checkbox"
-                                       (ngModelChange)="updateTask(task)" />
-                                <label for="custom{{task.id}}">
-                                    <tui-svg style="color: #eeeeee" src="tuiIconCheckLarge"/>
-                                </label>
-                            </div>
-
-                            <div style="display: flex; flex-direction: column">
-                                <span class="list-today__task-name-complete">{{ task.name }}</span>
-                                <span class="list-today__task-start-time-complete">{{ task.timeStart }}</span>
-                            </div>
-                        </div>
-                        <span class="list-today__task-tags">#{{ task.tags }}</span>
-                    </div>
-                    <hr class="list-today__divider" />
-                </div>
-            </ng-container>
+            <list-web-component [taskList]="completedTask$ | async" [isListCompleted]="true"/>
         </div>
     </div>
 </nav>

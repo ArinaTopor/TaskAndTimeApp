@@ -1,0 +1,22 @@
+<ng-container *ngIf="taskList">
+    <div style="display: flex; flex-direction: column" *ngFor="let task of taskList">
+        <div class="list__task">
+            <div class="list__task">
+                <div [ngClass]="{'list__checkbox':!isListCompleted, 'list__checkbox-complete': isListCompleted}">
+                    <input type="checkbox" id="custom{{task.id}}" [(ngModel)]="task.checkbox"
+                           (ngModelChange)="updateTask(task)"/>
+                    <label for="custom{{task.id}}">
+                        <tui-svg style="color: #eeeeee" src="tuiIconCheckLarge"/>
+                    </label>
+                </div>
+
+                <div style="display: flex; flex-direction: column">
+                    <span [ngClass]="{'list__task-name':!isListCompleted, 'list__task-name-complete': isListCompleted}">{{ task.name }}</span>
+                    <span [ngClass]="{'list__task-start-time':!isListCompleted, 'list__task-start-time-complete': isListCompleted}">{{ task.timeStart }}</span>
+                </div>
+            </div>
+            <span class="list__task-tags">#{{ task.tags }}</span>
+        </div>
+        <hr class="list__divider"/>
+    </div>
+</ng-container>

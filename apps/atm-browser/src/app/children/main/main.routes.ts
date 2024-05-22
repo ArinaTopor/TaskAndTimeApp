@@ -18,8 +18,8 @@ export const mainRoutes: Routes = [
             },
             {
                 path: 'list',
-                loadChildren: () => import('./children/list/list.web.module')
-                    .then((a: any) => a.ListWebModule)
+                loadChildren: () => import('./children/list/list-today.web.module')
+                    .then((a: any) => a.ListTodayWebModule)
             },
             {
                 path: 'project',
