@@ -10,7 +10,7 @@ import {
     shareReplay,
     startWith,
     Subject,
-    switchMap,
+    switchMap
 } from 'rxjs';
 import { NewTaskService } from '../../../components/new-task/services/new-task.service';
 import { ITask } from '@atm-project/interfaces';
@@ -25,13 +25,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class ListTodayWebComponent {
     protected readonly currentDate: string = dayjs().locale('ru').format('D MMMM');
     protected currentDateFull: dayjs.Dayjs = dayjs().locale('ru');
-
     protected taskAll$: Observable<ITask[]>;
     protected unCompletedTask$: Observable<ITask[]>;
     protected completedTask$: Observable<ITask[]>;
-
     protected destroyRef: DestroyRef = inject(DestroyRef);
     protected refreshSubject$: Subject<void> = new Subject<void>();
+    protected isEdit$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    protected currentTask: ITask | null = null;
+
     private _isShow$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     public get isShow$(): Observable<boolean> {
@@ -98,5 +99,14 @@ export class ListTodayWebComponent {
      */
     protected toggleSection(): void {
         this._isShow$.next(!this._isShow$.value);
+    }
+
+    /**
+     *
+     * Редактирование задачи
+     */
+    protected edit(task: ITask): void {
+        this.currentTask = task;
+        this.isEdit$.next(!this.isEdit$.value);
     }
 }

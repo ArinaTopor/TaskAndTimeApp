@@ -1,4 +1,4 @@
-<button class="new-task__add-task" (click)="showDialog()">
+<button *ngIf="!currentTask" class="new-task__add-task" (click)="showDialog()">
     <img
         class="new-task__link-icon"
         [ngSrc]="'../../../../../assets/icons/add-task.svg'"
@@ -66,7 +66,7 @@
                 class="new-task__modal-btn-add"
                 size="m"
             >
-                Добавить
+                {{ !currentTask? 'Добавить' : 'Сохранить' }}
             </button>
         </p>
     </form>

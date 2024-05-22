@@ -9,4 +9,5 @@ export interface ITask {
     checkbox: boolean | null | undefined;
     projectId?: string;
     sectionId?: string;
+    isEditing?: boolean;
 }
