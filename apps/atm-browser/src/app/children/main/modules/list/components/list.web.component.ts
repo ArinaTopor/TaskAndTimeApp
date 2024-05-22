@@ -20,6 +20,7 @@ import {
 })
 export class ListWebComponent {
     @Input() public taskList: ITask[] | null | undefined;
+    @Input() public isListCompleted: boolean | null | undefined = false;
 
     protected taskAll$: Observable<ITask[]>;
     protected destroyRef: DestroyRef = inject(DestroyRef);

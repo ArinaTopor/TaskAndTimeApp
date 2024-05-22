@@ -6,7 +6,6 @@
     <div class="list-today__current-tasks">
         <span class="list-today__header">{{ currentDate }} • Сегодня</span>
         <hr class="list-today__divider" />
-
         <list-web-component [taskList]="unCompletedTask$ | async"/>
         <new-task-modal></new-task-modal>
     </div>
@@ -26,7 +25,7 @@
         </button>
         <hr class="list-today__divider" />
         <div *ngIf="isShow$ | async">
-            <list-web-component [taskList]="completedTask$ | async"/>
+            <list-web-component [taskList]="completedTask$ | async" [isListCompleted]="true"/>
         </div>
     </div>
 </nav>
