@@ -1,4 +1,8 @@
-import { ErrorHandler, importProvidersFrom, NgModule } from '@angular/core';
+import {
+    ErrorHandler,
+    importProvidersFrom,
+    NgModule,
+} from '@angular/core';
 import { AppComponent } from './components/app.component';
 import {
     TUI_SANITIZER,

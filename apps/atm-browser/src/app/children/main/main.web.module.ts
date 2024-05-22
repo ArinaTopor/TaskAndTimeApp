@@ -6,7 +6,9 @@ import {
     FirebaseDatabaseService,
     USER_INFO_TOKEN,
 } from '@atm-project/common';
+import { ColorPickerModule } from 'ngx-color-picker';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NewProjectComponent } from './components/new-project/new-project.component';
 import {
     TuiRootModule,
     TuiDialogModule,
@@ -30,11 +32,13 @@ import { NewTaskComponent } from './components/new-task/components/new-task.comp
         MainWebComponent,
         SidenavComponent,
         ModeToggleComponent,
+        NewProjectComponent,
     ],
     imports: [
         RouterModule.forChild(mainRoutes),
         NgOptimizedImage,
         CommonModule,
+        ColorPickerModule,
         ReactiveFormsModule,
         TuiRootModule,
         TuiDialogModule,
