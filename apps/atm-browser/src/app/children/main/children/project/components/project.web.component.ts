@@ -1,11 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-
 @Component({
     selector: 'project-web-component',
-    template: './project.web.component.html',
+    templateUrl: './project.web.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [],
 })
-export class ProjectWebComponent {
-
-}
+export class ProjectWebComponent {}

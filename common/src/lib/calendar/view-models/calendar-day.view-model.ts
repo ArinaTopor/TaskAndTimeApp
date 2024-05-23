@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { ITask } from '@atm-project/common';
+import { ITask } from '../../db/interfaces/task.interface';
 
 
 
@@ -14,7 +14,7 @@ export class CalendarDayViewModel {
         dayData: dayjs.Dayjs,
         task: ITask[]
     ) {
-        this.currentDay = dayData.format('YYYY:MM:DD') === currentDay.format('YYYY:MM:DD');
+        this.currentDay = dayData.isSame(currentDay, 'date');
         this.dayData = dayData;
         this.tasks = task;
     }

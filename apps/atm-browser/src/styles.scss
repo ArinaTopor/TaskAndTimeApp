@@ -12,6 +12,10 @@
     --checkbox-border: #{$checkbox-border};
     --grey: #{$grey};
     --complete: #{$complete};
+    --border-input-color: #{$border-input-color};
+    --border-input-shadow: #{$border-input-shadow};
+    --grey-light: #{$grey-light};
+    --grey-active: #{$grey-active};
 }
 body {
     margin: 0;
@@ -38,4 +42,20 @@ a:hover {
 }
 [data-status='error'][_nghost-ng-c3553744663] {
     --tui-base-01: #f0e6e6;
+}
+.t-heading[_ngcontent-ng-c1591437670] {
+    font-size: 24px !important;
+    color: var(--text-color);
+}
+
+button#year-btn.ng-star-inserted[_nghost-ng-c2749805289] {
+    color: var(--primary);
+}
+
+div.t-wrapper[tuiWrapper][data-appearance='flat'] {
+    color: var(--primary);
+}
+
+.t-content[_ngcontent-ng-c1591437670] {
+    background: var(--base-bg) !important;
 }

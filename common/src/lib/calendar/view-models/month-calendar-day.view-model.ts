@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import { ITask } from '@atm-project/common';
 import { CalendarDayViewModel } from './calendar-day.view-model';
+import { ITask } from '../../db/interfaces/task.interface';
 
 
 export class MonthCalendarDayViewModel extends CalendarDayViewModel {
@@ -12,6 +12,6 @@ export class MonthCalendarDayViewModel extends CalendarDayViewModel {
         task: ITask[],
     ) {
         super(currentDay, dayData, task);
-        this.inCurrentMonth = dayData.month() === currentDay.month();
+        this.inCurrentMonth = dayData.isSame(currentDay, 'month');
     }
 }

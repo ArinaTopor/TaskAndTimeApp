@@ -3,27 +3,38 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import { WeekCalendarDayViewModel } from '../view-models/week-calendar-day.view-model';
 import { WeekCalendarViewModel } from '../view-models/week-calendar.view-model';
-import { ITask } from '../interfaces/ITask.interface';
 import { DATE_TOKEN } from '../../date/tokens/date.token';
+import { ITask } from '../../db/interfaces/task.interface';
 
 
 @Injectable()
 export class WeekCalendarService {
     protected weekCalendar: dayjs.Dayjs[] = [];
-    public weekCalendarViewModel: WeekCalendarViewModel;
+    private _weekCalendarViewModel!: WeekCalendarViewModel;
 
-    private _taskList: ITask[];
+    private _tasks!: ITask[];
     public currentDate: dayjs.Dayjs;
 
     constructor(@Inject(DATE_TOKEN) public date: dayjs.Dayjs) {
         this.currentDate = this.date;
 
         this.weekCalendar = this.getWeekDays();
-        this._taskList = this.setMokTask();
+    }
 
-        this.weekCalendarViewModel = new WeekCalendarViewModel(
+
+    /**
+     * Создаем вью модель
+     */
+    public createWeekCalendarViewModel($tasks: ITask[]): WeekCalendarViewModel{
+        this._weekCalendarViewModel = new WeekCalendarViewModel(
             this.initWeekCalendar()
         );
+
+
+        this._tasks = $tasks;
+        console.log(this._tasks);
+
+        return this._weekCalendarViewModel;
     }
 
     /**
@@ -31,12 +42,11 @@ export class WeekCalendarService {
      */
     public setTasks(height: number): void {
         for (const day of this.weekCalendarViewModel.week) {
-            console.log(day);
             const tasks: ITask[] = [];
             day.height = height;
-            for (const task of this._taskList) {
+            for (const task of this.$tasks) {
 
-                if (day.dayData.format('YYYY:MM:DD') === task.date.format('YYYY:MM:DD')) {
+                if (day.dayData.isSame(task.date, 'date')) {
                     tasks.push(task);
                 } else {
 
@@ -79,48 +89,5 @@ export class WeekCalendarService {
         }
 
         return res;
-    }
-
-    /**
-     * Метод для мока задач, нужно будет потом убрать
-     */
-    private setMokTask(): ITask[] {
-        const testTask: ITask = {
-            id: 'string1',
-            name: 'testTask1',
-            description: 'string',
-            date: dayjs().set('day', 1),
-            timeStart: dayjs().set('hour', 15).set('minute', 25).set('day', 1),
-            timeEnd: dayjs().set('hour', 17).set('minute', 20).set('day', 1),
-            tags: [],
-            completed: false
-        };
-
-        const testTask1: ITask = {
-            id: 'string2',
-            name: 'testTask2',
-            description: 'string',
-            date: dayjs().set('day', 3),
-            timeStart: dayjs().set('hour', 20).set('minute', 10).set('day', 3),
-            timeEnd: dayjs().set('hour', 21).set('minute', 45).set('day', 3),
-            tags: [],
-            completed: false
-        };
-
-        const testTask2: ITask = {
-            id: 'string3',
-            name: 'testTask3',
-            description: 'string',
-            date: dayjs().set('day', 5),
-            timeStart: dayjs().set('hour', 12).set('minute', 10).set('day', 4),
-            timeEnd: dayjs().set('hour', 20).set('minute', 45).set('day', 4),
-            tags: [],
-            completed: false
-        };
-
-        // console.log(testTask1.timeStart);
-        // console.log(testTask1.timeEnd);
-
-        return [testTask, testTask1, testTask2];
     }
 }

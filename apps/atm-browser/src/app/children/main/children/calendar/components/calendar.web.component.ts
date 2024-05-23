@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, } from '@angular/core';
 import { Router } from '@angular/router';
 
+
 type CalendarTypes = 'week' | 'month'
 
 @Component({

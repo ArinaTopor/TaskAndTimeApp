@@ -7,6 +7,9 @@ import {
     ViewChild
 } from '@angular/core';
 import { WeekCalendarService, WeekCalendarViewModel } from '@atm-project/common';
+import { ListContentManagerService } from '../../../../list/services/list-content-manager.service';
+import { Subject, shareReplay, startWith, switchMap, tap } from 'rxjs';
+import { ITask } from '@atm-project/interfaces';
 
 
 @Component({
@@ -20,7 +23,9 @@ import { WeekCalendarService, WeekCalendarViewModel } from '@atm-project/common'
 })
 export class WeekCalendarWebComponent implements AfterViewInit {
     protected week: WeekCalendarViewModel;
-    //protected renderFlag: boolean = false;
+    protected refreshSubject$: Subject<void> = new Subject<void>();
+    // @ts-ignore
+    protected taskAll$: Observavble<ITask>;
 
     @ViewChild('dayContainer', { read: ElementRef })
     protected calendarContainer!: ElementRef;
@@ -28,13 +33,31 @@ export class WeekCalendarWebComponent implements AfterViewInit {
     constructor(
         private _cd: ChangeDetectorRef,
         private _service: WeekCalendarService,
+        private _contentManagerService: ListContentManagerService
     ) {
-        this.week = this._service.weekCalendarViewModel;
+        let tasks: ITask[] = [];
+        this.taskAll$ = this.refreshSubject$
+            .pipe(
+                startWith(null),
+                switchMap(() => _contentManagerService.getAllTask()),
+                shareReplay(1)
+            );
+
+        this.taskAll$
+            .pipe(tap((el: ITask[]) => {
+                tasks = el;
+                console.log(el);
+                this._cd.markForCheck();
+            })
+            ).subscribe();
+
+        console.log(tasks);
+
+        this.week = this._service.createWeekCalendarViewModel(tasks);
     }
 
     public ngAfterViewInit(): void {
         this._service.setTasks(this.calendarContainer.nativeElement.offsetHeight);
-        //this.renderFlag = true смешной баг хз как пофиксить)
         this._cd.detectChanges();
     }
 

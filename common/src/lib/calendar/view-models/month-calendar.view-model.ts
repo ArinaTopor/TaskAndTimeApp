@@ -24,8 +24,6 @@ export class MonthCalendarViewModel {
             }
         }
 
-        console.log(res);
-
         return res;
     }
 }
