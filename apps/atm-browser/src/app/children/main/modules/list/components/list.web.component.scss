@@ -1,0 +1,108 @@
+.list {
+    &__task {
+        display: flex;
+        flex-direction: row;
+        margin-top: 0.3em;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__task-name {
+        font-size: 16px;
+        color: var(--base-text-color-light);
+        font-weight: 600;
+    }
+
+    &__task-name-complete {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--complete);
+    }
+
+    &__task-start-time {
+        font-size: 12px;
+        color: var(--primary);
+        margin-top: 0.3em;
+    }
+
+    &__task-start-time-complete {
+        font-size: 12px;
+        color: var(--complete);
+        margin-top: 0.3em;
+    }
+
+    &__task-tags {
+        font-size: 16px;
+        color: var(--grey);
+        margin-top: 3em;
+        margin-right: -22em;
+    }
+
+    &__checkbox {
+        position: relative;
+        cursor: pointer;
+        margin-right: 1em;
+    }
+
+    &__checkbox-complete {
+        position: relative;
+        cursor: pointer;
+        margin-right: 1em;
+    }
+
+    &__checkbox input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+    &__checkbox-complete input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+    &__checkbox label {
+        position: relative;
+        display: inline-block;
+        height: 24px;
+        width: 24px;
+        background-color: var(--checkbox-label);
+        border: 1px solid var(--checkbox-border);
+        border-radius: 0.6em;
+        cursor: pointer;
+    }
+
+    &__checkbox-complete label {
+        position: relative;
+        display: inline-block;
+        height: 24px;
+        width: 24px;
+        background-color: var(--checkbox-label);
+        border: 1px solid var(--checkbox-border);
+        border-radius: 0.6em;
+        cursor: pointer;
+    }
+
+    &__checkbox input:checked + label {
+        background-color: var(--primary);
+        border: 1px solid var(--primary);
+    }
+
+    &__checkbox-complete input:checked + label {
+        background-color: var(--checkbox-uncomplete);
+        border: 1px solid var(--checkbox-uncomplete);
+    }
+
+    &__divider {
+        margin-top: 0.5em;
+        height: 0;
+        border: none;
+        border-top: 2px solid var(--bg-hover-item);
+        width: 1437px;
+    }
+}

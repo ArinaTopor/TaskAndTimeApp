@@ -1,4 +1,4 @@
-import { DestroyRef, inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
     FirebaseAuthService,
     FirebaseDatabaseService,
@@ -9,12 +9,10 @@ import { Observable, of, switchMap } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
-export class ListContentManagerService {
-
+export class ListService {
 
     constructor(
         private _afs: FirebaseDatabaseService,
-        protected destroyRef: DestroyRef = inject(DestroyRef),
         public fbAuthService: FirebaseAuthService
     ) {}
 
