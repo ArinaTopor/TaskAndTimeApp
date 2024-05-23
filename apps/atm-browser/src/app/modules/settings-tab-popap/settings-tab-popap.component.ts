@@ -5,17 +5,22 @@ import {
     Input,
     Output,
 } from '@angular/core';
-import { IElement } from '@atm-project/common';
+import { IElement, IProject } from '@atm-project/common';
 import { CommonModalComponent } from 'apps/atm-browser/src/app/modules/common-modal/common-modal.component';
 import { ModalForDeleteComponent } from 'apps/atm-browser/src/app/modules/modal-for-delete/modal-for-delete.component';
 import { universeElementModel } from '../../children/main/children/project/models/cleanSection.model';
+import { NewProjectComponent } from '../../children/main/components/new-project/new-project.component';
 
 @Component({
     selector: 'settings-tab-popap',
     templateUrl: './settings-tab-popap.component.html',
     styleUrl: './settings-tab-popap.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [CommonModalComponent, ModalForDeleteComponent],
+    providers: [
+        CommonModalComponent,
+        ModalForDeleteComponent,
+        NewProjectComponent,
+    ],
 })
 export class SettingsTabComponent {
     protected readonly items: string[] = ['Редактировать', 'Удалить'];
@@ -24,6 +29,8 @@ export class SettingsTabComponent {
     protected openCommonModal: boolean = false;
     public isCreate: boolean = false;
     @Input() public value: IElement = universeElementModel;
+    @Input() public project?: IProject;
+    @Input() public isProject: boolean = false;
     @Output() public changeData: EventEmitter<any> = new EventEmitter<any>();
     @Output() public deleteData: EventEmitter<void> = new EventEmitter<void>();
 
@@ -38,8 +45,6 @@ export class SettingsTabComponent {
      */
     public openDelete(): void {
         this.openDeleteNotification = true;
-        console.log(this.openDeleteNotification);
-        // this.openDeleteNotification = false;
     }
     /**
      * for cancel modal-delete

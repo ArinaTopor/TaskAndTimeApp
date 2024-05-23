@@ -1,15 +1,8 @@
 import { DestroyRef, Inject, Injectable } from '@angular/core';
 import { TabButtonViewModel } from '../view-models/tab-button.view-model';
-import {
-    BehaviorSubject,
-    filter,
-    Observable,
-    switchMap,
-} from 'rxjs';
+import { BehaviorSubject, filter, Observable, switchMap } from 'rxjs';
 import { SectionListViewModel } from '../view-models/section-list.view-model';
-import {
-    SECTION_LIST,
-} from '../models/section-list-content';
+import { SECTION_LIST } from '../models/section-list-content';
 import { TAB_LIST } from '../models/tab-list-content';
 import {
     FirebaseAuthService,
@@ -76,16 +69,13 @@ export class NavBarContentManagerService {
     }
 
     /**
-     *  This method return list navbar function as Observable
+     * function for delete project by Id
      */
-    // protected getProjectListByType(type: ProjectType): Observable<IProject[]> {
-    //     switch (type) {
-    //         case ProjectType.filter:
-    //             return of(FILTERS).pipe(delay(1000));
-    //         case ProjectType.tag:
-    //             return of(TAGS);
-    //         case ProjectType.project:
-    //             return of(PROJECTS);
-    //     }
-    // }
+    public deleteProject(projectId: string): Observable<void> {
+        return this.user$.pipe(
+            filter((user): user is firebase.User => !!user),
+            switchMap((user) => this.afs.deleteProject(user.uid, projectId)),
+            takeUntilDestroyed(this._destroyRef)
+        );
+    }
 }

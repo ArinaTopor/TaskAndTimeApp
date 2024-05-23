@@ -14,7 +14,6 @@ export class ChangeColorElementDirective implements AfterViewInit {
      */
     private changeColor(el: ElementRef): void {
         if (this.color) {
-            console.log(this.color);
             el.nativeElement.style.background = this.color;
         }
     }

@@ -11,7 +11,6 @@ import {
     BehaviorSubject,
     Observable,
     Subject,
-    Subscription,
     filter,
     map,
     shareReplay,
@@ -21,6 +20,9 @@ import {
 import { ProjectService } from '../services/project.service';
 import { CommonModalComponent } from 'apps/atm-browser/src/app/modules/common-modal/common-modal.component';
 import { IProject, IElement } from '@atm-project/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ITask } from '@atm-project/interfaces';
+import dayjs from 'dayjs';
 
 @Component({
     selector: 'project-web-component',
@@ -32,12 +34,12 @@ import { IProject, IElement } from '@atm-project/common';
 export class ProjectWebComponent implements OnDestroy {
     protected id: Observable<string>;
     protected bhvsId: BehaviorSubject<string> = new BehaviorSubject<string>('');
-    protected subscription!: Subscription;
     protected sections$: Observable<IElement[]>;
     protected currentProject$: Observable<IProject[]>;
     protected isOpen: boolean = false;
     protected refreshSubject$: Subject<void> = new Subject<void>();
-
+    protected allProjectTodos$: Observable<ITask[]>;
+    protected currentDateFull: dayjs.Dayjs = dayjs().locale('ru');
     constructor(
         private _activateRoute: ActivatedRoute,
         private _cdr: ChangeDetectorRef,
@@ -53,7 +55,6 @@ export class ProjectWebComponent implements OnDestroy {
             }),
             shareReplay(1)
         );
-        // _activateRoute.params.subscribe((params) => this.id = params['id']);
         this.sections$ = this.refreshSubject$.pipe(
             startWith(null),
             switchMap(() => this.getSections()),
@@ -62,6 +63,11 @@ export class ProjectWebComponent implements OnDestroy {
         this.currentProject$ = this.refreshSubject$.pipe(
             startWith(null),
             switchMap(() => this.getProject()),
+            shareReplay(1)
+        );
+        this.allProjectTodos$ = this.refreshSubject$.pipe(
+            startWith(null),
+            switchMap(() => this.getTasks()),
             shareReplay(1)
         );
     }
@@ -73,16 +79,6 @@ export class ProjectWebComponent implements OnDestroy {
             filter((projectId): projectId is string => !!projectId),
             switchMap((projectId) => this._projectService.getSection(projectId))
         );
-        // this.id.pipe(filter((projectId): projectId is string => !!projectId)),
-        // switchMap((projectId) => {
-        //     if(projectId){
-        //         return this._projectService.getSection(projectId);
-        //     }
-        //     else {
-        //         return of();
-        //     }
-        // }
-        // );
     }
 
     /**
@@ -94,10 +90,20 @@ export class ProjectWebComponent implements OnDestroy {
             switchMap((projectId) => this._projectService.getProject(projectId))
         );
     }
-
-    public ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+    /**
+     * filter todos by section id
+     */
+    public filterTasksBySectionId(sectionId: string): Observable<ITask[]> {
+        return this.allProjectTodos$.pipe(
+            map((tasks) =>
+                tasks.filter((task) => {
+                    return task.sectionId === sectionId && !task.checkbox;
+                })
+            )
+        );
     }
+
+    public ngOnDestroy(): void {}
 
     /**
      * function for open modal
@@ -110,38 +116,41 @@ export class ProjectWebComponent implements OnDestroy {
      * add section
      */
     public addSection(section: IElement): void {
-        this.id.pipe(
-            filter((projectId): projectId is string => !!projectId),
-            switchMap((projectId) =>
-                this._projectService.addSection(projectId, section)
-            )
-        );
-        // if (section) {
-        //     this._projectService
-        //         .addSection(this.id, section)
-        //         .pipe(takeUntilDestroyed(this._destroyRef))
-        //         .subscribe();
-        // }
+        this._projectService
+            .addSection(this.bhvsId.value, section)
+            .pipe(takeUntilDestroyed(this._destroyRef))
+            .subscribe();
     }
 
     /**
      * updateSection
      */
     public updateSection(section: IElement): void {
-        // this._projectService
-        //     .updateSection(this.id, section)
-        //     .pipe(takeUntilDestroyed(this._destroyRef))
-        //     .subscribe();
+        this._projectService
+            .updateSection(this.bhvsId.value, section)
+            .pipe(takeUntilDestroyed(this._destroyRef))
+            .subscribe();
     }
 
     /**
      * deleteSection
      */
     public deleteSection(sectionId: string): void {
-        console.log('dfdf');
-        // this._projectService
-        //     .deleteSection(this.id, sectionId)
-        //     .pipe(takeUntilDestroyed(this._destroyRef))
-        //     .subscribe();
+        this._projectService
+            .deleteSection(this.bhvsId.value, sectionId)
+            .pipe(takeUntilDestroyed(this._destroyRef))
+            .subscribe();
+    }
+
+    /**
+     * get all tasks
+     */
+    public getTasks(): Observable<ITask[]> {
+        return this.id.pipe(
+            filter((projectId): projectId is string => !!projectId),
+            switchMap((projectId) =>
+                this._projectService.getAllTodos(projectId)
+            )
+        );
     }
 }

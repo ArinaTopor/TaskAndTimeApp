@@ -25,8 +25,9 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { mainRoutes } from './main.routes';
 import { NewTaskComponent } from './components/new-task/components/new-task.component';
-import { SettingTabModule } from '../../modules/settings-tab-popap/setting-tab-popap.modal';
+import { SettingTabModule } from '../../modules/settings-tab-popap/setting-tab-popap.module';
 import { ChangeColorElementDirective } from './directives/change-color.directive';
+import { ControlErrorModule } from '../../modules/atm-controls/control-error.module';
 
 @NgModule({
     exports: [],
@@ -38,7 +39,6 @@ import { ChangeColorElementDirective } from './directives/change-color.directive
         MainWebComponent,
         SidenavComponent,
         ModeToggleComponent,
-        NewProjectComponent,
         ChangeColorElementDirective,
     ],
     imports: [
@@ -58,6 +58,8 @@ import { ChangeColorElementDirective } from './directives/change-color.directive
         CommonModalModule,
         SettingTabModule,
         NewTaskComponent,
+        ControlErrorModule,
+        NewProjectComponent,
     ],
 })
 export class MainWebModule {}

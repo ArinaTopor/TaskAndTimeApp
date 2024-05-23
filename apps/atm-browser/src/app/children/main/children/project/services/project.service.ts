@@ -9,6 +9,7 @@ import {
 import { Observable, filter, of, switchMap } from 'rxjs';
 import firebase from 'firebase/compat/app';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ITask } from '@atm-project/interfaces';
 @Injectable()
 export class ProjectService {
     constructor(
@@ -141,6 +142,22 @@ export class ProjectService {
                     );
                 } else {
                     return of();
+                }
+            })
+        );
+    }
+
+    /**
+     * function for get all todos
+     */
+    public getAllTodos(projectId: string): Observable<ITask[]> {
+        return this._authService.user$.pipe(
+            filter((user): user is firebase.User => !!user),
+            switchMap((user) => {
+                if (user) {
+                    return this._afs.getTodosByProject(user.uid, projectId);
+                } else {
+                    return of([]);
                 }
             })
         );

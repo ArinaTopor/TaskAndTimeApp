@@ -43,8 +43,6 @@ export class CommonModalComponent implements OnChanges {
      */
     protected onDataChanged(observer: any): any {
         const rawForm: { title: string } = this.commonForm.getRawValue();
-        console.log(rawForm);
-        console.log({ ...rawForm, id: this.value.id });
         this.dataChanged.emit({ ...rawForm, id: this.value.id });
         this.commonForm.reset();
         observer.complete();

@@ -18,6 +18,10 @@
     --grey-active: #{$grey-active};
     --grey-hover: #{$grey-hover};
 }
+html,
+body {
+    height: 100%;
+}
 body {
     margin: 0;
     background-color: var(--base-bg);

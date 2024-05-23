@@ -73,72 +73,15 @@
                                 >{{ project.title }}</span
                             >
                         </span>
-                        <settings-tab-popap></settings-tab-popap>
+                        <settings-tab-popap
+                            [project]="project"
+                            [isProject]="true"
+                            (deleteData)="deleteProject(project.id)"
+                        ></settings-tab-popap>
                     </li>
                 </ul>
             </div>
         </div>
-
-        <!-- <ul class="sidenavbar__function">
-            <li
-                class="sidenavbar__function-item"
-                *ngFor="let section of sectionList"
-            >
-                <div class="sidenavbar__function-item-link">
-                    <span class="sidenavbar__function-item-link-span">
-                        <img
-                            class="sidenavbar__function-item-link-icon"
-                            [ngSrc]="
-                                '../../../../../assets/icons/tag-close.svg'
-                            "
-                            width="16"
-                            height="16"
-                            title="icon"
-                            [ngClass]="{ rotate: section.isShow$ | async }"
-                            (click)="toggleSection(section)"
-                        />
-                        <span class="sidenavbar__function-item-link-text">{{
-                            section.title
-                        }}</span>
-                    </span>
-                    <img
-                        class="sidenavbar__function-item-link-icon-two"
-                        [ngSrc]="'../../../../../assets/icons/add.svg'"
-                        title="icon"
-                        width="24"
-                        height="24"
-                        (click)="toggleModal(section.type)"
-                    />
-                </div>
-                <div
-                    *ngIf="section.isShow$ | async"
-                    class="sidenavbar__function-item-content"
-                >
-                    <div *ngIf="section.list$ | async as list; else skeleton">
-                        <li
-                            class="sidenavbar__function-item-content-item"
-                            *ngFor="let project of list"
-                        >
-                            <span class="sidenavbar__function-item-link-span">
-                                <img
-                                    *ngIf="project.icon"
-                                    [ngSrc]="project.icon"
-                                    width="20"
-                                    height="20"
-                                    title="icon"
-                                    class="sidenavbar__function-item-content-item-icon"
-                                />
-                                <span
-                                    class="sidenavbar__function-item-content-item-name"
-                                    >{{ project.title }}</span
-                                >
-                            </span>
-                            <settings-tab-popap></settings-tab-popap>
-                        </li>
-                    </div>
-                </div>
-            </li>
-        </ul> -->
 
         <ng-template #skeleton>
             <img

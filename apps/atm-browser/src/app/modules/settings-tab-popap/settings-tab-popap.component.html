@@ -1,7 +1,12 @@
 <tui-hosted-dropdown [content]="dropdown" [(open)]="open">
     <button
         type="button"
-        style="background: transparent; border: none; cursor: pointer"
+        style="
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            height: 20px;
+        "
     >
         <img src="../../../../../assets/icons/setting.svg" />
     </button>
@@ -18,6 +23,7 @@
     (confirm)="handleConfirm()"
 ></delete-element-notification>
 <common-modal
+    *ngIf="!isProject"
     [isOpen]="openCommonModal"
     [header]="'Редактировать'"
     [isCreate]="false"
@@ -25,3 +31,10 @@
     (dataChanged)="handleChangeData($event)"
 >
 </common-modal>
+<new-project-modal
+    *ngIf="isProject"
+    [isOpen]="openCommonModal"
+    [isEdit]="true"
+    [project]="project"
+>
+</new-project-modal>

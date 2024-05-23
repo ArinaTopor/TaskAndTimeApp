@@ -18,6 +18,7 @@ import { BehaviorSubject, Observable, filter, of } from 'rxjs';
 import { NewProjectComponent } from '../../new-project/new-project.component';
 import { ProjectType } from '../interfaces/project.interface';
 import { NewProjectService } from '../../new-project/services/new-project.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'sidenav',
     templateUrl: './sidenav.component.html',
@@ -62,6 +63,16 @@ export class SidenavComponent implements OnInit {
      */
     public toggleModal(open: boolean): void {
         this.isOpenModalProject = open;
+    }
+
+    /**
+     * delete project
+     */
+    public deleteProject(projectId: string): void {
+        this.contentManager
+            .deleteProject(projectId)
+            .pipe(takeUntilDestroyed(this._destroyRef))
+            .subscribe();
     }
 
     /**

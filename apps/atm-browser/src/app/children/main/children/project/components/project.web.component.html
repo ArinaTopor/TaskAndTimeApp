@@ -16,24 +16,28 @@
         class="project_section__wrapper"
         *ngIf="sections$ | async as sectionList"
     >
-        <div *ngFor="let section of sectionList">
-            <h2 class="project_section__title">{{ section.title }}</h2>
-            <div class="project_section__settings">
+        <div class="project_section__data" *ngFor="let section of sectionList">
+            <div class="project_section__data_settings">
+                <h2 class="project_section__data_title">{{ section.title }}</h2>
                 <settings-tab-popap
                     [value]="section"
                     (changeData)="updateSection($event)"
                     (deleteData)="deleteSection(section.id)"
                 ></settings-tab-popap>
                 <new-task-modal
+                    style="margin-top: -1em"
                     [projectId]="bhvsId.value"
                     [sectionId]="section.id"
                 ></new-task-modal>
             </div>
             <hr class="project_section__line" />
-            <!--здесь нужно будет добавить todo-->
+            <list-web-component
+                [taskList]="filterTasksBySectionId(section.id) | async"
+            ></list-web-component>
         </div>
     </div>
 </div>
+
 <common-modal
     [header]="'Добавить раздел'"
     [placeholder]="'Раздел'"

@@ -49,6 +49,7 @@ export class FirebaseDatabaseService {
         userId: string,
         section: IElement
     ): Promise<void> {
+        console.log(section);
         const newSection: DocumentReference<IElement> = this._afs
             .collection<IElement>(
                 `/userProjects/${userId}/projects/${projectId}/sections`
@@ -98,7 +99,7 @@ export class FirebaseDatabaseService {
         project.id = newProject.id;
         const newSection: CollectionReference<DocumentData> =
             newProject.collection('sections');
-        defaultSection.id = newSection.id;
+        defaultSection.id = newSection.doc().id;
         newSection.add(defaultSection);
 
         return newProject.set(project);
@@ -168,8 +169,8 @@ export class FirebaseDatabaseService {
         projectId: string,
         sectionId: string
     ): Promise<void> {
-        const sectionRef: AngularFirestoreDocument<ITask> = this._afs
-            .collection<ITask>(
+        const sectionRef: AngularFirestoreDocument<IElement> = this._afs
+            .collection<IElement>(
                 `/userProjects/${userId}/projects/${projectId}/sections`
             )
             .doc(sectionId);
@@ -185,12 +186,52 @@ export class FirebaseDatabaseService {
         sectionId: string,
         section: IElement
     ): Promise<void> {
-        const sectionRef: AngularFirestoreDocument<ITask> = this._afs
-            .collection<ITask>(
+        const sectionRef: AngularFirestoreDocument<IElement> = this._afs
+            .collection<IElement>(
                 `/userProjects/${userId}/projects/${projectId}/sections`
             )
             .doc(sectionId);
 
         return sectionRef.update(section);
+    }
+
+    /**
+     * function for get todos in project
+     */
+    public getTodosByProject(
+        userId: string,
+        projectId: string
+    ): Observable<ITask[]> {
+        return this._afs
+            .collection<ITask>(`/userProjects/${userId}/todos`, (ref) =>
+                ref.where('projectId', '==', projectId)
+            )
+            .valueChanges();
+    }
+    /**
+     * func for update project
+     */
+    public updateProject(
+        userId: string,
+        projectId: string,
+        project: IProject
+    ): Promise<void> {
+        const sectionRef: AngularFirestoreDocument<IElement> = this._afs
+            .collection<IElement>(`/userProjects/${userId}/projects`)
+            .doc(projectId);
+
+        return sectionRef.update(project);
+    }
+
+    /**
+     * function for delete project from db
+     */
+    public deleteProject(userId: string, projectId: string): Promise<void> {
+        console.log('delete');
+        const projectRef: AngularFirestoreDocument<IElement> = this._afs
+            .collection<IElement>(`/userProjects/${userId}/projects`)
+            .doc(projectId);
+
+        return projectRef.delete();
     }
 }

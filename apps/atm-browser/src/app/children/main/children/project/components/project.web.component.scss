@@ -1,7 +1,9 @@
 .project {
-    margin-top: 112px;
+    height: 100vh;
     margin-left: 47px;
+    overflow-y: scroll;
     &_title {
+        margin-top: 112px;
         font-size: 32px;
     }
     &_add_section {
@@ -20,13 +22,32 @@
     }
 
     &_section {
-        &_title {
-            font-size: 18px;
-            font-weight: 700;
+        &__wrapper {
+            margin-top: 34px;
         }
-        &__settings {
-            display: flex;
-            align-items: center;
+        &__line {
+            margin-top: 0.5em;
+            border: none;
+            height: 0;
+            border-top: 2px solid var(--bg-hover-item);
+            width: 75vw;
+        }
+        &__data {
+            margin-bottom: 9vh;
+            &_title {
+                font-size: 18px;
+                font-weight: 700;
+                margin: 0;
+                flex-grow: 1;
+            }
+            &_settings {
+                height: 40px;
+                display: grid;
+                grid-template-columns: 1fr auto auto;
+                align-items: end;
+                gap: 10px;
+                margin-bottom: 4px;
+            }
         }
     }
 }
