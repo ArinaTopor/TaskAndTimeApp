@@ -1,8 +1,6 @@
 import { DestroyRef, Inject, Injectable } from '@angular/core';
 import { TabButtonViewModel } from '../view-models/tab-button.view-model';
 import { BehaviorSubject, filter, Observable, switchMap } from 'rxjs';
-import { SectionListViewModel } from '../view-models/section-list.view-model';
-import { SECTION_LIST } from '../models/section-list-content';
 import { TAB_LIST } from '../models/tab-list-content';
 import {
     FirebaseAuthService,
@@ -40,21 +38,6 @@ export class NavBarContentManagerService {
         return TAB_LIST;
     }
 
-    /**
-     *
-     * This method get data-list about section
-     */
-    public getSectionList(): SectionListViewModel[] {
-        return SECTION_LIST;
-    }
-
-    /**
-     * initSection
-     * @param section
-     */
-    public initSection(section: SectionListViewModel): void {
-        // section.list$ = this.getProjectListByType(section.type);
-    }
     /**
      * this method for take project from fb
      */
