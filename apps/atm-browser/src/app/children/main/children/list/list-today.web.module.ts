@@ -27,6 +27,8 @@ import {
 import { NewTaskComponent } from '../../components/new-task/components/new-task.component';
 import { NewTaskService } from '../../components/new-task/services/new-task.service';
 import { FormatTimeDirective } from '../../directives/formatTime.directive';
+import { ListWebModule } from '../../modules/list/list.web.module';
+import { ListService } from '../../modules/list/services/list-manager.service';
 
 const routes: Routes = [
     {
@@ -40,8 +42,8 @@ const routes: Routes = [
     providers: [
         { provide: USER_INFO_TOKEN, useClass: FirebaseAuthService },
         FirebaseDatabaseService,
-        NewTaskService
-
+        NewTaskService,
+        ListService
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -63,11 +65,12 @@ const routes: Routes = [
         TuiInputTimeModule,
         TuiTextareaModule,
         NewTaskComponent,
-        FormatTimeDirective
+        FormatTimeDirective,
+        ListWebModule
     ],
     declarations: [
-        ListTodayWebComponent
+        ListTodayWebComponent,
     ]
 })
-export class ListWebModule {
+export class ListTodayWebModule {
 }
