@@ -20,7 +20,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { mainRoutes } from './main.routes';
-import { NewTaskComponent } from './components/new-task/components/new-task.component';
+import { TaskComponent } from './components/new-task/components/task.component';
 
 @NgModule({
     exports: [],
@@ -45,7 +45,7 @@ import { NewTaskComponent } from './components/new-task/components/new-task.comp
         TuiInputModule,
         TuiTextfieldControllerModule,
         TuiButtonModule,
-        NewTaskComponent,
+        TaskComponent,
     ],
 })
 export class MainWebModule {}

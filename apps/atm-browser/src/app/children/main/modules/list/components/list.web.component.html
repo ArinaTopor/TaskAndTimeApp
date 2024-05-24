@@ -10,7 +10,7 @@
                     </label>
                 </div>
 
-                <div style="display: flex; flex-direction: column">
+                <div style="display: flex; flex-direction: column" (click)="getCurrentTask(task)">
                     <span [ngClass]="{'list__task-name':!isListCompleted, 'list__task-name-complete': isListCompleted}">{{ task.name }}</span>
                     <span [ngClass]="{'list__task-start-time':!isListCompleted, 'list__task-start-time-complete': isListCompleted}">{{ task.timeStart }}</span>
                 </div>
@@ -20,3 +20,6 @@
         <hr class="list__divider"/>
     </div>
 </ng-container>
+
+<task-modal *ngIf="!isListCompleted" [actionModal]="'add'"></task-modal>
+<task-modal *ngIf="!isListCompleted" [currentTask]="curTask" [stateModal]="open" [actionModal]="'edit'"></task-modal>

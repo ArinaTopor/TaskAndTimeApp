@@ -1,4 +1,4 @@
-<button *ngIf="!currentTask" class="new-task__add-task" (click)="showDialog()">
+<button *ngIf="actionModal==='add'" class="new-task__add-task" (click)="showDialog()">
     <img
         class="new-task__link-icon"
         [ngSrc]="'../../../../../assets/icons/add-task.svg'"
@@ -16,7 +16,7 @@
     [tuiDialogOptions]="{ size: 'auto' }"
 >
     <form
-        [formGroup]="addTaskForm"
+        [formGroup]="taskForm"
         class="new-task__modal-task"
         (ngSubmit)="observer.complete()"
     >
@@ -58,17 +58,28 @@
             Добавить тег
         </tui-select>
 
-        <p>
+        <div class="new-task__modal-btn" *ngIf="actionModal == 'edit'">
             <button
                 tuiButton
                 type="submit"
-                (click)="addTask()"
+                (click)="deleteTask()"
+                class="new-task__modal-btn-delete"
+                size="s"
+            >
+                Удалить задачу
+            </button>
+
+            <button
+                tuiButton
+                type="submit"
+                (click)="actionTask()"
                 class="new-task__modal-btn-add"
+                [ngStyle]="{'margin-left': actionModal === 'add'? '25em' : ''}"
                 size="m"
             >
-                {{ !currentTask? 'Добавить' : 'Сохранить' }}
+                {{ actionModal === 'add'? 'Добавить' : 'Сохранить' }}
             </button>
-        </p>
+        </div>
     </form>
 </ng-template>
 
@@ -79,7 +90,7 @@
     class="new-task__modal"
 >
     <form
-        [formGroup]="addTaskForm"
+        [formGroup]="taskForm"
         (ngSubmit)="observer.complete()"
         class="new-task__date-form"
     >

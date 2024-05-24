@@ -22,7 +22,7 @@ import {
     FirebaseDatabaseService,
     USER_INFO_TOKEN
 } from '@atm-project/common';
-import { NewTaskComponent } from '../../components/new-task/components/new-task.component';
+import { TaskComponent } from '../../components/new-task/components/task.component';
 import { FormatTimeDirective } from '../../directives/formatTime.directive';
 import { ListWebComponent } from './components/list.web.component';
 
@@ -50,7 +50,7 @@ import { ListWebComponent } from './components/list.web.component';
         TuiTextfieldControllerModule,
         TuiInputTimeModule,
         TuiTextareaModule,
-        NewTaskComponent,
+        TaskComponent,
         FormatTimeDirective,
     ],
     declarations: [

@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input } from '@angular/core';
 import 'dayjs/locale/ru';
-import { NewTaskService } from '../../../components/new-task/services/new-task.service';
+import { TaskService } from '../../../components/new-task/services/task.service';
 import { ITask } from '@atm-project/interfaces';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ListService } from '../services/list-manager.service';
 import {
     Observable,
-    shareReplay,
     startWith,
     Subject,
     switchMap,
@@ -22,16 +21,17 @@ export class ListWebComponent {
     @Input() public taskList: ITask[] | null | undefined;
     @Input() public isListCompleted: boolean | null | undefined = false;
 
+    public curTask: ITask | undefined;
+    public open: boolean = false;
     protected taskAll$: Observable<ITask[]>;
     protected destroyRef: DestroyRef = inject(DestroyRef);
     protected refreshSubject$: Subject<void> = new Subject<void>();
 
-    constructor(protected taskService: NewTaskService, protected  listService: ListService) {
+    constructor(protected taskService: TaskService, protected  listService: ListService) {
         this.taskAll$ = this.refreshSubject$
             .pipe(
                 startWith(null),
                 switchMap(() => this.getAllTask()),
-                shareReplay(1)
             );
     }
 
@@ -51,5 +51,13 @@ export class ListWebComponent {
             .subscribe(() => {
                 this.refreshSubject$.next();
             });
+    }
+
+    /**
+     * Получаем текущую задачу
+     */
+    protected getCurrentTask(task: ITask): void {
+        this.curTask = task;
+        this.open = true;
     }
 }

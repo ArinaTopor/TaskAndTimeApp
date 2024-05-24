@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import {
     AngularFirestore,
+    AngularFirestoreDocument,
     CollectionReference,
     DocumentChangeAction,
     DocumentData,
-    DocumentReference,
-    AngularFirestoreDocument,
+    DocumentReference
 } from '@angular/fire/compat/firestore';
 import { IProject } from './interfaces/project.interface';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { defaultSection } from './models/default.section';
-import { IUser } from './interfaces';
-import { ITask } from './interfaces';
+import { ITask, IUser } from './interfaces';
 
 @Injectable({
     providedIn: 'root',
@@ -106,11 +105,20 @@ export class FirebaseDatabaseService {
         return this.readProject(userId).pipe(
             map((actions) =>
                 actions.map((a) => {
-                    const data: IProject = a.payload.doc.data();
-
-                    return data;
+                    return a.payload.doc.data();
                 })
             )
         );
+    }
+
+    /**
+     * Удаляет задачу с сервера
+     */
+    public deleteTask(task: ITask, userId: string): Promise<void> {
+        const taskRef: AngularFirestoreDocument<ITask> = this._afs
+            .collection<ITask>(`/userProjects/${userId}/todos`)
+            .doc(task.id);
+
+        return taskRef.delete();
     }
 }
