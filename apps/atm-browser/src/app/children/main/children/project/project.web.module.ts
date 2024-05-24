@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProjectWebComponent } from './components/project.web.component';
 import { TuiButtonModule } from '@taiga-ui/core';
-import { ModalDeleteModule } from 'apps/atm-browser/src/app/modules/modal-for-delete/modal-for-delete.module';
 import { CommonModalModule } from 'apps/atm-browser/src/app/modules/common-modal/common-modal.module';
 import { ProjectService } from './services/project.service';
 import { NewTaskComponent } from '../../components/new-task/components/new-task.component';
@@ -20,6 +19,9 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { CommonModule } from '@angular/common';
 import { ListWebModule } from '../../modules/list/list.web.module';
 import { ListService } from '../../modules/list/services/list-manager.service';
+import { DeleteModalModule } from 'apps/atm-browser/src/app/modules/delete-modal/delete-modal.module';
+import { SectionComponent } from './modules/section/section.component';
+import { SectionService } from './modules/section/services/section.service';
 
 const routes: Routes = [
     {
@@ -30,11 +32,11 @@ const routes: Routes = [
 
 @NgModule({
     exports: [ProjectWebComponent],
-    providers: [ProjectService, NewTaskService, ListService],
+    providers: [ProjectService, NewTaskService, ListService, SectionService],
     imports: [
         RouterModule.forChild(routes),
         TuiButtonModule,
-        ModalDeleteModule,
+        DeleteModalModule,
         CommonModalModule,
         SettingTabModule,
         NewTaskComponent,
@@ -49,6 +51,7 @@ const routes: Routes = [
         TuiRootModule,
         TuiDialogModule,
         ListWebModule,
+        SectionComponent,
     ],
     declarations: [ProjectWebComponent],
 })

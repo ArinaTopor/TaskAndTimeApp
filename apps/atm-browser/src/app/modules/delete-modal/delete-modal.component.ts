@@ -8,11 +8,11 @@ import {
 
 @Component({
     selector: 'delete-element-notification',
-    templateUrl: './modal-for-delete.component.html',
-    styleUrl: './modal-for-delete.component.scss',
+    templateUrl: './delete-modal.component.html',
+    styleUrl: './delete-modal.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModalForDeleteComponent {
+export class DeleteModalComponent {
     @Input() public isOpen: boolean = false;
     @Output() public confirm: EventEmitter<void> = new EventEmitter<void>();
     @Output() public cancel: EventEmitter<void> = new EventEmitter<void>();

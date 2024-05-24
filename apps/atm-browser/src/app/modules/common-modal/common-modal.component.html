@@ -21,7 +21,13 @@
                 <button class="form_button_positive" tuiButton type="submit">
                     Сохранить
                 </button>
-                <button class="form_button_negative">Отмена</button>
+                <button
+                    class="form_button_negative"
+                    type="button"
+                    (click)="observer.complete()"
+                >
+                    Отмена
+                </button>
             </div>
         </form>
     </div>

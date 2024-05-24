@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { ModalForDeleteComponent } from './modal-for-delete.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
@@ -11,11 +10,12 @@ import {
     TuiDataListModule,
 } from '@taiga-ui/core';
 import { TuiInputModule } from '@taiga-ui/kit';
+import { DeleteModalComponent } from './delete-modal.component';
 
 @NgModule({
-    exports: [ModalForDeleteComponent],
+    exports: [DeleteModalComponent],
     providers: [],
-    declarations: [ModalForDeleteComponent],
+    declarations: [DeleteModalComponent],
     imports: [
         CommonModule,
         ReactiveFormsModule,
@@ -28,4 +28,4 @@ import { TuiInputModule } from '@taiga-ui/kit';
         TuiDataListModule,
     ],
 })
-export class ModalDeleteModule {}
+export class DeleteModalModule {}

@@ -12,9 +12,9 @@ import {
 import { TuiInputModule } from '@taiga-ui/kit';
 import { SettingsTabComponent } from './settings-tab-popap.component';
 import { CommonModalModule } from '../common-modal/common-modal.module';
-import { ModalDeleteModule } from '../modal-for-delete/modal-for-delete.module';
 import { NewProjectComponent } from '../../children/main/components/new-project/new-project.component';
 import { NewProjectService } from '../../children/main/components/new-project/services/new-project.service';
+import { DeleteModalModule } from '../delete-modal/delete-modal.module';
 
 @NgModule({
     exports: [SettingsTabComponent],
@@ -30,7 +30,7 @@ import { NewProjectService } from '../../children/main/components/new-project/se
         TuiButtonModule,
         TuiHostedDropdownModule,
         TuiDataListModule,
-        ModalDeleteModule,
+        DeleteModalModule,
         CommonModalModule,
         NewProjectComponent,
     ],

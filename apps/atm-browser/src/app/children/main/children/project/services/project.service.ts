@@ -5,11 +5,13 @@ import {
     IProject,
     IElement,
     USER_INFO_TOKEN,
+    ISection,
 } from '@atm-project/common';
 import { Observable, filter, of, switchMap } from 'rxjs';
 import firebase from 'firebase/compat/app';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ITask } from '@atm-project/interfaces';
+import { DocumentChangeAction } from '@angular/fire/compat/firestore';
 @Injectable()
 export class ProjectService {
     constructor(
@@ -21,31 +23,15 @@ export class ProjectService {
     /**
      * function for get sections of project
      */
-    public getSection(projectId: string): Observable<IElement[]> {
+    public getSections(projectId: string): Observable<ISection[]> {
         return this._authService.user$.pipe(
             filter((user): user is firebase.User => !!user),
             switchMap((user) => {
                 if (user) {
-                    return this._afs.formattedData(
-                        this._afs.getSectionsProject(user.uid, projectId)
-                    );
-                } else {
-                    return of([]);
-                }
-            }),
-            takeUntilDestroyed(this._destroyRef)
-        );
-    }
-    /**
-     * function for get info about project by id
-     */
-    public getSectionInfo(id: string): Observable<IElement[]> {
-        return this._authService.user$.pipe(
-            filter((user): user is firebase.User => !!user),
-            switchMap((user) => {
-                if (user) {
-                    return this._afs.formattedData(
-                        this._afs.getSectionsProject(user.uid, id)
+                    return this._afs.getSectionsProject(
+                        user.uid,
+                        projectId,
+                        this.getAllTodos(projectId)
                     );
                 } else {
                     return of([]);
@@ -81,69 +67,19 @@ export class ProjectService {
     /**
      * getProjectInfo
      */
-    public getProject(projectId: string): Observable<IProject[]> {
+    public getProjectById(
+        projectId: string
+    ): Observable<Array<DocumentChangeAction<IProject>>> {
         return this._authService.user$.pipe(
             filter((user): user is firebase.User => !!user),
             switchMap((user) => {
                 if (user) {
-                    return this._afs.formattedData(
-                        this._afs.readProject(user.uid)
-                    );
+                    return this._afs.getProjectById(user.uid, projectId).pipe();
                 } else {
                     return of([]);
                 }
             }),
             takeUntilDestroyed(this._destroyRef)
-        );
-    }
-
-    /**
-     * function for update section
-     * @param projectId
-     * @param section
-     * @returns
-     */
-    public updateSection(
-        projectId: string,
-        section: IElement
-    ): Observable<void> {
-        return this._authService.user$.pipe(
-            filter((user): user is firebase.User => !!user),
-            switchMap((user) => {
-                if (user) {
-                    return this._afs.updateSection(
-                        user.uid,
-                        projectId,
-                        section.id,
-                        section
-                    );
-                } else {
-                    return of();
-                }
-            })
-        );
-    }
-
-    /**
-     * delete section
-     */
-    public deleteSection(
-        projectId: string,
-        sectionId: string
-    ): Observable<void> {
-        return this._authService.user$.pipe(
-            filter((user): user is firebase.User => !!user),
-            switchMap((user) => {
-                if (user) {
-                    return this._afs.deleteSection(
-                        user.uid,
-                        projectId,
-                        sectionId
-                    );
-                } else {
-                    return of();
-                }
-            })
         );
     }
 

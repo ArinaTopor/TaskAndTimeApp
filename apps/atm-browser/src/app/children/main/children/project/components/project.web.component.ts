@@ -1,109 +1,74 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     DestroyRef,
-    OnDestroy,
+    OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalForDeleteComponent } from 'apps/atm-browser/src/app/modules/modal-for-delete/modal-for-delete.component';
 import {
-    BehaviorSubject,
     Observable,
     Subject,
     filter,
     map,
-    shareReplay,
+    mergeMap,
     startWith,
     switchMap,
 } from 'rxjs';
 import { ProjectService } from '../services/project.service';
 import { CommonModalComponent } from 'apps/atm-browser/src/app/modules/common-modal/common-modal.component';
-import { IProject, IElement } from '@atm-project/common';
+import { IProject, IElement, ISection } from '@atm-project/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ITask } from '@atm-project/interfaces';
-import dayjs from 'dayjs';
+import { DeleteModalComponent } from 'apps/atm-browser/src/app/modules/delete-modal/delete-modal.component';
 
 @Component({
     selector: 'project-web-component',
     templateUrl: './project.web.component.html',
     styleUrl: './project.web.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [ModalForDeleteComponent, CommonModalComponent],
+    providers: [DeleteModalComponent, CommonModalComponent],
 })
-export class ProjectWebComponent implements OnDestroy {
-    protected id: Observable<string>;
-    protected bhvsId: BehaviorSubject<string> = new BehaviorSubject<string>('');
-    protected sections$: Observable<IElement[]>;
-    protected currentProject$: Observable<IProject[]>;
+export class ProjectWebComponent implements OnInit {
+    protected projectInfo$!: Observable<IProject>;
+    protected sections$!: Observable<ISection[]>;
     protected isOpen: boolean = false;
     protected refreshSubject$: Subject<void> = new Subject<void>();
-    protected allProjectTodos$: Observable<ITask[]>;
-    protected currentDateFull: dayjs.Dayjs = dayjs().locale('ru');
     constructor(
         private _activateRoute: ActivatedRoute,
-        private _cdr: ChangeDetectorRef,
         private _projectService: ProjectService,
         private _destroyRef: DestroyRef
-    ) {
-        this.id = this._activateRoute.params.pipe(
-            filter((params) => !!params['id']),
-            map((params) => {
-                this.bhvsId.next(params['id']);
+    ) {}
 
-                return params['id'];
-            }),
-            shareReplay(1)
+    public ngOnInit(): void {
+        this.projectInfo$ = this._activateRoute.params.pipe(
+            mergeMap((params) =>
+                this._projectService.getProjectById(params['id'])
+            ),
+            map((result) => result[0].payload.doc.data())
         );
-        this.sections$ = this.refreshSubject$.pipe(
-            startWith(null),
-            switchMap(() => this.getSections()),
-            shareReplay(1)
+        this.sections$ = this.projectInfo$.pipe(
+            filter((projectInfo) => !!projectInfo),
+
+            switchMap((projectInfo) => {
+                const projectId: string = projectInfo.id;
+
+                return this.refreshSubject$.pipe(
+                    startWith(null),
+                    switchMap(() => this.getSections(projectId))
+                );
+            })
         );
-        this.currentProject$ = this.refreshSubject$.pipe(
-            startWith(null),
-            switchMap(() => this.getProject()),
-            shareReplay(1)
-        );
-        this.allProjectTodos$ = this.refreshSubject$.pipe(
-            startWith(null),
-            switchMap(() => this.getTasks()),
-            shareReplay(1)
-        );
+        this.refreshSubject$.next();
     }
+
     /**
      * get sections
      */
-    public getSections(): Observable<IElement[]> {
-        return this.id.pipe(
-            filter((projectId): projectId is string => !!projectId),
-            switchMap((projectId) => this._projectService.getSection(projectId))
+    public getSections(id: string): Observable<ISection[]> {
+        return this.refreshSubject$.pipe(
+            startWith(null),
+            switchMap(() => this._projectService.getSections(id))
         );
     }
-
-    /**
-     * get project
-     */
-    public getProject(): Observable<IProject[]> {
-        return this.id.pipe(
-            filter((projectId): projectId is string => !!projectId),
-            switchMap((projectId) => this._projectService.getProject(projectId))
-        );
-    }
-    /**
-     * filter todos by section id
-     */
-    public filterTasksBySectionId(sectionId: string): Observable<ITask[]> {
-        return this.allProjectTodos$.pipe(
-            map((tasks) =>
-                tasks.filter((task) => {
-                    return task.sectionId === sectionId && !task.checkbox;
-                })
-            )
-        );
-    }
-
-    public ngOnDestroy(): void {}
 
     /**
      * function for open modal
@@ -115,42 +80,11 @@ export class ProjectWebComponent implements OnDestroy {
     /**
      * add section
      */
-    public addSection(section: IElement): void {
+    public addSection(section: IElement, projectid: string): void {
         this._projectService
-            .addSection(this.bhvsId.value, section)
+            .addSection(projectid, section)
             .pipe(takeUntilDestroyed(this._destroyRef))
             .subscribe();
-    }
-
-    /**
-     * updateSection
-     */
-    public updateSection(section: IElement): void {
-        this._projectService
-            .updateSection(this.bhvsId.value, section)
-            .pipe(takeUntilDestroyed(this._destroyRef))
-            .subscribe();
-    }
-
-    /**
-     * deleteSection
-     */
-    public deleteSection(sectionId: string): void {
-        this._projectService
-            .deleteSection(this.bhvsId.value, sectionId)
-            .pipe(takeUntilDestroyed(this._destroyRef))
-            .subscribe();
-    }
-
-    /**
-     * get all tasks
-     */
-    public getTasks(): Observable<ITask[]> {
-        return this.id.pipe(
-            filter((projectId): projectId is string => !!projectId),
-            switchMap((projectId) =>
-                this._projectService.getAllTodos(projectId)
-            )
-        );
+        this.refreshSubject$.next();
     }
 }

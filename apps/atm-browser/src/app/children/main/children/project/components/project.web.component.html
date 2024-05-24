@@ -1,10 +1,6 @@
-<div class="project">
-    <h1 class="project_title" *ngIf="currentProject$ | async as projects">
-        <span *ngFor="let project of projects">
-            <span *ngIf="project.id === bhvsId.value">{{
-                project.title
-            }}</span></span
-        >
+<div class="project" *ngIf="projectInfo$ | async as project">
+    <h1 class="project_title">
+        {{ project.title }}
     </h1>
     <button class="project_add_section" (click)="onOpen()">
         <div class="project_add_section__container">
@@ -17,30 +13,18 @@
         *ngIf="sections$ | async as sectionList"
     >
         <div class="project_section__data" *ngFor="let section of sectionList">
-            <div class="project_section__data_settings">
-                <h2 class="project_section__data_title">{{ section.title }}</h2>
-                <settings-tab-popap
-                    [value]="section"
-                    (changeData)="updateSection($event)"
-                    (deleteData)="deleteSection(section.id)"
-                ></settings-tab-popap>
-                <new-task-modal
-                    style="margin-top: -1em"
-                    [projectId]="bhvsId.value"
-                    [sectionId]="section.id"
-                ></new-task-modal>
-            </div>
-            <hr class="project_section__line" />
-            <list-web-component
-                [taskList]="filterTasksBySectionId(section.id) | async"
-            ></list-web-component>
+            <section
+                [section]="section"
+                [projectId]="project.id"
+                [todos$]="section.todos"
+            ></section>
         </div>
+
+        <common-modal
+            [header]="'Добавить раздел'"
+            [placeholder]="'Раздел'"
+            [isOpen]="isOpen"
+            (dataChanged)="addSection($event, project.id)"
+        ></common-modal>
     </div>
 </div>
-
-<common-modal
-    [header]="'Добавить раздел'"
-    [placeholder]="'Раздел'"
-    [isOpen]="isOpen"
-    (dataChanged)="addSection($event)"
-></common-modal>

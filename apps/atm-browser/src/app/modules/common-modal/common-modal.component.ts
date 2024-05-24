@@ -10,7 +10,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ICommonForm } from './interfaces/common-form.interface';
 import { IElement } from '@atm-project/common';
-import { universeElementModel } from '../../children/main/children/project/models/cleanSection.model';
+import { universeElementModel } from '../../children/main/children/project/models/clean-section.model';
 
 @Component({
     selector: 'common-modal',

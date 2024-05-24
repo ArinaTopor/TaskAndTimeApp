@@ -2,6 +2,8 @@
     height: 100vh;
     margin-left: 47px;
     overflow-y: scroll;
+    width: 75vw;
+    overflow-x: hidden;
     &_title {
         margin-top: 112px;
         font-size: 32px;
@@ -24,30 +26,6 @@
     &_section {
         &__wrapper {
             margin-top: 34px;
-        }
-        &__line {
-            margin-top: 0.5em;
-            border: none;
-            height: 0;
-            border-top: 2px solid var(--bg-hover-item);
-            width: 75vw;
-        }
-        &__data {
-            margin-bottom: 9vh;
-            &_title {
-                font-size: 18px;
-                font-weight: 700;
-                margin: 0;
-                flex-grow: 1;
-            }
-            &_settings {
-                height: 40px;
-                display: grid;
-                grid-template-columns: 1fr auto auto;
-                align-items: end;
-                gap: 10px;
-                margin-bottom: 4px;
-            }
         }
     }
 }

@@ -18,7 +18,7 @@ import {
     TuiDataListModule,
 } from '@taiga-ui/core';
 import { TuiInputModule } from '@taiga-ui/kit';
-import { ModalDeleteModule } from '../../modules/modal-for-delete/modal-for-delete.module';
+import { DeleteModalModule } from '../../modules/delete-modal/delete-modal.module';
 import { CommonModalModule } from '../../modules/common-modal/common-modal.module';
 import { NgModule } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
@@ -54,7 +54,7 @@ import { ControlErrorModule } from '../../modules/atm-controls/control-error.mod
         TuiButtonModule,
         TuiHostedDropdownModule,
         TuiDataListModule,
-        ModalDeleteModule,
+        DeleteModalModule,
         CommonModalModule,
         SettingTabModule,
         NewTaskComponent,
