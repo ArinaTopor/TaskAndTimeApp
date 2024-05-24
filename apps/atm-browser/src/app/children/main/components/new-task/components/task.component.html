@@ -58,13 +58,14 @@
             Добавить тег
         </tui-select>
 
-        <div class="new-task__modal-btn" *ngIf="actionModal == 'edit'">
+        <div class="new-task__modal-btn">
             <button
                 tuiButton
                 type="submit"
                 (click)="deleteTask()"
                 class="new-task__modal-btn-delete"
                 size="s"
+                *ngIf="actionModal == 'edit'"
             >
                 Удалить задачу
             </button>
@@ -74,10 +75,22 @@
                 type="submit"
                 (click)="actionTask()"
                 class="new-task__modal-btn-add"
-                [ngStyle]="{'margin-left': actionModal === 'add'? '25em' : ''}"
+                style="margin-left: 25em"
                 size="m"
+                *ngIf="actionModal === 'add'"
             >
-                {{ actionModal === 'add'? 'Добавить' : 'Сохранить' }}
+                Добавить
+            </button>
+
+            <button
+                tuiButton
+                type="submit"
+                (click)="actionTask()"
+                class="new-task__modal-btn-add"
+                size="m"
+                *ngIf="actionModal === 'edit'"
+            >
+                Сохранить
             </button>
         </div>
     </form>
