@@ -7,12 +7,11 @@ import {
     DocumentReference,
     AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
-import { IProject } from './interfaces/project.interface';
+import { IProject, IElement, ISection } from './interfaces/project.interface';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { defaultSection } from './models/default.section';
 import { IUser } from './interfaces';
 import { ITask } from './interfaces';
-
 @Injectable({
     providedIn: 'root',
 })
@@ -41,6 +40,23 @@ export class FirebaseDatabaseService {
         task.id = newTodoRef.id;
 
         return newTodoRef.set(task);
+    }
+    /**
+     * function for add section in project
+     */
+    public addNewSection(
+        projectId: string,
+        userId: string,
+        section: IElement
+    ): Promise<void> {
+        const newSection: DocumentReference<IElement> = this._afs
+            .collection<IElement>(
+                `/userProjects/${userId}/projects/${projectId}/sections`
+            )
+            .doc().ref;
+        section.id = newSection.id;
+
+        return newSection.set(section);
     }
 
     /**
@@ -82,7 +98,7 @@ export class FirebaseDatabaseService {
         project.id = newProject.id;
         const newSection: CollectionReference<DocumentData> =
             newProject.collection('sections');
-        defaultSection.id = newSection.id;
+        defaultSection.id = newSection.doc().id;
         newSection.add(defaultSection);
 
         return newProject.set(project);
@@ -95,10 +111,26 @@ export class FirebaseDatabaseService {
         userId: string
     ): Observable<Array<DocumentChangeAction<IProject>>> {
         return this._afs
-            .collection<IProject>(`/projects/${userId}/project/`)
+            .collection<IProject>(`userProjects/${userId}/projects/`)
             .snapshotChanges();
     }
 
+    /**
+     * function for data formatted projects, sections...
+     */
+    public formattedData<T>(
+        observerData: Observable<Array<DocumentChangeAction<T>>>
+    ): Observable<T[]> {
+        return observerData.pipe(
+            map((actions) =>
+                actions.map((a) => {
+                    const data: T = a.payload.doc.data();
+
+                    return data;
+                })
+            )
+        );
+    }
     /**
      * function for formatted projects data
      */
@@ -112,5 +144,138 @@ export class FirebaseDatabaseService {
                 })
             )
         );
+    }
+
+    /**
+     * fitered todos
+     */
+    public filterTasksBySectionId(
+        sectionId: string,
+        todos: Observable<ITask[]>
+    ): Observable<ITask[]> {
+        return todos.pipe(
+            map((tasks) =>
+                tasks.filter((task) => {
+                    return task.sectionId === sectionId && !task.checkbox;
+                })
+            )
+        );
+    }
+
+    /**
+     * function for get sections of project from db
+     */
+    public getSectionsProject(
+        userId: string,
+        projectId: string,
+        todos: Observable<ITask[]>
+    ): Observable<ISection[]> {
+        return this._afs
+            .collection<IElement>(
+                `userProjects/${userId}/projects/${projectId}/sections`
+            )
+            .snapshotChanges()
+            .pipe(
+                map((actions) =>
+                    actions.map((a) => {
+                        const { id, title } = a.payload.doc.data() as IElement;
+                        const filteredTodos: Observable<ITask[]> =
+                            this.filterTasksBySectionId(id, todos);
+                        const section: ISection = {
+                            id: id,
+                            title: title,
+                            todos: filteredTodos,
+                        };
+
+                        return section;
+                    })
+                )
+            );
+    }
+
+    /**
+     * function for delete sections
+     */
+    public deleteSection(
+        userId: string,
+        projectId: string,
+        sectionId: string
+    ): Promise<void> {
+        const sectionRef: AngularFirestoreDocument<IElement> = this._afs
+            .collection<IElement>(
+                `/userProjects/${userId}/projects/${projectId}/sections`
+            )
+            .doc(sectionId);
+
+        return sectionRef.delete();
+    }
+    /**
+     * function for update section
+     */
+    public updateSection(
+        userId: string,
+        projectId: string,
+        sectionId: string,
+        section: IElement
+    ): Promise<void> {
+        const sectionRef: AngularFirestoreDocument<IElement> = this._afs
+            .collection<IElement>(
+                `/userProjects/${userId}/projects/${projectId}/sections`
+            )
+            .doc(sectionId);
+
+        return sectionRef.update(section);
+    }
+
+    /**
+     * function for get todos in project
+     */
+    public getTodosByProject(
+        userId: string,
+        projectId: string
+    ): Observable<ITask[]> {
+        return this._afs
+            .collection<ITask>(`/userProjects/${userId}/todos`, (ref) =>
+                ref.where('projectId', '==', projectId)
+            )
+            .valueChanges();
+    }
+    /**
+     * func for update project
+     */
+    public updateProject(
+        userId: string,
+        projectId: string,
+        project: IProject
+    ): Promise<void> {
+        const sectionRef: AngularFirestoreDocument<IElement> = this._afs
+            .collection<IElement>(`/userProjects/${userId}/projects`)
+            .doc(projectId);
+
+        return sectionRef.update(project);
+    }
+
+    /**
+     * function for delete project from db
+     */
+    public deleteProject(userId: string, projectId: string): Promise<void> {
+        const projectRef: AngularFirestoreDocument<IElement> = this._afs
+            .collection<IElement>(`/userProjects/${userId}/projects`)
+            .doc(projectId);
+
+        return projectRef.delete();
+    }
+    /**
+     * getProjectById
+     */
+    public getProjectById(
+        userId: string,
+        projectId: string
+    ): Observable<Array<DocumentChangeAction<IProject>>> {
+        return this._afs
+            .collection<IProject>(`/userProjects/${userId}/projects`, (ref) =>
+                ref.where('id', '==', projectId)
+            )
+            .snapshotChanges();
     }
 }

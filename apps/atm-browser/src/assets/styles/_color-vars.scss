@@ -27,3 +27,11 @@ $border-input-color: #edecec;
 $border-input-shadow: 0 0.125rem 0.1875rem rgba(0, 0, 0, 0.1);
 $grey-light: #c8c8c8;
 $grey-active: #676767;
+$grey-hover: #d0d0d0;
+$skeleton-base: rgb(235, 235, 235);
+$skeleton-gradient: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4)
+    ),
+    transparent;

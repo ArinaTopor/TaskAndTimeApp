@@ -1,14 +1,31 @@
 import {
     ChangeDetectionStrategy,
-    Component, DestroyRef, inject
+    Component,
+    DestroyRef,
+    Input,
+    inject,
 } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+    FormControl,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+} from '@angular/forms';
 import { TuiDay, TuiTime } from '@taiga-ui/cdk';
 import { NewTaskService } from '../services/new-task.service';
 import dayjs from 'dayjs';
 import { ITask } from '@atm-project/interfaces';
-import { TuiInputTimeModule, TuiSelectModule, TuiTextareaModule } from '@taiga-ui/kit';
-import { TuiButtonModule, TuiCalendarModule, TuiDialogModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
+import {
+    TuiInputTimeModule,
+    TuiSelectModule,
+    TuiTextareaModule,
+} from '@taiga-ui/kit';
+import {
+    TuiButtonModule,
+    TuiCalendarModule,
+    TuiDialogModule,
+    TuiTextfieldControllerModule,
+} from '@taiga-ui/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -31,13 +48,15 @@ import { Subject } from 'rxjs';
         TuiSelectModule,
         CommonModule,
         HttpClientModule,
-        NgOptimizedImage
+        NgOptimizedImage,
     ],
-    standalone: true
+    standalone: true,
 })
 export class NewTaskComponent {
     public stateModal: boolean = false;
     public stateModalDate: boolean = false;
+    @Input() public projectId: string = '';
+    @Input() public sectionId: string = '';
 
     protected valueDate: TuiDay | null = null;
     protected value: never[] = [];
@@ -86,14 +105,18 @@ export class NewTaskComponent {
      * Добавляем новую задачу и обновляем список задач
      */
     public addTask(): void {
-
-        const taskDateJs: dayjs.Dayjs = dayjs(this.valueDate?.toLocalNativeDate());
+        const taskDateJs: dayjs.Dayjs = dayjs(
+            this.valueDate?.toLocalNativeDate()
+        );
         const taskDate: string = taskDateJs.toString();
-        const taskValueAdd: string | null | undefined = this.addTaskForm.get('taskValueAdd')?.value;
-        const taskDescription: string | null | undefined = this.addTaskForm.get('textarea')?.value;
+        const taskValueAdd: string | null | undefined =
+            this.addTaskForm.get('taskValueAdd')?.value;
+        const taskDescription: string | null | undefined =
+            this.addTaskForm.get('textarea')?.value;
         const taskTimeStart: string | null = this.valueTimeStart;
         const taskTimeEnd: string | null = this.valueTimeEnd;
-        const taskTags: string | null | undefined = this.addTaskForm.get('tags')?.value;
+        const taskTags: string | null | undefined =
+            this.addTaskForm.get('tags')?.value;
 
         if (!taskValueAdd) {
             return;
@@ -112,9 +135,12 @@ export class NewTaskComponent {
             timeEnd: taskTimeEnd,
             tags: taskTags,
             checkbox: false,
+            projectId: this.projectId,
+            sectionId: this.sectionId,
         };
 
-        this._newTaskService.addTask(newTask)
+        this._newTaskService
+            .addTask(newTask)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(() => {
                 this.refreshSubject$.next();

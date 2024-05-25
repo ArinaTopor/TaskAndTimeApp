@@ -112,7 +112,6 @@
         --tui-primary: var(--primary);
         --tui-primary-hover: var(--primary-active);
         --tui-primary-active: var(--primary-active);
-
     }
 
     &__input-time {
@@ -120,13 +119,11 @@
         --tui-primary-hover: var(--primary-active);
         --tui-primary-active: var(--primary-active);
         width: 270px;
-
     }
 
     &__checkbox {
         --tui-primary: var(--primary);
         --tui-primary-hover: var(--primary-active);
         --tui-primary-active: var(--primary-active);
-
     }
 }

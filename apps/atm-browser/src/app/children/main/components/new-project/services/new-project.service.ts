@@ -27,4 +27,23 @@ export class NewProjectService {
             })
         );
     }
+
+    /**
+     * function for edit project
+     */
+    public updateProject(project: IProject): Observable<void | null> {
+        return this.fbAuthService.user$.pipe(
+            switchMap((user: firebase.default.User | null) => {
+                if (user) {
+                    return this._afs.updateProject(
+                        user.uid,
+                        project.id,
+                        project
+                    );
+                } else {
+                    return of(null);
+                }
+            })
+        );
+    }
 }
