@@ -17,6 +17,8 @@
     --grey-light: #{$grey-light};
     --grey-active: #{$grey-active};
     --grey-hover: #{$grey-hover};
+    --skeleton-base: #{$skeleton-base};
+    --skeleton-gradient: #{$skeleton-gradient};
 }
 html,
 body {
@@ -62,5 +64,9 @@ div.t-wrapper[tuiWrapper][data-appearance='flat'] {
 }
 
 .t-content[_ngcontent-ng-c1591437670] {
+    background: var(--base-bg) !important;
+}
+[_nghost-ng-c2374896908] {
+    border: none !important;
     background: var(--base-bg) !important;
 }

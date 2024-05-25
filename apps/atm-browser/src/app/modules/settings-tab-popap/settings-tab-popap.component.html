@@ -12,9 +12,13 @@
     </button>
 </tui-hosted-dropdown>
 <ng-template #dropdown>
-    <tui-data-list>
-        <button tuiOption (click)="openCommon()">Редактировать</button>
-        <button tuiOption (click)="openDelete()">Удалить</button>
+    <tui-data-list class="datalist">
+        <button tuiOption (click)="openCommon()" class="datalist_option">
+            Редактировать
+        </button>
+        <button tuiOption (click)="openDelete()" class="datalist_option">
+            Удалить
+        </button>
     </tui-data-list>
 </ng-template>
 <delete-element-notification

@@ -1,0 +1,8 @@
+.datalist {
+    &_option {
+        color: var(--text-color);
+        &:hover {
+            color: var(--primary);
+        }
+    }
+}

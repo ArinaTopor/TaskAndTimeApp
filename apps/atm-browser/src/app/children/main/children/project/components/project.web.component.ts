@@ -46,8 +46,7 @@ export class ProjectWebComponent implements OnInit {
             map((result) => result[0].payload.doc.data())
         );
         this.sections$ = this.projectInfo$.pipe(
-            filter((projectInfo) => !!projectInfo),
-
+            filter((projectInfo): projectInfo is IProject => !!projectInfo),
             switchMap((projectInfo) => {
                 const projectId: string = projectInfo.id;
 
@@ -57,7 +56,6 @@ export class ProjectWebComponent implements OnInit {
                 );
             })
         );
-        this.refreshSubject$.next();
     }
 
     /**
