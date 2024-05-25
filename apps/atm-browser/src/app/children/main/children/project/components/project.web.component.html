@@ -1,4 +1,7 @@
-<div class="project" *ngIf="projectInfo$ | async as project">
+<div
+    class="project"
+    *ngIf="projectInfo$ | async as project; else loadingProject"
+>
     <h1 class="project_title">
         {{ project.title }}
     </h1>
@@ -10,13 +13,13 @@
     </button>
     <div
         class="project_section__wrapper"
-        *ngIf="sections$ | async as sectionList"
+        *ngIf="sections$ | async as sectionList; else loadingSection"
     >
         <div class="project_section__data" *ngFor="let section of sectionList">
             <section
                 [section]="section"
                 [projectId]="project.id"
-                [todos$]="section.todos"
+                [todos]="section.todos | async"
             ></section>
         </div>
 
@@ -28,3 +31,18 @@
         ></common-modal>
     </div>
 </div>
+
+<ng-template #loadingProject>
+    <div class="project_title project_loader_title project_loader"></div>
+    <div class="project_add_section project_loader_button project_loader"></div>
+</ng-template>
+<ng-template #loadingSection>
+    <div class="project_loader_section project_loader"></div>
+    <div class="project_loader_todo project_loader"></div>
+    <div class="project_loader_todo project_loader"></div>
+    <div class="project_loader_todo project_loader"></div>
+    <div class="project_loader_section project_loader"></div>
+    <div class="project_loader_todo project_loader"></div>
+    <div class="project_loader_todo project_loader"></div>
+    <div class="project_loader_todo project_loader"></div>
+</ng-template>

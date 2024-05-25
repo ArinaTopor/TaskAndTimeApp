@@ -90,7 +90,9 @@ export class NewProjectComponent implements OnChanges {
         };
         this._newProjectService
             .addProject(project)
-            .pipe(takeUntilDestroyed(this._destoroyRef))
+            .pipe(
+                takeUntilDestroyed(this._destoroyRef)
+            )
             .subscribe();
     }
     /**

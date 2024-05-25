@@ -71,7 +71,9 @@ export class SidenavComponent implements OnInit {
     public deleteProject(projectId: string): void {
         this.contentManager
             .deleteProject(projectId)
-            .pipe(takeUntilDestroyed(this._destroyRef))
+            .pipe(
+                takeUntilDestroyed(this._destroyRef)
+            )
             .subscribe();
     }
 

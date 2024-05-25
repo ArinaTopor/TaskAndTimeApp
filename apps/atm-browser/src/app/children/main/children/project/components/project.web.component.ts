@@ -80,10 +80,12 @@ export class ProjectWebComponent implements OnInit {
     /**
      * add section
      */
-    public addSection(section: IElement, projectid: string): void {
+    public addSection(section: IElement, projectId: string): void {
         this._projectService
-            .addSection(projectid, section)
-            .pipe(takeUntilDestroyed(this._destroyRef))
+            .addSection(projectId, section)
+            .pipe(
+                takeUntilDestroyed(this._destroyRef)
+            )
             .subscribe();
         this.refreshSubject$.next();
     }

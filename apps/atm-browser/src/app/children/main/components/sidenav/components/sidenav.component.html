@@ -64,12 +64,12 @@
                     <li
                         class="sidenavbar__function-item-content-item"
                         *ngFor="let project of list"
-                        [routerLink]="['project/' + project.id]"
                         [changeColorElement]="project.color"
                     >
                         <span class="sidenavbar__function-item-link-span">
                             <span
                                 class="sidenavbar__function-item-content-item-name"
+                                [routerLink]="['project/' + project.id]"
                                 >{{ project.title }}</span
                             >
                         </span>
