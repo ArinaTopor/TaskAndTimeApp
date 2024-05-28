@@ -170,9 +170,7 @@ export class FirebaseDatabaseService {
         projectId: string,
         todos: Observable<ITask[]>
     ): Observable<ISection[]> {
-        todos.subscribe((todo) => {
-            console.log(todo);
-        });
+        todos.subscribe();
 
         return this._afs
             .collection<IElement>(

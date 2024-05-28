@@ -19,9 +19,16 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListWebComponent {
-    @Input() public taskList: ITask[] | null | undefined;
-    @Input() public isListCompleted?: boolean | null = false;
-    @Input() public inSection?: boolean | null = false;
+    @Input()
+    public taskList: ITask[] | null | undefined;
+    @Input()
+    public isListCompleted?: boolean | null = false;
+    @Input()
+    public inSection?: boolean | null = false;
+    @Input()
+    public projectTitle?: string = '';
+    @Input()
+    public sectionTitle?: string = '';
 
     public curTask$: BehaviorSubject<ITask | null> = new BehaviorSubject<ITask | null>(null);
     public open: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

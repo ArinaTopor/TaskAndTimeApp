@@ -23,5 +23,12 @@
 
 <task-modal *ngIf="!isListCompleted" [actionModal]="'add'" [inSection]="inSection"></task-modal>
 <ng-container *ngIf="!isListCompleted">
-    <task-modal *ngIf="(curTask$ | async)" [currentTask$]="curTask$" [stateModal]="open.value" [actionModal]="'edit'"></task-modal>
+    <task-modal
+        *ngIf="(curTask$ | async)"
+        [currentTask$]="curTask$"
+        [stateModal]="open.value"
+        [actionModal]="'edit'"
+        [sectionTitle]="sectionTitle"
+        [projectTitle]="projectTitle"
+    ></task-modal>
 </ng-container>

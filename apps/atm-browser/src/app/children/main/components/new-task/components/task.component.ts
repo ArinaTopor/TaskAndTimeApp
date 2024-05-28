@@ -1,6 +1,6 @@
 import {
     ChangeDetectionStrategy,
-    Component, DestroyRef, Inject, inject, Input
+    Component, DestroyRef, inject, Input
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TuiDay, TuiTime } from '@taiga-ui/cdk';
@@ -12,7 +12,6 @@ import {
     TuiButtonModule,
     TuiCalendarModule,
     TuiDialogModule,
-    TuiDialogService,
     TuiTextfieldControllerModule
 } from '@taiga-ui/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
@@ -54,10 +53,14 @@ export class TaskComponent {
         this.actionModalValue = value;
         this.getForm();
     }
-    @Input() public projectId?: string;
-    @Input() public sectionId?: string;
-    @Input() public projectTitle?: string;
-    @Input() public sectionTitle?: string;
+    @Input()
+    public projectId?: string = '';
+    @Input()
+    public sectionId?: string = '';
+    @Input()
+    public projectTitle?: string;
+    @Input()
+    public sectionTitle?: string;
 
     public stateModalDate: boolean = false;
     protected valueDate: TuiDay | null = null;
@@ -94,7 +97,7 @@ export class TaskComponent {
         return this.actionModalValue === 'add'? 'margin-left: 24em' : '';
     }
 
-    constructor(protected taskService: TaskService, @Inject(TuiDialogService) protected readonly dialogs: TuiDialogService) {
+    constructor(protected taskService: TaskService) {
     }
 
     /**
@@ -109,18 +112,6 @@ export class TaskComponent {
 
         return time;
     }
-
-    /**
-     * Открываем модалку
-     */
-    /*public showDialog(
-        content: PolymorpheusContent,
-    ): void {
-        this.dialogs.open(content).subscribe({
-            complete: () => {
-            },
-        });
-    }*/
 
     /**
      * Открываем модалку
@@ -150,6 +141,8 @@ export class TaskComponent {
                         const dateObject: Date = dayjs(currentTask.date).toDate();
                         this.valueDate = TuiDay.fromLocalNativeDate(dateObject);
                         this.emptyName = false;
+                        this.projectId = currentTask.projectId;
+                        this.sectionId = currentTask.sectionId;
                     }
                 });
         }
@@ -163,15 +156,6 @@ export class TaskComponent {
     public showDialogDate(): void {
         this.stateModalDate = true;
     }
-
-    /* public showDialogDate(
-        content: PolymorpheusContent,
-    ): void {
-        this.dialogs.open(content).subscribe({
-            complete: () => {
-            },
-        });
-    }*/
 
     /**
      * Проверка на непустое значение в поле инпута названии задачи
@@ -207,7 +191,9 @@ export class TaskComponent {
                         timeStart: taskTimeStart,
                         timeEnd: taskTimeEnd,
                         tags: taskTags,
-                        checkbox: false
+                        checkbox: false,
+                        projectId: this.projectId,
+                        sectionId: this.sectionId
                     };
 
                     this.taskService.updateTask(updatedTask)
@@ -228,6 +214,8 @@ export class TaskComponent {
                 timeEnd: taskTimeEnd,
                 tags: taskTags,
                 checkbox: false,
+                projectId: this.projectId,
+                sectionId: this.sectionId
             };
 
             if (!this.emptyName) {
@@ -263,7 +251,7 @@ export class TaskComponent {
      */
     public getPathTask(): string {
         if (this.projectTitle && this.sectionTitle) {
-            return `${this.projectTitle}/${this.sectionTitle}`;
+            return `${this.projectTitle} / ${this.sectionTitle}`;
         }
 
         return '';
@@ -297,11 +285,10 @@ export class TaskComponent {
     /**
      * Очистить форму
      */
-    private clearForm(): void {
+    protected clearForm(): void {
         this.taskForm.reset();
         this.valueDate = null;
         this.emptyName = true;
         this.currentTask$?.next(null);
     }
-
 }
