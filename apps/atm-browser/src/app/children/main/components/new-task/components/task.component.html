@@ -1,4 +1,4 @@
-<button *ngIf="actionModalValue==='add' && inSection === false" class="new-task__add-task" (click)="showDialog(modal)">
+<button *ngIf="actionModalValue==='add' && inSection === false" class="new-task__add-task" (click)="showDialog()">
     <img
         class="new-task__link-icon"
         [ngSrc]="'../../../../../assets/icons/add-task.svg'"
@@ -11,7 +11,6 @@
 </button>
 
 <ng-template
-    #modal
     let-observer
     [(tuiDialog)]="stateModal"
     [tuiDialogOptions]="{
@@ -34,7 +33,7 @@
 
         <button
             tuiButton
-            (click)="showDialogDate(date)"
+            (click)="showDialogDate()"
             icon="tuiIconCalendar"
             class="new-task__modal-btn-date"
             size="s"
@@ -81,7 +80,7 @@
             <button
                 tuiButton
                 type="submit"
-                (click)="actionTask(observer)"
+                (click)="actionTask()"
                 class="new-task__modal-btn-add"
                 size="m"
                 style="{{additionalClass}}"
@@ -94,7 +93,6 @@
 </ng-template>
 
 <ng-template
-    #date
     let-observer
     [(tuiDialog)]="stateModalDate"
     [tuiDialogOptions]="{ size: 'auto' }"
@@ -131,7 +129,6 @@
         <p style="display: flex; gap: 1em">
             <button
                 tuiButton
-                type="submit"
                 (click)="onDayClickDefault()"
                 class="new-task__modal-btn-cancel"
                 size="m"
@@ -142,7 +139,7 @@
             <button
                 tuiButton
                 type="submit"
-                (click)="showDialog(modal)"
+                (click)="showDialog()"
                 class="new-task__modal-btn-ok"
                 size="m"
             >

@@ -19,7 +19,6 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 
 @Component({
     selector: 'task-modal',
@@ -109,13 +108,20 @@ export class TaskComponent {
     /**
      * Открываем модалку
      */
-    public showDialog(
+    /*public showDialog(
         content: PolymorpheusContent,
     ): void {
         this.dialogs.open(content).subscribe({
             complete: () => {
             },
         });
+    }*/
+
+    /**
+     * Открываем модалку
+     */
+    public showDialog(): void {
+        this.stateModal = true;
     }
 
     /**
@@ -124,7 +130,7 @@ export class TaskComponent {
     public getForm(): FormGroup {
         if (this.actionModalValue === 'edit') {
             this.currentTask$?.subscribe((currentTask: ITask | null) => {
-                if (currentTask) {
+                if (currentTask !== null) {
                     this.taskForm.setValue({
                         taskValueAdd: currentTask.name || '',
                         timeValueStart: currentTask.timeStart || null,
@@ -146,21 +152,18 @@ export class TaskComponent {
     /**
      * Открываем модалку даты
      */
-    /* public showDialogDate(): void {
+    public showDialogDate(): void {
         this.stateModalDate = true;
-    }*/
+    }
 
-    /**
-     * Открываем модалку даты
-     */
-    public showDialogDate(
+    /* public showDialogDate(
         content: PolymorpheusContent,
     ): void {
         this.dialogs.open(content).subscribe({
             complete: () => {
             },
         });
-    }
+    }*/
 
     /**
      * Проверка на непустое значение в поле инпута названии задачи
@@ -172,7 +175,7 @@ export class TaskComponent {
     /**
      * Работаем с задачей
      */
-    public actionTask(observer: any): void {
+    public actionTask(): void {
         const taskValueAdd: string | null | undefined = this.taskForm.get('taskValueAdd')?.value;
         const taskDescription: string | null | undefined = this.taskForm.get('textarea')?.value;
         const taskTimeStart: string | null | undefined = this.valueTimeStart;
@@ -200,8 +203,9 @@ export class TaskComponent {
                 this.taskService.updateTask(updatedTask)
                     .pipe(takeUntilDestroyed(this.destroyRef))
                     .subscribe(() => {
+                        this.currentTask$?.next(null);
                         this.refreshSubject$.next();
-                        observer.complete();
+                        this.stateModal = false;
                     });
             });
         } else {
@@ -221,7 +225,7 @@ export class TaskComponent {
                     .pipe(takeUntilDestroyed(this.destroyRef))
                     .subscribe(() => {
                         this.refreshSubject$.next();
-                        observer.complete();
+                        this.stateModal = false;
                     });
             }
         }
