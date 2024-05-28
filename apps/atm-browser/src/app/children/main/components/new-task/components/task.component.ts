@@ -129,21 +129,23 @@ export class TaskComponent {
      */
     public getForm(): FormGroup {
         if (this.actionModalValue === 'edit') {
-            this.currentTask$?.subscribe((currentTask: ITask | null) => {
-                if (currentTask !== null) {
-                    this.taskForm.setValue({
-                        taskValueAdd: currentTask.name || '',
-                        timeValueStart: currentTask.timeStart || null,
-                        timeValueEnd: currentTask.timeEnd || null,
-                        checkboxRepeat: currentTask.checkbox || false,
-                        textarea: currentTask.description || '',
-                        tags: currentTask.tags || [],
-                    });
-                    const dateObject: Date = dayjs(currentTask.date).toDate();
-                    this.valueDate = TuiDay.fromLocalNativeDate(dateObject);
-                    this.emptyName = false;
-                }
-            });
+            this.currentTask$?.
+                pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe((currentTask: ITask | null) => {
+                    if (currentTask !== null) {
+                        this.taskForm.setValue({
+                            taskValueAdd: currentTask.name || '',
+                            timeValueStart: currentTask.timeStart || null,
+                            timeValueEnd: currentTask.timeEnd || null,
+                            checkboxRepeat: currentTask.checkbox || false,
+                            textarea: currentTask.description || '',
+                            tags: currentTask.tags || [],
+                        });
+                        const dateObject: Date = dayjs(currentTask.date).toDate();
+                        this.valueDate = TuiDay.fromLocalNativeDate(dateObject);
+                        this.emptyName = false;
+                    }
+                });
         }
 
         return this.taskForm;
@@ -185,29 +187,30 @@ export class TaskComponent {
         const taskTags: string | null | undefined = this.taskForm.get('tags')?.value;
 
         if (this.currentTask$) {
-            this.currentTask$.subscribe(currentTask => {
-                const taskId: string | undefined = currentTask?.id;
+            this.currentTask$.
+                pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe(currentTask => {
+                    const taskId: string | undefined = currentTask?.id;
 
-                const updatedTask: ITask = {
-                    ...currentTask,
-                    id: taskId,
-                    name: taskValueAdd,
-                    description: taskDescription,
-                    date: taskDate,
-                    timeStart: taskTimeStart,
-                    timeEnd: taskTimeEnd,
-                    tags: taskTags,
-                    checkbox: false
-                };
+                    const updatedTask: ITask = {
+                        ...currentTask,
+                        id: taskId,
+                        name: taskValueAdd,
+                        description: taskDescription,
+                        date: taskDate,
+                        timeStart: taskTimeStart,
+                        timeEnd: taskTimeEnd,
+                        tags: taskTags,
+                        checkbox: false
+                    };
 
-                this.taskService.updateTask(updatedTask)
-                    .pipe(takeUntilDestroyed(this.destroyRef))
-                    .subscribe(() => {
-                        this.currentTask$?.next(null);
-                        this.refreshSubject$.next();
-                        this.stateModal = false;
-                    });
-            });
+                    this.taskService.updateTask(updatedTask)
+                        .pipe(takeUntilDestroyed(this.destroyRef))
+                        .subscribe(() => {
+                            this.refreshSubject$.next();
+                            this.stateModal = false;
+                        });
+                });
         } else {
             const newTask: ITask = {
                 id: crypto.randomUUID(),
@@ -229,7 +232,6 @@ export class TaskComponent {
                     });
             }
         }
-        this.currentTask$?.next(null);
         this.taskForm.reset();
         this.valueDate = null;
         this.emptyName = true;
