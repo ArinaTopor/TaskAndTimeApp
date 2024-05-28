@@ -5,6 +5,7 @@ import { ITask } from '@atm-project/interfaces';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ListService } from '../services/list-manager.service';
 import {
+    BehaviorSubject,
     Observable,
     startWith,
     Subject,
@@ -19,10 +20,11 @@ import {
 })
 export class ListWebComponent {
     @Input() public taskList: ITask[] | null | undefined;
-    @Input() public isListCompleted: boolean | null | undefined = false;
+    @Input() public isListCompleted?: boolean | null = false;
+    @Input() public inSection?: boolean | null = false;
 
-    public curTask: ITask | undefined;
-    public open: boolean = false;
+    public curTask$: BehaviorSubject<ITask | null> = new BehaviorSubject<ITask | null>(null);
+    public open: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     protected taskAll$: Observable<ITask[]>;
     protected destroyRef: DestroyRef = inject(DestroyRef);
     protected refreshSubject$: Subject<void> = new Subject<void>();
@@ -33,6 +35,7 @@ export class ListWebComponent {
                 startWith(null),
                 switchMap(() => this.getAllTask()),
             );
+
     }
 
     /**
@@ -57,7 +60,7 @@ export class ListWebComponent {
      * Получаем текущую задачу
      */
     protected getCurrentTask(task: ITask): void {
-        this.curTask = task;
-        this.open = true;
+        this.curTask$.next(task);
+        this.open.next(true);
     }
 }

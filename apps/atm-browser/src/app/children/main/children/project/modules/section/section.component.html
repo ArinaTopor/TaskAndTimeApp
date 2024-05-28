@@ -6,12 +6,15 @@
             (changeData)="updateSection($event)"
             (deleteData)="deleteSection(section.id)"
         ></settings-tab-popap>
-        <new-task-modal
+        <task-modal
             style="margin-top: -1em"
+            [actionModal]="'add'"
             [projectId]="projectId"
             [sectionId]="section.id"
-        ></new-task-modal>
+            [projectTitle]="projectTitle"
+            [sectionTitle]="section.title"
+        ></task-modal>
     </div>
     <hr class="section__line" />
-    <list-web-component [taskList]="todos"></list-web-component>
+    <list-web-component [taskList]="todos" [inSection]="true"/>
 </div>

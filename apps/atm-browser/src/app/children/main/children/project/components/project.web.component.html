@@ -7,7 +7,7 @@
     </h1>
     <button class="project_add_section" (click)="onOpen()">
         <div class="project_add_section__container">
-            <img src="../../../../../../assets/icons/add-task.svg" />
+            <img src="../../../../../../assets/icons/add-task.svg" alt=""/>
             <span>Добавить раздел</span>
         </div>
     </button>
@@ -19,6 +19,7 @@
             <section
                 [section]="section"
                 [projectId]="project.id"
+                [projectTitle]="project.title"
                 [todos]="section.todos | async"
             ></section>
         </div>

@@ -21,5 +21,6 @@
     </div>
 </ng-container>
 
-<task-modal *ngIf="!isListCompleted" [actionModal]="'add'"></task-modal>
-<task-modal *ngIf="!isListCompleted" [currentTask]="curTask" [stateModal]="open" [actionModal]="'edit'"></task-modal>
+<task-modal *ngIf="!isListCompleted" [actionModal]="'add'" [inSection]="inSection"></task-modal>
+<task-modal *ngIf="!isListCompleted" [currentTask$]="curTask$" [stateModal]="open.value" [actionModal]="'edit'"></task-modal>
+

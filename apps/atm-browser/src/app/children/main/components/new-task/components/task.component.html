@@ -1,4 +1,4 @@
-<button *ngIf="actionModal==='add'" class="new-task__add-task" (click)="showDialog()">
+<button *ngIf="actionModalValue==='add' && inSection === false" class="new-task__add-task" (click)="showDialog(modal)">
     <img
         class="new-task__link-icon"
         [ngSrc]="'../../../../../assets/icons/add-task.svg'"
@@ -11,40 +11,48 @@
 </button>
 
 <ng-template
+    #modal
     let-observer
     [(tuiDialog)]="stateModal"
-    [tuiDialogOptions]="{ size: 'auto' }"
+    [tuiDialogOptions]="{
+        size: 'auto'
+        }"
 >
     <form
         [formGroup]="taskForm"
         class="new-task__modal-task"
         (ngSubmit)="observer.complete()"
     >
+        <span class="new-task__pathTask">
+            {{ getPathTask() }}
+        </span>
 
-        <input placeholder="Название задачи..." class="new-task__name-task" formControlName="taskValueAdd">
+        <input placeholder="Название задачи..." class="new-task__name-task" formControlName="taskValueAdd" (change)="controlChange()">
+        <span *ngIf="emptyName" class="new-task__error">
+            Введите название задачи, чтобы добавить!
+        </span>
 
         <button
             tuiButton
-            type="submit"
-            (click)="showDialogDate()"
+            (click)="showDialogDate(date)"
             icon="tuiIconCalendar"
             class="new-task__modal-btn-date"
             size="s"
         >
-            <ng-container *ngIf="valueTimeEnd == null && valueTimeStart!= null && valueDate; else noEndTime">
-                {{ valueDate }}, {{ valueTimeStart }}
+            <ng-container *ngIf="valueTimeEnd && valueTimeStart && valueDate; else noTime">
+                {{ valueDate }}, {{ valueTimeStart }} - {{ valueDate }}, {{ valueTimeEnd }}
             </ng-container>
-            <ng-template #noEndTime>
-                <ng-container *ngIf="valueTimeStart == null && valueDate; else noStartTime">
+            <ng-template #noTime>
+                <ng-container *ngIf="valueTimeStart == null && valueDate; else noTimeTwo">
                     {{ valueDate }}
                 </ng-container>
-                <ng-template #noStartTime>
-                    <ng-container *ngIf="valueTimeEnd!= null && valueTimeStart && valueDate; else defaultText">
-                        {{ valueDate }}, {{ valueTimeStart }} - {{ valueDate }}, {{ valueTimeEnd }}
+                <ng-template #noTimeTwo>
+                    <ng-container *ngIf="valueTimeStart && valueDate; else defaultText">
+                        {{ valueDate }}, {{ valueTimeStart }}
                     </ng-container>
-                    <ng-template #defaultText>
-                        Выбрать дату и время
-                    </ng-template>
+                </ng-template>
+                <ng-template #defaultText>
+                    Выбрать дату и время
                 </ng-template>
             </ng-template>
         </button>
@@ -65,7 +73,7 @@
                 (click)="deleteTask()"
                 class="new-task__modal-btn-delete"
                 size="s"
-                *ngIf="actionModal == 'edit'"
+                *ngIf="actionModalValue == 'edit'"
             >
                 Удалить задачу
             </button>
@@ -73,30 +81,20 @@
             <button
                 tuiButton
                 type="submit"
-                (click)="actionTask()"
-                class="new-task__modal-btn-add"
-                style="margin-left: 25em"
-                size="m"
-                *ngIf="actionModal === 'add'"
-            >
-                Добавить
-            </button>
-
-            <button
-                tuiButton
-                type="submit"
-                (click)="actionTask()"
+                (click)="actionTask(observer)"
                 class="new-task__modal-btn-add"
                 size="m"
-                *ngIf="actionModal === 'edit'"
+                style="{{additionalClass}}"
+                [disabled]="emptyName"
             >
-                Сохранить
+                {{ buttonText }}
             </button>
         </div>
     </form>
 </ng-template>
 
 <ng-template
+    #date
     let-observer
     [(tuiDialog)]="stateModalDate"
     [tuiDialogOptions]="{ size: 'auto' }"
@@ -133,6 +131,7 @@
         <p style="display: flex; gap: 1em">
             <button
                 tuiButton
+                type="submit"
                 (click)="onDayClickDefault()"
                 class="new-task__modal-btn-cancel"
                 size="m"
@@ -143,7 +142,7 @@
             <button
                 tuiButton
                 type="submit"
-                (click)="showDialog()"
+                (click)="showDialog(modal)"
                 class="new-task__modal-btn-ok"
                 size="m"
             >

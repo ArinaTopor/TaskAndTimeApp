@@ -1,6 +1,6 @@
 export interface ITask {
     id: string | undefined;
-    name: string | null;
+    name: string | null | undefined;
     description: string | null | undefined;
     date: string | null;
     timeStart: string | null | undefined;
