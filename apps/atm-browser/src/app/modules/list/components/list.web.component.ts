@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input } from '@angular/core';
 import 'dayjs/locale/ru';
-import { TaskService } from '../../../components/new-task/services/task.service';
+import { TaskService } from '../../task-modal/services/task.service';
 import { ITask } from '@atm-project/interfaces';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ListService } from '../services/list-manager.service';

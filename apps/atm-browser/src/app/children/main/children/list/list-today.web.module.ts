@@ -24,11 +24,11 @@ import {
     FirebaseDatabaseService,
     USER_INFO_TOKEN
 } from '@atm-project/common';
-import { TaskComponent } from '../../components/new-task/components/task.component';
-import { TaskService } from '../../components/new-task/services/task.service';
+import { TaskComponent } from '../../../../modules/task-modal/components/task.component';
+import { TaskService } from '../../../../modules/task-modal/services/task.service';
 import { FormatTimeDirective } from '../../directives/formatTime.directive';
-import { ListWebModule } from '../../modules/list/list.web.module';
-import { ListService } from '../../modules/list/services/list-manager.service';
+import { ListWebModule } from '../../../../modules/list/list.web.module';
+import { ListService } from '../../../../modules/list/services/list-manager.service';
 
 const routes: Routes = [
     {
