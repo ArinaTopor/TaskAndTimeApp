@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import { ListService } from '../../../modules/list/services/list-manager.service';
+import { ListService } from '../../../../../modules/list/services/list-manager.service';
 import {
     BehaviorSubject,
     delay,

@@ -170,6 +170,8 @@ export class FirebaseDatabaseService {
         projectId: string,
         todos: Observable<ITask[]>
     ): Observable<ISection[]> {
+        todos.subscribe();
+
         return this._afs
             .collection<IElement>(
                 `userProjects/${userId}/projects/${projectId}/sections`
@@ -278,4 +280,17 @@ export class FirebaseDatabaseService {
             )
             .snapshotChanges();
     }
+
+
+    /**
+     * Удаляет задачу с сервера
+     */
+    public deleteTask(task: ITask, userId: string): Promise<void> {
+        const taskRef: AngularFirestoreDocument<ITask> = this._afs
+            .collection<ITask>(`/userProjects/${userId}/todos`)
+            .doc(task.id);
+
+        return taskRef.delete();
+    }
+
 }

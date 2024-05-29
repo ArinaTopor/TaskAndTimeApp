@@ -22,8 +22,8 @@ import {
     FirebaseDatabaseService,
     USER_INFO_TOKEN
 } from '@atm-project/common';
-import { NewTaskComponent } from '../../components/new-task/components/new-task.component';
-import { FormatTimeDirective } from '../../directives/formatTime.directive';
+import { TaskComponent } from '../task-modal/components/task.component';
+import { FormatTimeDirective } from '../../children/main/directives/formatTime.directive';
 import { ListWebComponent } from './components/list.web.component';
 
 @NgModule({
@@ -50,7 +50,7 @@ import { ListWebComponent } from './components/list.web.component';
         TuiTextfieldControllerModule,
         TuiInputTimeModule,
         TuiTextareaModule,
-        NewTaskComponent,
+        TaskComponent,
         FormatTimeDirective,
     ],
     declarations: [

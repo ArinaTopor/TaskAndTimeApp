@@ -86,6 +86,7 @@
         align-items: center;
         margin-top: 1em;
         margin-left: -5px;
+        cursor: pointer;
     }
 
     &__link-icon {
@@ -105,7 +106,22 @@
         --tui-primary: var(--primary);
         --tui-primary-hover: var(--primary-active);
         --tui-primary-active: var(--primary-active);
-        margin-left: 24em;
+    }
+
+    &__modal-btn-delete {
+        font-size: 13px;
+        font-weight: 400;
+        width: 170px;
+        border-radius: 24px;
+        --tui-primary: var(--primary);
+        --tui-primary-hover: var(--primary-active);
+        --tui-primary-active: var(--primary-active);
+    }
+
+    &__modal-btn {
+        display: flex;
+        flex-direction: row;
+        gap: 14em;
     }
 
     &__calendar {
@@ -125,5 +141,19 @@
         --tui-primary: var(--primary);
         --tui-primary-hover: var(--primary-active);
         --tui-primary-active: var(--primary-active);
+    }
+
+    &__pathTask {
+        font-size: 12px;
+        color: var(--text-color);
+        font-weight: 500;
+        margin-bottom: -2em;
+    }
+
+    &__error {
+        font-size: 14px;
+        color: var(--error);
+        font-weight: 500;
+        margin-top: -2em;
     }
 }

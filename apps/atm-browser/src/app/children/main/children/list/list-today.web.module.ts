@@ -24,11 +24,11 @@ import {
     FirebaseDatabaseService,
     USER_INFO_TOKEN
 } from '@atm-project/common';
-import { NewTaskComponent } from '../../components/new-task/components/new-task.component';
-import { NewTaskService } from '../../components/new-task/services/new-task.service';
+import { TaskComponent } from '../../../../modules/task-modal/components/task.component';
+import { TaskService } from '../../../../modules/task-modal/services/task.service';
 import { FormatTimeDirective } from '../../directives/formatTime.directive';
-import { ListWebModule } from '../../modules/list/list.web.module';
-import { ListService } from '../../modules/list/services/list-manager.service';
+import { ListWebModule } from '../../../../modules/list/list.web.module';
+import { ListService } from '../../../../modules/list/services/list-manager.service';
 
 const routes: Routes = [
     {
@@ -42,7 +42,7 @@ const routes: Routes = [
     providers: [
         { provide: USER_INFO_TOKEN, useClass: FirebaseAuthService },
         FirebaseDatabaseService,
-        NewTaskService,
+        TaskService,
         ListService
     ],
     imports: [
@@ -64,7 +64,7 @@ const routes: Routes = [
         TuiTextfieldControllerModule,
         TuiInputTimeModule,
         TuiTextareaModule,
-        NewTaskComponent,
+        TaskComponent,
         FormatTimeDirective,
         ListWebModule
     ],

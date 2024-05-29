@@ -87,6 +87,7 @@ export class ProjectService {
      * function for get all todos
      */
     public getAllTodos(projectId: string): Observable<ITask[]> {
+
         return this._authService.user$.pipe(
             filter((user): user is firebase.User => !!user),
             switchMap((user) => {

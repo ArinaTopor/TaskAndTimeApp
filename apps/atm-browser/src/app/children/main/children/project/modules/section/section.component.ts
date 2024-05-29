@@ -10,10 +10,10 @@ import { ITask } from '@atm-project/interfaces';
 import { CommonModalModule } from 'apps/atm-browser/src/app/modules/common-modal/common-modal.module';
 import { DeleteModalModule } from 'apps/atm-browser/src/app/modules/delete-modal/delete-modal.module';
 import { SettingTabModule } from 'apps/atm-browser/src/app/modules/settings-tab-popap/setting-tab-popap.module';
-import { ListWebModule } from '../../../../modules/list/list.web.module';
-import { NewTaskComponent } from '../../../../components/new-task/components/new-task.component';
+import { ListWebModule } from '../../../../../../modules/list/list.web.module';
 import { SectionService } from './services/section.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TaskComponent } from '../../../../../../modules/task-modal/components/task.component';
 
 @Component({
     selector: 'section',
@@ -27,7 +27,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         SettingTabModule,
         CommonModule,
         ListWebModule,
-        NewTaskComponent,
+        TaskComponent,
     ],
 })
 export class SectionComponent {
@@ -37,6 +37,8 @@ export class SectionComponent {
     public todos: ITask[] | null = null;
     @Input()
     public projectId!: string;
+    @Input()
+    public projectTitle!: string;
 
     constructor(
         private _sectionService: SectionService,

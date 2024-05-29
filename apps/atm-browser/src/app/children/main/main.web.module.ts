@@ -24,7 +24,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { mainRoutes } from './main.routes';
-import { NewTaskComponent } from './components/new-task/components/new-task.component';
+import { TaskComponent } from '../../modules/task-modal/components/task.component';
 import { SettingTabModule } from '../../modules/settings-tab-popap/setting-tab-popap.module';
 import { ChangeColorElementDirective } from './directives/change-color.directive';
 import { ControlErrorModule } from '../../modules/atm-controls/control-error.module';
@@ -57,7 +57,7 @@ import { ControlErrorModule } from '../../modules/atm-controls/control-error.mod
         DeleteModalModule,
         CommonModalModule,
         SettingTabModule,
-        NewTaskComponent,
+        TaskComponent,
         ControlErrorModule,
         NewProjectComponent,
     ],
