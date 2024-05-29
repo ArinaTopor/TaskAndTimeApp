@@ -81,11 +81,11 @@ export class TaskComponent {
         tags: new FormControl(''),
     });
 
-    public get valueTimeStart(): string | null | undefined {
+    public get valueTimeStart(): string | null {
         return this.getTimeValue('timeValueStart');
     }
 
-    public get valueTimeEnd(): string | null | undefined {
+    public get valueTimeEnd(): string | null {
         return this.getTimeValue('timeValueEnd');
     }
 
@@ -165,16 +165,16 @@ export class TaskComponent {
     }
 
     /**
-     * Работаем с задачей
+     * Работаем с задачей: добавляем или редактируем
      */
     public actionTask(): void {
-        const taskValueAdd: string | null | undefined = this.taskForm.get('taskValueAdd')?.value;
-        const taskDescription: string | null | undefined = this.taskForm.get('textarea')?.value;
-        const taskTimeStart: string | null | undefined = this.valueTimeStart;
-        const taskTimeEnd: string | null | undefined = this.valueTimeEnd;
+        const taskValueAdd: string | null = this.taskForm.get('taskValueAdd')?.value;
+        const taskDescription: string | null = this.taskForm.get('textarea')?.value;
+        const taskTimeStart: string | null = this.valueTimeStart;
+        const taskTimeEnd: string | null = this.valueTimeEnd;
         const taskDateJs: dayjs.Dayjs = dayjs(this.valueDate?.toLocalNativeDate());
         const taskDate: string = taskDateJs.toString();
-        const taskTags: string | null | undefined = this.taskForm.get('tags')?.value;
+        const taskTags: string | null = this.taskForm.get('tags')?.value;
 
         if (this.currentTask$) {
             this.currentTask$.
@@ -195,6 +195,8 @@ export class TaskComponent {
                         projectId: this.projectId,
                         sectionId: this.sectionId
                     };
+
+                    console.log(updatedTask);
 
                     this.taskService.updateTask(updatedTask)
                         .pipe(takeUntilDestroyed(this.destroyRef))
@@ -228,7 +230,6 @@ export class TaskComponent {
             }
             this.clearForm();
         }
-
     }
 
     /**
@@ -247,7 +248,7 @@ export class TaskComponent {
     }
 
     /**
-     * Хлебные крошки: получаем путь задачи
+     * Показываем пользователю, в каком проекте и разделе находится задача
      */
     public getPathTask(): string {
         if (this.projectTitle && this.sectionTitle) {
@@ -258,22 +259,25 @@ export class TaskComponent {
     }
 
     /**
-     * Выбираем день
+     * Выбираем день в календаре
      */
     protected onDayClick(day: TuiDay): void {
         this.valueDate = day;
     }
 
     /**
-     * Очищаем форму
+     * Очищаем форму выбора даты и времени по кнопке очистить
      */
     protected onDayClickDefault(): void {
-        this.taskForm.reset();
         this.valueDate = null;
+        this.taskForm.patchValue({
+            timeValueStart: null,
+            timeValueEnd: null,
+        });
     }
 
     /**
-     * Форматируем данные
+     * Форматируем данные времени
      */
     protected formatTuiTime(time: TuiTime): string {
         const hours: string = time.hours.toString().padStart(2, '0');
@@ -283,7 +287,7 @@ export class TaskComponent {
     }
 
     /**
-     * Очистить форму
+     * Очищаем форму всех данных при работе с задачей
      */
     protected clearForm(): void {
         this.taskForm.reset();
