@@ -19,6 +19,31 @@ import { NewProjectComponent } from '../../new-project/new-project.component';
 import { ProjectType } from '../interfaces/project.interface';
 import { NewProjectService } from '../../new-project/services/new-project.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+    AnimationTriggerMetadata,
+    animate,
+    state,
+    style,
+    transition,
+    trigger,
+} from '@angular/animations';
+
+const fadeInOut: AnimationTriggerMetadata = trigger('fadeInOut', [
+    state(
+        'open',
+        style({
+            opacity: 1,
+        })
+    ),
+    state(
+        'close',
+        style({
+            opacity: 0,
+        })
+    ),
+    transition('open => close', [animate('1s ease-out')]),
+    transition('close => open', [animate('1s ease-out')]),
+]);
 @Component({
     selector: 'sidenav',
     templateUrl: './sidenav.component.html',
@@ -33,6 +58,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         SettingsTabComponent,
         NewProjectComponent,
     ],
+    animations: [fadeInOut],
 })
 export class SidenavComponent implements OnInit {
     protected btnList: TabButtonViewModel[];

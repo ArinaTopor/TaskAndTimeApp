@@ -53,6 +53,7 @@
                 class="new_project__button"
                 size="m"
                 type="submit"
+                [disabled]="newProjectForm.controls.title.errors ? true : false"
             >
                 {{ isEdit ? 'Сохранить' : 'Добавить' }}
             </button>

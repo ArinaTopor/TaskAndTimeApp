@@ -5,15 +5,7 @@ import {
     OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-    Observable,
-    Subject,
-    filter,
-    map,
-    mergeMap,
-    startWith,
-    switchMap,
-} from 'rxjs';
+import { Observable, Subject, filter, map, startWith, switchMap } from 'rxjs';
 import { ProjectService } from '../services/project.service';
 import { CommonModalComponent } from 'apps/atm-browser/src/app/modules/common-modal/common-modal.component';
 import { IProject, IElement, ISection } from '@atm-project/common';
@@ -40,7 +32,7 @@ export class ProjectWebComponent implements OnInit {
 
     public ngOnInit(): void {
         this.projectInfo$ = this._activateRoute.params.pipe(
-            mergeMap((params) =>
+            switchMap((params) =>
                 this._projectService.getProjectById(params['id'])
             ),
             map((result) => result[0].payload.doc.data())
