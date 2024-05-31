@@ -59,7 +59,10 @@
                     (click)="toggleModal(true)"
                 />
             </div>
-            <div *ngIf="showProject" class="sidenavbar__function-item-content">
+            <div
+                [@fadeInOut]="showProject ? 'open' : 'close'"
+                class="sidenavbar__function-item-content"
+            >
                 <ul *ngIf="allProject$ | async as list; else skeleton">
                     <li
                         class="sidenavbar__function-item-content-item"
