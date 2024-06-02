@@ -5,7 +5,7 @@ import {
 import {
     MonthCalendarService, MonthCalendarViewModel
 } from '@atm-project/common';
-import { ListService } from '../../../../../modules/list/services/list-manager.service';
+import { ListService } from '../../../../../../../modules/list/services/list-manager.service';
 import { ITask } from '@atm-project/interfaces';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 

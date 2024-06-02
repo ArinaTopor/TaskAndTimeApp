@@ -5,7 +5,7 @@ import {
     ViewChild
 } from '@angular/core';
 import { WeekCalendarService, WeekCalendarViewModel } from '@atm-project/common';
-import { ListService } from '../../../../../modules/list/services/list-manager.service';
+import { ListService } from '../../../../../../../modules/list/services/list-manager.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ITask } from '@atm-project/interfaces';
 import {
