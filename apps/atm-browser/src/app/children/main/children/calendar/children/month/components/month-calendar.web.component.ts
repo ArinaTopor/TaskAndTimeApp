@@ -5,9 +5,9 @@ import {
 import {
     MonthCalendarService, MonthCalendarViewModel
 } from '@atm-project/common';
-import {ListService} from "../../../../../modules/list/services/list-manager.service";
-import {ITask} from "@atm-project/interfaces";
-import {BehaviorSubject, Observable, tap} from 'rxjs';
+import { ListService } from '../../../../../modules/list/services/list-manager.service';
+import { ITask } from '@atm-project/interfaces';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 
 @Component({
@@ -23,29 +23,27 @@ export class MonthCalendarWebComponent {
     protected month: BehaviorSubject<MonthCalendarViewModel>;
     protected taskAll$: Observable<ITask[]>;
 
+    /**
+     * Получение текузего месяца
+     */
     protected get currentMonth(): string {
-        return this._service.currentDate.format('MM');
+        return this._service.currentDate.format('MMMM');
     }
 
     constructor(private _service: MonthCalendarService,
                 private _contentManagerService: ListService
     ) {
         this.month = new BehaviorSubject(
-            this._service.initMonth()
-        )
+            this._service.initMonth([])
+        );
 
         this.taskAll$ = _contentManagerService.getAllTask()
             .pipe(tap((el: ITask[]) => {
-                    this._service.setTasks(el);
+                this.month.next(this._service.initMonth(el));
+            })
+            );
 
-                })
-            )
-
-        this.taskAll$.subscribe()
-
-        this.month.subscribe(() => {
-            this._service.addOnCalendarTasks();
-        })
+        this.taskAll$.subscribe();
     }
 
     /**
@@ -54,5 +52,4 @@ export class MonthCalendarWebComponent {
     protected chooseMonth(nextMonth: -1 | 1): void {
         this.month.next(this._service.createNextMonth(nextMonth));
     }
-
 }

@@ -1,11 +1,10 @@
-import {Inject, Injectable} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
-import {WeekCalendarDayViewModel} from '../view-models/week-calendar-day.view-model';
-import {WeekCalendarViewModel} from '../view-models/week-calendar.view-model';
-import {DATE_TOKEN} from '../../date/tokens/date.token';
-import {ITask} from '../../db/interfaces/task.interface';
-import {BehaviorSubject, switchMap} from 'rxjs';
+import { WeekCalendarDayViewModel } from '../view-models/week-calendar-day.view-model';
+import { WeekCalendarViewModel } from '../view-models/week-calendar.view-model';
+import { DATE_TOKEN } from '../../date/tokens/date.token';
+import { ITask } from '../../db/interfaces/task.interface';
 
 
 @Injectable()
@@ -15,14 +14,13 @@ export class WeekCalendarService {
 
     private _tasks!: ITask[];
     public currentDate: dayjs.Dayjs;
-    private taskIsGet: boolean = false
+    private _taskIsGet: boolean = false;
 
     constructor(@Inject(DATE_TOKEN) public date: dayjs.Dayjs) {
         this.currentDate = this.date;
 
         this.weekCalendar = this.getWeekDays();
     }
-
 
     /**
      * Создаем вью модель
@@ -32,22 +30,23 @@ export class WeekCalendarService {
             this.initWeekCalendar()
         );
 
-
-
         return this._weekCalendarViewModel;
     }
 
-    public setTasks(tasks: ITask[]) {
-        this.taskIsGet = true
-        this._tasks = tasks
+    /**
+     * Сохраняем таски
+     */
+    public setTasks(tasks: ITask[]): void {
+        this._taskIsGet = true;
+        this._tasks = tasks;
     }
 
     /**
      * Устанавливаем таски после инициализации контейнера
      */
     public addOnCalendarTasks(): void {
-        if (!this.taskIsGet) {
-            return
+        if (!this._taskIsGet) {
+            return;
         }
 
         for (const day of this._weekCalendarViewModel.week) {
@@ -58,7 +57,7 @@ export class WeekCalendarService {
                 }
             }
 
-            day.tasks.next(tasks);
+            day.tasks = tasks;
         }
     }
 
@@ -69,7 +68,6 @@ export class WeekCalendarService {
         const res: WeekCalendarDayViewModel[] = [];
 
         for (const day of this.weekCalendar) {
-            //TODO вынести в класс
             res.push(
                 new WeekCalendarDayViewModel(this.currentDate, day, [])
             );

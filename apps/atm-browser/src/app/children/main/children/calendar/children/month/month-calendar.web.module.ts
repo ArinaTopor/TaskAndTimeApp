@@ -5,8 +5,7 @@ import { Routes } from '@angular/router';
 import { TuiButtonModule } from '@taiga-ui/core';
 import { MonthCalendarWebComponent } from './components/month-calendar.web.component';
 import { DateParseWebPipe } from '../../pipes/date-parse.web.pipe';
-import { DayParseWebPipe } from '../../pipes/day-parse.web.pipe';
-import { TimeParseWebPipe } from '../../pipes/time-parse.web.pipe';
+
 
 const routes: Routes = [
     {
@@ -26,8 +25,6 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         DateParseWebPipe,
         TuiButtonModule,
-        DayParseWebPipe,
-        TimeParseWebPipe,
     ],
 })
 export class MonthCalendarWebModule {}

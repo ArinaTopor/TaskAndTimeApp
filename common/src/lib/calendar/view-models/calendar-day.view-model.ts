@@ -1,13 +1,12 @@
 import dayjs from 'dayjs';
 import { ITask } from '../../db/interfaces/task.interface';
-import { BehaviorSubject } from 'rxjs';
 
 
 
 export class CalendarDayViewModel {
     public currentDay: boolean;
     public dayData: dayjs.Dayjs;
-    public tasks: BehaviorSubject<ITask[]>;
+    public tasks: ITask[];
 
 
     constructor(
@@ -17,6 +16,6 @@ export class CalendarDayViewModel {
     ) {
         this.currentDay = dayData.isSame(currentDay, 'date');
         this.dayData = dayData;
-        this.tasks = new BehaviorSubject(task);
+        this.tasks = task;
     }
 }

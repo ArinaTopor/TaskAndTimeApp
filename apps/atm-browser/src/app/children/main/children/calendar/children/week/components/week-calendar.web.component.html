@@ -18,7 +18,7 @@
                 <th class="week_calendar__table__time"></th>
 
                 <th class="week_calendar__table__header" *ngFor="let day of dayWeek()">
-                    <p>{{day.dayData | dayParse}}</p>
+                    <p>{{day.dayData | dateParse : 'dd'}}</p>
                     <p>{{day.dayData | dateParse}}</p>
                 </th>
             </tr>
@@ -30,15 +30,16 @@
             <tr>
                 <td></td>
                 <td class="week_calendar__task_row" *ngFor="let day of dayWeek()">
-                        <ng-container *ngIf="day.tasks | async as tasks">
-                            <ng-container *ngFor="let task of tasks">
+                        <ng-container *ngIf="taskAll$ | async">
+                            <ng-container *ngFor="let task of day.tasks">
 
                                 <div *calculatePosition="task; height: containerHeight"
                                      class="week_calendar__table__element__task">
 
                                     <p class="week_calendar__table__text">{{task.name}}</p>
-                                    <p class="week_calendar__table__text">{{task.timeStart }}
-                                        -{{task.timeEnd}}</p>
+                                    <p class="week_calendar__table__text">
+                                        {{task.timeStart }}-{{task.timeEnd}}
+                                    </p>
                                 </div>
                             </ng-container>
                         </ng-container>

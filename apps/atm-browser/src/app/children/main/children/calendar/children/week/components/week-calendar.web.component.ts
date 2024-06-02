@@ -4,10 +4,13 @@ import {
     ElementRef,
     ViewChild
 } from '@angular/core';
-import {WeekCalendarService, WeekCalendarViewModel} from '@atm-project/common';
-import {ListService} from '../../../../../modules/list/services/list-manager.service';
-import {BehaviorSubject, Observable, map, tap} from 'rxjs';
-import {ITask} from '@atm-project/interfaces';
+import { WeekCalendarService, WeekCalendarViewModel } from '@atm-project/common';
+import { ListService } from '../../../../../modules/list/services/list-manager.service';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { ITask } from '@atm-project/interfaces';
+import {
+    WeekCalendarDayViewModel
+} from '../../../../../../../../../../../common/src/lib/calendar/view-models/week-calendar-day.view-model';
 
 
 @Component({
@@ -20,22 +23,20 @@ import {ITask} from '@atm-project/interfaces';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeekCalendarWebComponent {
+    public get containerHeight(): number {
+        return this.calendarContainer?.nativeElement.offsetHeight;
+    }
+
     protected week: BehaviorSubject<WeekCalendarViewModel>;
     protected taskAll$: Observable<ITask[]>;
 
     /**
      * Получение массива чисел от 0 до 23 для отображения в календаре
      */
-    protected dayWeek() {
-        return this.week.value.week
-    }
 
-    @ViewChild('dayContainer', {read: ElementRef})
+    @ViewChild('dayContainer', { read: ElementRef })
     protected calendarContainer!: ElementRef;
 
-    public get containerHeight() {
-        return this.calendarContainer?.nativeElement.offsetHeight
-    }
 
     constructor(
         private _service: WeekCalendarService,
@@ -43,16 +44,22 @@ export class WeekCalendarWebComponent {
     ) {
         this.week = new BehaviorSubject(
             this._service.createWeekCalendarViewModel()
-        )
+        );
 
-        this.taskAll$ = _contentManagerService.getAllTask()
+        this.taskAll$ = _contentManagerService.getAllTask();
 
         this.taskAll$.pipe(map((el) => {
-            this._service.setTasks(el)
-            this._service.addOnCalendarTasks()
-        })).subscribe()
+            this._service.setTasks(el);
+            this._service.addOnCalendarTasks();
+        })).subscribe();
     }
 
+    /**
+     * Получение недели
+     */
+    protected dayWeek(): WeekCalendarDayViewModel[] {
+        return this.week.value.week;
+    }
 
     /**
      * Получение массива чисел от 0 до 23 для отображения в календаре
@@ -76,6 +83,4 @@ export class WeekCalendarWebComponent {
 
         this._service.addOnCalendarTasks();
     }
-
-    protected readonly console = console;
 }

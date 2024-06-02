@@ -14,7 +14,9 @@ type CalendarTypes = 'week' | 'month'
 })
 export class CalendarWebComponent {
     public get calendarType(): CalendarTypes {
-        return this._router.url.split('/')[2] as CalendarTypes;
+        const type: string  = this._router.url.split('/')[2];
+
+        return type as CalendarTypes;
     }
 
     constructor(

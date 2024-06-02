@@ -7,9 +7,9 @@ import dayjs from 'dayjs';
 })
 export class DateParseWebPipe implements PipeTransform {
     /**
-     * Парсим доту в удобный для вывода формат
+     * Парсим доту в нужный для вывода формат
      */
-    public transform(value: dayjs.Dayjs, exponent: string = ''): string {
-        return value.format('DD.MM');
+    public transform(value: dayjs.Dayjs, exponent: string = 'DD.MM'): string {
+        return value.format(exponent);
     }
 }

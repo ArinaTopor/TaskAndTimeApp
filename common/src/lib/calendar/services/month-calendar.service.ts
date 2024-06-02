@@ -14,13 +14,10 @@ export class MonthCalendarService {
     private _days!: dayjs.Dayjs[];
     private _tasks: ITask[] = [];
     public currentDate: dayjs.Dayjs;
-    public month: MonthCalendarViewModel;
-    private taskIsGet: boolean = false
+    public month!: MonthCalendarViewModel;
 
     constructor(@Inject(DATE_TOKEN) public date: dayjs.Dayjs) {
         this.currentDate = this.date.clone();
-
-        this.month = this.initMonth();
     }
 
     /**
@@ -28,45 +25,29 @@ export class MonthCalendarService {
      */
     public createNextMonth(nextMonth: -1 | 1): MonthCalendarViewModel{
         this.currentDate = this.currentDate.add(nextMonth,'month');
-        this.month = this.initMonth();
 
-        return this.month;
-    }
-
-    public setTasks(tasks: ITask[]) {
-        this.taskIsGet = true
-        this._tasks = tasks;
-        return this.month
-    }
-
-    public addOnCalendarTasks(): void {
-        if (!this.taskIsGet) {
-            return
-        }
-
-        for (const day of this.month.month) {
-            const tasks: ITask[] = [];
-            for (const task of this._tasks) {
-                if (dayjs(day.dayData).isSame(dayjs(task.date), 'date')) {
-                    tasks.push(task);
-                }
-            }
-
-            day.tasks.next(tasks);
-        }
+        return this.initMonth(this._tasks);
     }
 
     /**
      * Инициализируем вью модельку с тасками
      */
-    public initMonth(): MonthCalendarViewModel {
+    public initMonth(tasks: ITask[]): MonthCalendarViewModel {
+        this._tasks = tasks;
         this._days = this.getMonthDays();
         const res: MonthCalendarDayViewModel[] = [];
 
         for (const day of this._days){
+            const tempTask: ITask[] = [];
+            for (const task of this._tasks) {
+                if (dayjs(day).isSame(dayjs(task.date), 'date')) {
+                    tempTask.push(task);
+                }
+            }
+
             res.push(
                 new MonthCalendarDayViewModel(
-                    this.currentDate, day, []
+                    this.currentDate, day, tempTask
                 ));
         }
 

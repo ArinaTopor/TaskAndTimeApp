@@ -3,7 +3,7 @@
     <div class="month_calendar__switch-month">
         <button class="month_calendar__btn-choose-month" size="xs" (click)="chooseMonth(-1)" tuiButton><</button>
         <p class="month_calendar__current-month">
-            {{currentMonth}}
+            {{currentMonth }}
         </p>
         <button class="month_calendar__btn-choose-month" size="xs" (click)="chooseMonth(1)" tuiButton>></button>
     </div>
@@ -15,37 +15,31 @@
             <thead>
             <tr>
                 <th class="month_calendar__table__header" *ngFor="let day of month.value.monthInWeeks[0]">
-                    <p>{{day.dayData | dayParse}}</p>
+                    <p>{{day.dayData | dateParse : 'dd'}}</p>
                 </th>
             </tr>
             </thead>
 
             <tbody class="month_calendar__tbody">
 
-            <tr *ngFor="let week of month.value.monthInWeeks">
-                <th class="month_calendar__table__element" *ngFor="let day of week">
-                    <div style="height: 100%;">
-                        <div style="text-align: left; padding: 5px">{{day.dayData | dateParse}}</div>
-                        <div style="display: flex; flex-direction: column; gap: 5px; margin-top: 10%">
-                            <ng-container *ngIf="day.tasks | async as tasks">
-                                {{console.log(tasks)}}
-                                <span style="display: flex; justify-content: space-between; margin: auto"
-                                      class="month_calendar__table__element__task" *ngFor="let task of tasks">
-
+            <ng-container *ngIf="month | async as montha">
+                <tr *ngFor="let week of montha.monthInWeeks">
+                    <th class="month_calendar__table__element" [height]="100 / montha.monthInWeeks.length + '%'"
+                        *ngFor="let day of week">
+                        <div class="month_calendar__table__element__container">
+                            <div class="month_calendar__table__element__container__text">{{day.dayData | dateParse}}</div>
+                            <div class="month_calendar__table__element__container__task_container">
+                                <span class="month_calendar__table__element__task" *ngFor="let task of day.tasks">
                                     <span> {{task.name}}</span>
                                     <span> {{task.timeStart }}</span>
                                 </span>
-                            </ng-container>
-
+                            </div>
                         </div>
-                    </div>
-                </th>
-            </tr>
+                    </th>
+                </tr>
+            </ng-container>
 
-
-            <tr class="month_calendar__table__row">
-
-            </tr>
+            <tr class="month_calendar__table__row"></tr>
 
             </tbody>
         </table>
