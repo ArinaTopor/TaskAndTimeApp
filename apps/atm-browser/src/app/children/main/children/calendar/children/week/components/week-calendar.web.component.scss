@@ -26,6 +26,11 @@
         --tui-primary-active: var(--primary-active);
     }
 
+    &__task_row{
+        position: relative;
+        right: 1px
+    }
+
     &__current-week {
         border-radius: 24px;
         padding-left: 20px;
@@ -43,6 +48,9 @@
         color: var(--table-text);
         height: 100%;
         width: 100%;
+        &__text{
+            margin: 0;
+        }
 
         &__header {
             text-align: left;
@@ -62,13 +70,14 @@
             max-height: 4%;
 
             &__task {
+                width: 100%;
                 margin: 0;
                 padding: 0;
                 color: #000;
                 height: 100%;
                 background-color: burlywood;
                 text-align: left;
-                position: relative;
+                position: absolute;
                 z-index: 1;
             }
         }

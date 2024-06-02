@@ -1,10 +1,11 @@
-import { Inject, Injectable } from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
-import { WeekCalendarDayViewModel } from '../view-models/week-calendar-day.view-model';
-import { WeekCalendarViewModel } from '../view-models/week-calendar.view-model';
-import { DATE_TOKEN } from '../../date/tokens/date.token';
-import { ITask } from '../../db/interfaces/task.interface';
+import {WeekCalendarDayViewModel} from '../view-models/week-calendar-day.view-model';
+import {WeekCalendarViewModel} from '../view-models/week-calendar.view-model';
+import {DATE_TOKEN} from '../../date/tokens/date.token';
+import {ITask} from '../../db/interfaces/task.interface';
+import {BehaviorSubject, switchMap} from 'rxjs';
 
 
 @Injectable()
@@ -14,6 +15,7 @@ export class WeekCalendarService {
 
     private _tasks!: ITask[];
     public currentDate: dayjs.Dayjs;
+    private taskIsGet: boolean = false
 
     constructor(@Inject(DATE_TOKEN) public date: dayjs.Dayjs) {
         this.currentDate = this.date;
@@ -25,37 +27,38 @@ export class WeekCalendarService {
     /**
      * Создаем вью модель
      */
-    public createWeekCalendarViewModel($tasks: ITask[]): WeekCalendarViewModel{
+    public createWeekCalendarViewModel(): WeekCalendarViewModel {
         this._weekCalendarViewModel = new WeekCalendarViewModel(
             this.initWeekCalendar()
         );
 
 
-        this._tasks = $tasks;
-        console.log(this._tasks);
 
         return this._weekCalendarViewModel;
+    }
+
+    public setTasks(tasks: ITask[]) {
+        this.taskIsGet = true
+        this._tasks = tasks
     }
 
     /**
      * Устанавливаем таски после инициализации контейнера
      */
-    public setTasks(height: number): void {
-        for (const day of this.weekCalendarViewModel.week) {
+    public addOnCalendarTasks(): void {
+        if (!this.taskIsGet) {
+            return
+        }
+
+        for (const day of this._weekCalendarViewModel.week) {
             const tasks: ITask[] = [];
-            day.height = height;
-            for (const task of this.$tasks) {
-
-                if (day.dayData.isSame(task.date, 'date')) {
+            for (const task of this._tasks) {
+                if (dayjs(day.dayData).isSame(dayjs(task.date), 'date')) {
                     tasks.push(task);
-                } else {
-
                 }
             }
 
-            day.tasks = tasks;
-
-            day.setTasksBlock();
+            day.tasks.next(tasks);
         }
     }
 
@@ -66,7 +69,7 @@ export class WeekCalendarService {
         const res: WeekCalendarDayViewModel[] = [];
 
         for (const day of this.weekCalendar) {
-
+            //TODO вынести в класс
             res.push(
                 new WeekCalendarDayViewModel(this.currentDate, day, [])
             );
@@ -91,3 +94,5 @@ export class WeekCalendarService {
         return res;
     }
 }
+
+

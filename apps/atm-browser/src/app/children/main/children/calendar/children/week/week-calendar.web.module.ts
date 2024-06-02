@@ -7,6 +7,7 @@ import { TuiButtonModule } from '@taiga-ui/core';
 import { DayParseWebPipe } from '../../pipes/day-parse.web.pipe';
 import { TimeParseWebPipe } from '../../pipes/time-parse.web.pipe';
 import { DateParseWebPipe } from '../../pipes/date-parse.web.pipe';
+import {CalculatePositionDirective} from "./directives/calculate-position.web.directive";
 
 const routes: Routes = [
     {
@@ -27,7 +28,8 @@ const routes: Routes = [
         TuiButtonModule,
         DayParseWebPipe,
         TimeParseWebPipe,
-        DateParseWebPipe
+        DateParseWebPipe,
+        CalculatePositionDirective
     ],
 })
 export class WeekCalendarWebModule {}

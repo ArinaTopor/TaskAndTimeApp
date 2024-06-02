@@ -14,7 +14,7 @@
 
             <thead>
             <tr>
-                <th class="month_calendar__table__header" *ngFor="let day of month.monthInWeeks[0]">
+                <th class="month_calendar__table__header" *ngFor="let day of month.value.monthInWeeks[0]">
                     <p>{{day.dayData | dayParse}}</p>
                 </th>
             </tr>
@@ -22,17 +22,21 @@
 
             <tbody class="month_calendar__tbody">
 
-            <tr *ngFor="let week of month.monthInWeeks">
+            <tr *ngFor="let week of month.value.monthInWeeks">
                 <th class="month_calendar__table__element" *ngFor="let day of week">
                     <div style="height: 100%;">
                         <div style="text-align: left; padding: 5px">{{day.dayData | dateParse}}</div>
+                        <div style="display: flex; flex-direction: column; gap: 5px; margin-top: 10%">
+                            <ng-container *ngIf="day.tasks | async as tasks">
+                                {{console.log(tasks)}}
+                                <span style="display: flex; justify-content: space-between; margin: auto"
+                                      class="month_calendar__table__element__task" *ngFor="let task of tasks">
 
-                        <div style="display: flex; flex-direction: column; gap: 5px; margin-top: 20%">
-                        <span style="display: flex; justify-content: space-between; margin: auto"
-                              class="month_calendar__table__element__task" *ngFor="let task of day.tasks">
-                            <span> {{task.name}}</span>
-                            <span> {{task.timeStart }}</span>
-                        </span>
+                                    <span> {{task.name}}</span>
+                                    <span> {{task.timeStart }}</span>
+                                </span>
+                            </ng-container>
+
                         </div>
                     </div>
                 </th>

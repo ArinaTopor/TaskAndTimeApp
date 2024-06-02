@@ -3,8 +3,8 @@
     <div class="week_calendar__switch-week">
         <button class="week_calendar__btn-choose-week" size="xs" (click)="chooseWeek(-1)" tuiButton><</button>
         <p class="week_calendar__current-week">
-            {{week.week[0].dayData | dateParse}} -
-            {{week.week[6].dayData | dateParse}}
+            {{dayWeek()[0].dayData | dateParse}} -
+            {{dayWeek()[6].dayData | dateParse}}
         </p>
         <button class="week_calendar__btn-choose-week" size="xs" (click)="chooseWeek(1)" tuiButton>></button>
     </div>
@@ -17,35 +17,39 @@
 
                 <th class="week_calendar__table__time"></th>
 
-                <th class="week_calendar__table__header" *ngFor="let day of week.week">
+                <th class="week_calendar__table__header" *ngFor="let day of dayWeek()">
                     <p>{{day.dayData | dayParse}}</p>
                     <p>{{day.dayData | dateParse}}</p>
                 </th>
             </tr>
             </thead>
 
+
             <tbody class="week_calendar__tbody" #dayContainer>
 
             <tr>
                 <td></td>
-                <td style="position: relative; right: 1px" *ngFor="let day of week.week">
-                    <ng-container *ngFor="let taskBlock of day.blocks">
-                        <div class="week_calendar__table__element__task" [style.height]="taskBlock.height +'px'"
-                             [style.top]="taskBlock.startPosition +'px'"
-                             style="position: absolute; width: 100%; display: inline">
+                <td class="week_calendar__task_row" *ngFor="let day of dayWeek()">
+                        <ng-container *ngIf="day.tasks | async as tasks">
+                            <ng-container *ngFor="let task of tasks">
 
-                            <p style="margin: 0">{{taskBlock.task.name}}</p>
-                            <p style="margin: 0">{{taskBlock.task.timeStart }}
-                                -{{taskBlock.task.timeEnd}}</p>
-                        </div>
-                    </ng-container>
+                                <div *calculatePosition="task; height: containerHeight"
+                                     class="week_calendar__table__element__task">
+
+                                    <p class="week_calendar__table__text">{{task.name}}</p>
+                                    <p class="week_calendar__table__text">{{task.timeStart }}
+                                        -{{task.timeEnd}}</p>
+                                </div>
+                            </ng-container>
+                        </ng-container>
                 </td>
+
             </tr>
 
             <tr *ngFor="let time of getTime()" class="calendar__table__row">
                 <td class="week_calendar__table__element">{{time + ':00'}}</td>
 
-                <td class="week_calendar__table__element" *ngFor="let day of week.week">
+                <td class="week_calendar__table__element" *ngFor="let day of dayWeek()">
                 </td>
             </tr>
             </tbody>

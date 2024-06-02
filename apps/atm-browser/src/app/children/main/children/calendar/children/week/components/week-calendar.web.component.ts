@@ -1,15 +1,13 @@
 import {
-    AfterViewInit,
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     ElementRef,
     ViewChild
 } from '@angular/core';
-import { WeekCalendarService, WeekCalendarViewModel } from '@atm-project/common';
-import { ListContentManagerService } from '../../../../list/services/list-content-manager.service';
-import { Subject, shareReplay, startWith, switchMap, tap } from 'rxjs';
-import { ITask } from '@atm-project/interfaces';
+import {WeekCalendarService, WeekCalendarViewModel} from '@atm-project/common';
+import {ListService} from '../../../../../modules/list/services/list-manager.service';
+import {BehaviorSubject, Observable, map, tap} from 'rxjs';
+import {ITask} from '@atm-project/interfaces';
 
 
 @Component({
@@ -21,45 +19,40 @@ import { ITask } from '@atm-project/interfaces';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WeekCalendarWebComponent implements AfterViewInit {
-    protected week: WeekCalendarViewModel;
-    protected refreshSubject$: Subject<void> = new Subject<void>();
-    // @ts-ignore
-    protected taskAll$: Observavble<ITask>;
+export class WeekCalendarWebComponent {
+    protected week: BehaviorSubject<WeekCalendarViewModel>;
+    protected taskAll$: Observable<ITask[]>;
 
-    @ViewChild('dayContainer', { read: ElementRef })
+    /**
+     * Получение массива чисел от 0 до 23 для отображения в календаре
+     */
+    protected dayWeek() {
+        return this.week.value.week
+    }
+
+    @ViewChild('dayContainer', {read: ElementRef})
     protected calendarContainer!: ElementRef;
 
+    public get containerHeight() {
+        return this.calendarContainer?.nativeElement.offsetHeight
+    }
+
     constructor(
-        private _cd: ChangeDetectorRef,
         private _service: WeekCalendarService,
-        private _contentManagerService: ListContentManagerService
+        private _contentManagerService: ListService
     ) {
-        let tasks: ITask[] = [];
-        this.taskAll$ = this.refreshSubject$
-            .pipe(
-                startWith(null),
-                switchMap(() => _contentManagerService.getAllTask()),
-                shareReplay(1)
-            );
+        this.week = new BehaviorSubject(
+            this._service.createWeekCalendarViewModel()
+        )
 
-        this.taskAll$
-            .pipe(tap((el: ITask[]) => {
-                tasks = el;
-                console.log(el);
-                this._cd.markForCheck();
-            })
-            ).subscribe();
+        this.taskAll$ = _contentManagerService.getAllTask()
 
-        console.log(tasks);
-
-        this.week = this._service.createWeekCalendarViewModel(tasks);
+        this.taskAll$.pipe(map((el) => {
+            this._service.setTasks(el)
+            this._service.addOnCalendarTasks()
+        })).subscribe()
     }
 
-    public ngAfterViewInit(): void {
-        this._service.setTasks(this.calendarContainer.nativeElement.offsetHeight);
-        this._cd.detectChanges();
-    }
 
     /**
      * Получение массива чисел от 0 до 23 для отображения в календаре
@@ -77,10 +70,12 @@ export class WeekCalendarWebComponent implements AfterViewInit {
      * Добавляем ко всем значениям во вью модели одну неделю и обновляем таски
      */
     protected chooseWeek(nextWeek: -1 | 1): void {
-        for (const day of this.week.week) {
+        for (const day of this.dayWeek()) {
             day.dayData = day.dayData.add(nextWeek, 'week');
         }
 
-        this._service.setTasks(this.calendarContainer.nativeElement.offsetHeight);
+        this._service.addOnCalendarTasks();
     }
+
+    protected readonly console = console;
 }

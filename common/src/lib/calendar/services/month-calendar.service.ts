@@ -11,18 +11,16 @@ import { ITask } from '../../db/interfaces/task.interface';
 @Injectable()
 export class MonthCalendarService {
 
-    private _days: dayjs.Dayjs[];
-    private _taskList: ITask[] = [];
+    private _days!: dayjs.Dayjs[];
+    private _tasks: ITask[] = [];
     public currentDate: dayjs.Dayjs;
     public month: MonthCalendarViewModel;
+    private taskIsGet: boolean = false
 
     constructor(@Inject(DATE_TOKEN) public date: dayjs.Dayjs) {
         this.currentDate = this.date.clone();
 
-
-
-        this._days = this.getMonthDays();
-        this.month = new MonthCalendarViewModel(this.initMonth());
+        this.month = this.initMonth();
     }
 
     /**
@@ -30,30 +28,49 @@ export class MonthCalendarService {
      */
     public createNextMonth(nextMonth: -1 | 1): MonthCalendarViewModel{
         this.currentDate = this.currentDate.add(nextMonth,'month');
-        this._days = this.getMonthDays();
-        this.month = new MonthCalendarViewModel(this.initMonth());
+        this.month = this.initMonth();
 
         return this.month;
+    }
+
+    public setTasks(tasks: ITask[]) {
+        this.taskIsGet = true
+        this._tasks = tasks;
+        return this.month
+    }
+
+    public addOnCalendarTasks(): void {
+        if (!this.taskIsGet) {
+            return
+        }
+
+        for (const day of this.month.month) {
+            const tasks: ITask[] = [];
+            for (const task of this._tasks) {
+                if (dayjs(day.dayData).isSame(dayjs(task.date), 'date')) {
+                    tasks.push(task);
+                }
+            }
+
+            day.tasks.next(tasks);
+        }
     }
 
     /**
      * Инициализируем вью модельку с тасками
      */
-    private initMonth(): MonthCalendarDayViewModel[] {
+    public initMonth(): MonthCalendarViewModel {
+        this._days = this.getMonthDays();
         const res: MonthCalendarDayViewModel[] = [];
 
         for (const day of this._days){
-            const tasks:ITask[] =[];
-            for (const task of this._taskList){
-                if (day.isSame(task.date, 'date')) {
-                    tasks.push(task);
-                }
-            }
-
-            res.push(new MonthCalendarDayViewModel(this.currentDate, day, tasks));
+            res.push(
+                new MonthCalendarDayViewModel(
+                    this.currentDate, day, []
+                ));
         }
 
-        return res;
+        return new MonthCalendarViewModel(res);
     }
 
     /**
