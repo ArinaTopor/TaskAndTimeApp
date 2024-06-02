@@ -1,0 +1,44 @@
+<tui-hosted-dropdown [content]="dropdown" [(open)]="open">
+    <button
+        type="button"
+        style="
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            height: 20px;
+        "
+    >
+        <img src="../../../../../assets/icons/setting.svg" />
+    </button>
+</tui-hosted-dropdown>
+<ng-template #dropdown>
+    <tui-data-list class="datalist">
+        <button tuiOption (click)="openCommon()" class="datalist_option">
+            Редактировать
+        </button>
+        <button tuiOption (click)="openDelete()" class="datalist_option">
+            Удалить
+        </button>
+    </tui-data-list>
+</ng-template>
+<delete-element-notification
+    [isOpen]="openDeleteNotification"
+    (cancel)="handleCancel()"
+    (confirm)="handleConfirm()"
+></delete-element-notification>
+<common-modal
+    *ngIf="!isProject"
+    [isOpen]="openCommonModal"
+    [header]="'Редактировать'"
+    [isCreate]="false"
+    [value]="value"
+    (dataChanged)="handleChangeData($event)"
+>
+</common-modal>
+<new-project-modal
+    *ngIf="isProject"
+    [isOpen]="openCommonModal"
+    [isEdit]="true"
+    [project]="project"
+>
+</new-project-modal>

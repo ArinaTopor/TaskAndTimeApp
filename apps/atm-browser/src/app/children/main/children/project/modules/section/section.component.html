@@ -1,0 +1,20 @@
+<div class="section">
+    <div class="section_settings">
+        <h2 class="section_title">{{ section.title }}</h2>
+        <settings-tab-popap
+            [value]="section"
+            (changeData)="updateSection($event)"
+            (deleteData)="deleteSection(section.id)"
+        ></settings-tab-popap>
+        <task-modal
+            style="margin-top: -1em"
+            [actionModal]="'add'"
+            [projectId]="projectId"
+            [sectionId]="section.id"
+            [projectTitle]="projectTitle"
+            [sectionTitle]="section.title"
+        ></task-modal>
+    </div>
+    <hr class="section__line" />
+    <list-web-component [taskList]="todos" [inSection]="true" [projectTitle]="projectTitle" [sectionTitle]="section.title"/>
+</div>

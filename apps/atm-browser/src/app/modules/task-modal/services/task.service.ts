@@ -5,11 +5,11 @@ import {
 } from '@atm-project/common';
 
 import { ITask } from '@atm-project/interfaces';
-import { Observable, of, switchMap } from 'rxjs';
+import { filter, Observable, of, switchMap } from 'rxjs';
 import { FirebaseDatabaseService } from '@atm-project/common';
 
 @Injectable()
-export class NewTaskService {
+export class TaskService {
 
     constructor(
         private _afs: FirebaseDatabaseService,
@@ -43,6 +43,16 @@ export class NewTaskService {
                     return of(null);
                 }
             })
+        );
+    }
+
+    /**
+     * Удаляем задачу
+     */
+    public deleteTask(task: ITask): Observable<void | null> {
+        return this.fbAuthService.user$.pipe(
+            filter((user): user is firebase.default.User => !!user),
+            switchMap((user) => this._afs.deleteTask(task, user.uid))
         );
     }
 }

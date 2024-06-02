@@ -1,6 +1,9 @@
 <ng-template
     let-observer
-    [tuiDialogOptions]="{ label: 'Добавить проект', size: 'auto' }"
+    [tuiDialogOptions]="{
+        label: isEdit ? 'Редактировать проект' : 'Добавить проект',
+        size: 'auto',
+    }"
     [(tuiDialog)]="isOpen"
 >
     <div class="new_project">
@@ -8,7 +11,7 @@
             class="new_project__form"
             [formGroup]="newProjectForm"
             (ngSubmit)="observer.complete()"
-            (submit)="addProject()"
+            (submit)="isEdit ? updateProject() : addProject()"
         >
             <tui-input
                 class="new_project_input"
@@ -18,6 +21,10 @@
             >
                 Введите название проекта
             </tui-input>
+            <control-error
+                *ngIf="newProjectForm.controls.title.touched"
+                [errors]="newProjectForm.controls.title.errors"
+            ></control-error>
             <div class="new_project__color_picker_wrapper">
                 <input
                     class="new_project__color_picker"
@@ -46,8 +53,9 @@
                 class="new_project__button"
                 size="m"
                 type="submit"
+                [disabled]="newProjectForm.controls.title.errors ? true : false"
             >
-                Добавить
+                {{ isEdit ? 'Сохранить' : 'Добавить' }}
             </button>
         </form>
     </div>

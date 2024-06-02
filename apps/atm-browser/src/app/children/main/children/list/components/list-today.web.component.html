@@ -5,9 +5,8 @@
 
     <div class="list-today__current-tasks">
         <span class="list-today__header">{{ currentDate }} • Сегодня</span>
-        <hr class="list-today__divider" />
+        <hr class="list-today__divider"/>
         <list-web-component [taskList]="unCompletedTask$ | async"/>
-        <new-task-modal></new-task-modal>
     </div>
 
     <div class="list-today__completed-tasks">
