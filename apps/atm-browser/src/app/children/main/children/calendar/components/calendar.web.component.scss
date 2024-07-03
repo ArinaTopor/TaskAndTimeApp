@@ -1,0 +1,70 @@
+.calendar {
+    &__container {
+        font-size: 13px;
+        height: 80%;
+        width: 105em;
+        padding: 5em;
+    }
+
+    &__switchweek {
+        display: flex;
+        gap: 10px;
+    }
+
+    &__btn-add-task {
+        font-weight: 400;
+        font-size: 20px;
+        border-radius: 50%;
+        --tui-primary: var(--primary);
+        --tui-primary-hover: var(--primary-active);
+        --tui-primary-active: var(--primary-active);
+    }
+
+    &__top-side-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__separator {
+        margin: 15px;
+    }
+
+    &__switch {
+        &__week:disabled {
+            --tui-primary: var(--primary);
+            --tui-primary-hover: var(--primary-active);
+            --tui-primary-active: var(--primary-active);
+            --tui-disabled-opacity: 1;
+        }
+
+        &__week{
+            border-radius: 24px 0 0 24px;
+
+            --tui-primary: #454545;
+            --tui-primary-hover: var(--primary-active);
+            --tui-primary-active: var(--primary-active);
+        }
+
+        &__month {
+            border-radius: 0 24px 24px 0;
+            --tui-primary: #454545;
+            --tui-primary-hover: var(--primary-active);
+            --tui-primary-active: var(--primary-active);
+        }
+
+        &__month:disabled {
+            --tui-primary: var(--primary);
+            --tui-primary-hover: var(--primary-active);
+            --tui-primary-active: var(--primary-active);
+            --tui-disabled-opacity: 1;
+        }
+    }
+
+    &__title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+}
+

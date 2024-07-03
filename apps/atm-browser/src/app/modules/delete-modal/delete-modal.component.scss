@@ -1,0 +1,30 @@
+.modal {
+    width: 300px;
+    display: flex;
+    gap: 35px;
+    margin: 0 auto;
+    &_button_positive {
+        border-radius: 24px;
+        width: 128px;
+        padding: 4px;
+        margin: 2.8vh auto 0;
+        --tui-primary: var(--primary);
+        --tui-primary-hover: var(--primary-active);
+        --tui-primary-active: var(--primary-active);
+    }
+    &_button_negative {
+        border-radius: 24px;
+        width: 124px;
+        height: 48px;
+        margin: 3.3vh auto 0;
+        background-color: transparent;
+        border: 1px solid var(--grey);
+        color: var(--grey);
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        &:hover {
+            background-color: var(--grey-hover);
+        }
+    }
+}

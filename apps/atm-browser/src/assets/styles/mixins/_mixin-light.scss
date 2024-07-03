@@ -1,0 +1,15 @@
+@use '../color-vars' as *;
+
+@mixin lighten {
+    --base-bg: #{$base-bg-light};
+    --tui-base-01: var(--base-bg);
+    --text-color: #{$base-text-color-light};
+    --tui-text-01: var(--text-color);
+    --bg-auth: #{$bg-auth-light};
+    --bg-menu: #{$bg-menu-light};
+    --bg-tabs: #{$hover-item-menu-light};
+    --bg-modal-auth: #{$modal-auth-light};
+    --bg-hover-item: #{$hover-item-menu-default-light};
+    --tui-elevation-01: var(--base-bg);
+    --table-text: #{$base-bg-dark};
+}

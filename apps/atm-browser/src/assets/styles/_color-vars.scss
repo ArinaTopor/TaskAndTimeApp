@@ -1,0 +1,37 @@
+$base-bg-dark: #252525;
+$base-bg-light: #fff;
+$bg-auth-light: #e0e0e0;
+$bg-menu-light: #f1f1f1;
+$bg-menu-dark: #1e1e1e;
+$modal-auth-light: rgb(255, 255, 255, 45%);
+$modal-auth-dark: #252525;
+$primary: #ff7a00;
+$primary-active: #e06b00;
+$hover-item-menu-light: rgb(255, 195, 140, 55%);
+$hover-item-menu-default-light: rgb(224, 224, 224, 46%);
+$hover-item-menu-dark: rgb(62, 62, 62, 68%);
+$hover-item-menu-default-dark: #454545;
+$base-text-color-light: #000;
+$base-text-color-dark: #fff;
+$base-grey: #7b7b7b;
+$grey-input: #b3b3b3;
+$shadow-modal: rgba(0, 0, 0, 0.3) 0px 20px 50px 4px;
+$shadow-btn: rgba(0, 0, 0, 0.2) 0px 1px 10px 2px;
+$error: red;
+$checkbox-uncomplete: #b3b3b3;
+$checkbox-label: #eee;
+$checkbox-border: #c8c8c8;
+$grey: #7b7b7b;
+$complete: #b3b3b3;
+$border-input-color: #edecec;
+$border-input-shadow: 0 0.125rem 0.1875rem rgba(0, 0, 0, 0.1);
+$grey-light: #c8c8c8;
+$grey-active: #676767;
+$grey-hover: #d0d0d0;
+$skeleton-base: rgb(235, 235, 235);
+$skeleton-gradient: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4)
+    ),
+    transparent;

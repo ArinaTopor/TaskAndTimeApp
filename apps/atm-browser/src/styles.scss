@@ -1,0 +1,72 @@
+@use './assets/styles/common-styles.scss' as *;
+:root {
+    font-family: $font-text-base;
+    --primary: #{$primary};
+    --primary-active: #{$primary-active};
+    --grey-input: #{$grey-input};
+    --shadow-modal: #{$shadow-modal};
+    --shadow-btn: #{$shadow-btn};
+    --error: #{$error};
+    --checkbox-uncomplete: #{$checkbox-uncomplete};
+    --checkbox-label: #{$checkbox-label};
+    --checkbox-border: #{$checkbox-border};
+    --grey: #{$grey};
+    --complete: #{$complete};
+    --border-input-color: #{$border-input-color};
+    --border-input-shadow: #{$border-input-shadow};
+    --grey-light: #{$grey-light};
+    --grey-active: #{$grey-active};
+    --grey-hover: #{$grey-hover};
+    --skeleton-base: #{$skeleton-base};
+    --skeleton-gradient: #{$skeleton-gradient};
+}
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    background-color: var(--base-bg);
+    color: var(--text-color);
+}
+
+body.dark {
+    @include darken();
+}
+body.light {
+    @include lighten();
+}
+h1 {
+    padding: 0;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: var(--primary);
+}
+a:hover {
+    color: var(--primary-active);
+}
+[data-status='error'][_nghost-ng-c3553744663] {
+    --tui-base-01: #f0e6e6;
+}
+.t-heading[_ngcontent-ng-c1591437670] {
+    font-size: 24px !important;
+    color: var(--text-color);
+}
+
+button#year-btn.ng-star-inserted[_nghost-ng-c2749805289] {
+    color: var(--primary);
+}
+
+div.t-wrapper[tuiWrapper][data-appearance='flat'] {
+    color: var(--primary);
+}
+
+.t-content[_ngcontent-ng-c1591437670] {
+    background: var(--base-bg) !important;
+}
+[_nghost-ng-c2374896908] {
+    border: none !important;
+    background: var(--base-bg) !important;
+}

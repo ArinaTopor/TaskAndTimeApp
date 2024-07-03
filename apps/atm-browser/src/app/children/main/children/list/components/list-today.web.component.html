@@ -1,0 +1,30 @@
+<nav class="list-today__container">
+    <h1 class="list-today__header-page">
+        Сегодня
+    </h1>
+
+    <div class="list-today__current-tasks">
+        <span class="list-today__header">{{ currentDate }} • Сегодня</span>
+        <hr class="list-today__divider"/>
+        <list-web-component [taskList]="unCompletedTask$ | async"/>
+    </div>
+
+    <div class="list-today__completed-tasks">
+        <button class="list-today__button-complete" (click)="toggleSection()">
+            <img
+                class="list-today__link-icon"
+                [ngSrc]="'../../../../../assets/icons/tag-close.svg'"
+                width="16"
+                height="16"
+                title="icon"
+                alt=""
+                [ngClass]="{ 'rotate': isShow$ | async }"
+            />
+            <span class="list-today__header">Выполненные</span>
+        </button>
+        <hr class="list-today__divider" />
+        <div *ngIf="isShow$ | async">
+            <list-web-component [taskList]="completedTask$ | async" [isListCompleted]="true"/>
+        </div>
+    </div>
+</nav>

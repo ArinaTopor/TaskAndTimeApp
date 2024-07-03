@@ -1,0 +1,151 @@
+<button *ngIf="actionModalValue==='add' && inSection === false" class="new-task__add-task" (click)="showDialog()">
+    <img
+        class="new-task__link-icon"
+        [ngSrc]="'../../../../../assets/icons/add-task.svg'"
+        width="24"
+        height="24"
+        title="icon"
+        alt=""
+    />
+    Добавить задачу
+</button>
+
+<ng-template
+    let-observer
+    [(tuiDialog)]="stateModal"
+    [tuiDialogOptions]="{
+        size: 'auto'
+    }"
+>
+    <form
+        [formGroup]="taskForm"
+        class="new-task__modal-task"
+        (ngSubmit)="observer.complete()"
+    >
+        <span class="new-task__pathTask">
+            {{ getPathTask() }}
+        </span>
+
+        <input placeholder="Название задачи..." class="new-task__name-task" formControlName="taskValueAdd" (change)="controlChange()">
+        <span *ngIf="emptyName" class="new-task__error">
+            Введите название задачи, чтобы добавить!
+        </span>
+
+        <button
+            tuiButton
+            (click)="showDialogDate()"
+            icon="tuiIconCalendar"
+            class="new-task__modal-btn-date"
+            size="s"
+        >
+            <ng-container *ngIf="valueTimeEnd && valueTimeStart && valueDate; else noTime">
+                {{ valueDate }}, {{ valueTimeStart }} - {{ valueDate }}, {{ valueTimeEnd }}
+            </ng-container>
+            <ng-template #noTime>
+                <ng-container *ngIf="valueTimeStart == null && valueDate; else noTimeTwo">
+                    {{ valueDate }}
+                </ng-container>
+                <ng-template #noTimeTwo>
+                    <ng-container *ngIf="valueTimeStart && valueDate; else defaultText">
+                        {{ valueDate }}, {{ valueTimeStart }}
+                    </ng-container>
+                </ng-template>
+                <ng-template #defaultText>
+                    Выбрать дату и время
+                </ng-template>
+            </ng-template>
+        </button>
+
+        <tui-textarea formControlName="textarea" class="new-task__textarea">Описание задачи</tui-textarea>
+
+        <tui-select
+            class="new-task__select"
+            formControlName="tags"
+        >
+            Добавить тег
+        </tui-select>
+
+        <div class="new-task__modal-btn">
+            <button
+                tuiButton
+                type="submit"
+                (click)="deleteTask()"
+                class="new-task__modal-btn-delete"
+                size="s"
+                *ngIf="actionModalValue == 'edit'"
+            >
+                Удалить задачу
+            </button>
+
+            <button
+                tuiButton
+                type="submit"
+                (click)="actionTask()"
+                class="new-task__modal-btn-add"
+                size="m"
+                style="{{ additionalClass }}"
+                [disabled]="emptyName"
+            >
+                {{ buttonText }}
+            </button>
+        </div>
+    </form>
+</ng-template>
+
+<ng-template
+    let-observer
+    [(tuiDialog)]="stateModalDate"
+    [tuiDialogOptions]="{ size: 'auto' }"
+    class="new-task__modal"
+>
+    <form
+        [formGroup]="taskForm"
+        (ngSubmit)="observer.complete()"
+        class="new-task__date-form"
+    >
+        <tui-calendar
+            [value]="value"
+            (dayClick)="onDayClick($event)"
+            class="new-task__calendar"
+        ></tui-calendar>
+
+        <tui-input-time
+            formControlName="timeValueStart"
+            class="new-task__input-time"
+            [tuiTextfieldCleaner]="true"
+        >
+            Время начала
+        </tui-input-time>
+
+        <tui-input-time
+            formControlName="timeValueEnd"
+            class="new-task__input-time"
+            [tuiTextfieldCleaner]="true"
+            itemSize="s"
+        >
+            Время конца
+        </tui-input-time>
+
+        <p style="display: flex; gap: 1em">
+            <button
+                tuiButton
+                type="button"
+                (click)="onDayClickDefault()"
+                class="new-task__modal-btn-cancel"
+                size="m"
+            >
+                Очистить
+            </button>
+
+            <button
+                tuiButton
+                type="submit"
+                (click)="showDialog()"
+                class="new-task__modal-btn-ok"
+                size="m"
+            >
+                Сохранить
+            </button>
+        </p>
+    </form>
+</ng-template>

@@ -1,0 +1,73 @@
+.new_project {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    &__open_btn {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        &-icon {
+            margin-left: 1em;
+        }
+    }
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+        margin-top: 8px;
+        width: 430px;
+    }
+    &_input {
+        --tui-primary: var(--primary);
+        --tui-primary-active: var(--primary);
+        --tui-primary-hover: var(--primary-active);
+        --tui-focus: var(--primary);
+        --tui-error-fill: var(--error);
+        border-color: var(--grey) !important;
+    }
+    &__color_picker_wrapper {
+        display: flex;
+        background: var(--base-bg);
+        gap: 0 4px;
+        border: 1px solid var(--border-input-color);
+        border-radius: 12px;
+        box-shadow: var(--border-input-shadow);
+        align-items: center;
+        padding: 0 8px;
+        height: 44px;
+
+        &_container {
+            display: flex;
+            flex-direction: column;
+            & p {
+                margin: 0;
+                padding: 0;
+                font-size: 12px;
+                line-height: normal;
+            }
+            &_color {
+                color: (--text-color);
+            }
+            &_title {
+                color: var(--grey);
+            }
+        }
+    }
+    &__color_picker {
+        border: none;
+        border-radius: 4px;
+        color: transparent;
+        width: 26px;
+        height: 27px;
+        cursor: pointer;
+    }
+    &__button {
+        --tui-primary: var(--primary);
+        --tui-primary-hover: var(--primary-active);
+        --tui-primary-active: var(--primary-active);
+        width: 155px;
+        border-radius: 25px;
+        margin-top: 4px;
+        margin-left: 63%;
+    }
+}

@@ -1,0 +1,43 @@
+<div class="calendar__container">
+
+    <div class="calendar__header">
+
+        <div class="calendar__top-side-header">
+            <div class="calendar__title">
+                <h1>
+                    Календарь
+                </h1>
+
+                <button class="calendar__btn-add-task" size="xs" tuiButton>
+                    +
+                </button>
+            </div>
+            <div>
+                <button
+                    [routerLink]="'../main/week'"
+                    class="calendar__switch__week"
+                    size="s"
+                    [disabled]="calendarType==='week'"
+                    tuiButton
+                >
+                    Неделя
+                </button>
+
+
+                <button
+                    class="calendar__switch__month"
+                    [routerLink]="'../main/month'"
+                    size="s"
+                    [disabled]="calendarType==='month'"
+                    tuiButton
+                >
+                    Месяц
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <hr class="calendar__separator"/>
+
+    <router-outlet></router-outlet>
+</div>

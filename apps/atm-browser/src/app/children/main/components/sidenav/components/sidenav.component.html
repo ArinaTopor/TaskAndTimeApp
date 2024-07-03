@@ -1,0 +1,125 @@
+<nav class="sidenavbar__container">
+    <div>
+        <div class="sidenavbar__personal-account">
+            <img
+                class="sidenavbar__personal-account-icon"
+                src="../../../../../assets/icons/personal-account.svg"
+                title="personal-account"
+            />
+            <span class="sidenavbar__personal-account-name">
+                {{ (user$ | async)?.displayName }}
+            </span>
+        </div>
+
+        <ul class="sidenavbar__list">
+            <li class="sidenavbar__list-item" *ngFor="let btn of btnList">
+                <button
+                    class="sidenavbar__list-item-link"
+                    [routerLink]="[btn.link]"
+                >
+                    <img
+                        class="sidenavbar__list-item-link-icon"
+                        [ngSrc]="btn.icon"
+                        width="24"
+                        height="24"
+                        title="icon"
+                    />
+                    <span class="sidenavbar__list-item-link-text">{{
+                        btn.title
+                    }}</span>
+                </button>
+            </li>
+        </ul>
+
+        <hr class="sidenavbar__divider" />
+        <div>
+            <div class="sidenavbar__function-item-link">
+                <span class="sidenavbar__function-item-link-span">
+                    <img
+                        class="sidenavbar__function-item-link-icon"
+                        [ngSrc]="'../../../../../assets/icons/tag-close.svg'"
+                        width="16"
+                        height="16"
+                        title="icon"
+                        [ngClass]="{
+                            rotate: showProject
+                        }"
+                        (click)="toggleSection(projectType.project)"
+                    />
+                    <span class="sidenavbar__function-item-link-text"
+                        >Проекты</span
+                    >
+                </span>
+                <img
+                    class="sidenavbar__function-item-link-icon-two"
+                    [ngSrc]="'../../../../../assets/icons/add.svg'"
+                    title="icon"
+                    width="24"
+                    height="24"
+                    (click)="toggleModal(true)"
+                />
+            </div>
+            <div
+                [@fadeInOut]="showProject ? 'open' : 'close'"
+                class="sidenavbar__function-item-content"
+            >
+                <ul *ngIf="allProject$ | async as list; else skeleton">
+                    <li
+                        class="sidenavbar__function-item-content-item"
+                        *ngFor="let project of list"
+                        [changeColorElement]="project.color"
+                    >
+                        <span class="sidenavbar__function-item-link-span">
+                            <span
+                                class="sidenavbar__function-item-content-item-name"
+                                [routerLink]="['project/' + project.id]"
+                                >{{ project.title }}</span
+                            >
+                        </span>
+                        <settings-tab-popap
+                            [project]="project"
+                            [isProject]="true"
+                            (deleteData)="deleteProject(project.id)"
+                        ></settings-tab-popap>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <ng-template #skeleton>
+            <img
+                class="sidenavbar__loading"
+                [ngSrc]="'../../../../../assets/icons/loading.gif'"
+                title="icon"
+                width="24"
+                height="24"
+            />
+            <!--
+                позже здесь будет нормальный скелетон загрузки, а сейчас почему-то ошибка
+                <ngx-skeleton-loader count="5" appearance="circle"></ngx-skeleton-loader>
+            -->
+        </ng-template>
+    </div>
+
+    <div class="sidenavbar__settings">
+        <mode-toggle></mode-toggle>
+        <div class="sidenavbar__settings-log-out-container">
+            <button class="sidenavbar__settings-log-out">
+                <img
+                    class="sidenav-container-settings-log-out-icon"
+                    src="../../../../../assets/icons/logout.svg"
+                    title="icon"
+                />
+                <span
+                    class="sidenavbar__settings-log-out-text"
+                    (click)="signOut()"
+                    >Выход</span
+                >
+            </button>
+        </div>
+    </div>
+</nav>
+<new-project-modal
+    [isOpen]="isOpenModalProject"
+    (toggleModal)="toggleModal($event)"
+></new-project-modal>
