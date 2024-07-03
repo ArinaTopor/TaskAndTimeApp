@@ -4,6 +4,8 @@
 
 Учетная запись: почта: test_11@gmail.com пароль: 123456
 
+Открыть проект можно по ссылке: https://timeandtaskapp.web.app/
+
 ## Функционал приложения
 
 https://docs.google.com/document/d/1bvkUENSayelI5ft-9M-YKob8-oJ8i-z9nkL6eS0d8Ug/edit
